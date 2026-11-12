@@ -1,4 +1,96 @@
-let allTestData = {};
+const allTestData = {
+  "Physics": {
+    "testName": "भौतिक विज्ञान - प्रैक्टिस सेट 1",
+    "duration": 5,
+    "questions": [
+      {
+        "question": "कार्य (Work) का SI मात्रक क्या है?",
+        "options": ["वाट (Watt)", "जूल (Joule)", "न्यूटन (Newton)", "पास्कल (Pascal)"],
+        "answer": 1,
+        "explanation": "कार्य और ऊर्जा दोनों का SI मात्रक जूल (Joule) होता है।"
+      },
+      {
+        "question": "प्रकाश वर्ष (Light Year) किसकी इकाई है?",
+        "options": ["समय की", "दूरी की", "प्रकाश की तीव्रता की", "द्रव्यमान की"],
+        "answer": 1,
+        "explanation": "प्रकाश द्वारा एक वर्ष में तय की गई दूरी को प्रकाश वर्ष कहते हैं।"
+      }
+    ]
+  },
+  "Chemistry": {
+    "testName": "रसायन विज्ञान - प्रैक्टिस सेट 1",
+    "duration": 5,
+    "questions": [
+      {
+        "question": "जल का रासायनिक सूत्र क्या है?",
+        "options": ["CO2", "H2O", "O2", "NaCl"],
+        "answer": 1,
+        "explanation": "जल के एक अणु में हाइड्रोजन के दो और ऑक्सीजन का एक परमाणु होता है (H2O)।"
+      }
+    ]
+  },
+  "Biology": {
+    "testName": "जीव विज्ञान - प्रैक्टिस सेट 1",
+    "duration": 5,
+    "questions": [
+      {
+        "question": "कोशिका का पावरहाउस (Powerhouse of Cell) किसे कहा जाता है?",
+        "options": ["राइबोसोम", "माइटोकॉन्ड्रिया", "लाइसोसोम", "केंद्रक"],
+        "answer": 1,
+        "explanation": "माइटोकॉन्ड्रिया में कोशिकीय श्वसन द्वारा ऊर्जा (ATP) का निर्माण होता है।"
+      }
+    ]
+  },
+  "History": {
+    "testName": "प्राचीन इतिहास - प्रैक्टिस सेट 1",
+    "duration": 5,
+    "questions": [
+      {
+        "question": "सिंधु घाटी सभ्यता का प्रमुख बंदरगाह कौन था?",
+        "options": ["हड़प्पा", "लोथल", "कालीबंगा", "मोहनजोदड़ो"],
+        "answer": 1,
+        "explanation": "लोथल गुजरात में भोगवा नदी के किनारे स्थित एक प्रमुख बंदरगाह था।"
+      }
+    ]
+  },
+  "Polity": {
+    "testName": "भारतीय राजव्यवस्था - प्रैक्टिस सेट 1",
+    "duration": 5,
+    "questions": [
+      {
+        "question": "भारतीय संविधान को कब अंगीकार किया गया था?",
+        "options": ["15 अगस्त 1947", "26 नवंबर 1949", "26 जनवरी 1950", "2 अक्टूबर 1950"],
+        "answer": 1,
+        "explanation": "संविधान सभा द्वारा 26 नवंबर 1949 को भारतीय संविधान को अंगीकार किया गया था।"
+      }
+    ]
+  },
+  "Economics": {
+    "testName": "भारतीय अर्थव्यवस्था - प्रैक्टिस सेट 1",
+    "duration": 5,
+    "questions": [
+      {
+        "question": "भारतीय रिज़र्व बैंक (RBI) की स्थापना किस वर्ष हुई थी?",
+        "options": ["1935", "1947", "1949", "1950"],
+        "answer": 0,
+        "explanation": "भारतीय रिज़र्व बैंक की स्थापना 1 अप्रैल 1935 को हुई थी।"
+      }
+    ]
+  },
+  "General Science": {
+    "testName": "सामान्य विज्ञान - प्रैक्टिस सेट 1",
+    "duration": 5,
+    "questions": [
+      {
+        "question": "सूर्य के प्रकाश से हमें कौन-सा विटामिन प्राप्त होता है?",
+        "options": ["विटामिन A", "विटामिन B", "विटामिन C", "विटामिन D"],
+        "answer": 3,
+        "explanation": "सूर्य के प्रकाश से त्वचा में विटामिन D का निर्माण होता है।"
+      }
+    ]
+  }
+};
+
 let currentSubject = "";
 let currentQuestions = [];
 let currentQIndex = 0;
@@ -17,16 +109,8 @@ const subjectsList = [
     { id: "General Science", title: "General Science (सामान्य विज्ञान)", desc: "दैनिक विज्ञान प्रश्नोत्तरी" }
 ];
 
-// पेज लोड होने पर प्रश्नों की फाइल लोड करें
-window.onload = async () => {
-    try {
-        const response = await fetch('questions.json');
-        allTestData = await response.json();
-        renderSubjects();
-    } catch (error) {
-        console.error("Error loading questions:", error);
-        document.getElementById('subject-list').innerHTML = "<p>प्रश्नों की फाइल लोड नहीं हो सकी। कृपया सुनिश्चित करें कि questions.json अपलोड है।</p>";
-    }
+window.onload = () => {
+    renderSubjects();
 };
 
 function renderSubjects() {
@@ -34,15 +118,21 @@ function renderSubjects() {
     container.innerHTML = "";
 
     subjectsList.forEach(sub => {
-        const hasQuestions = allTestData[sub.id] && allTestData[sub.id].questions.length > 0;
-        const qCount = hasQuestions ? allTestData[sub.id].questions.length : 0;
+        let countText = "";
+        if (sub.id === "Geography") {
+            countText = "उपलब्ध टेस्ट: 2 (100 प्रश्न)";
+        } else {
+            const hasQuestions = allTestData[sub.id] && allTestData[sub.id].questions.length > 0;
+            const qCount = hasQuestions ? allTestData[sub.id].questions.length : 0;
+            countText = `उपलब्ध प्रश्न: ${qCount}`;
+        }
 
         const card = document.createElement('div');
         card.className = 'subject-card';
         card.innerHTML = `
             <h3>${sub.title}</h3>
             <p>${sub.desc}</p>
-            <p><strong>उपलब्ध प्रश्न: ${qCount}</strong></p>
+            <p><strong>${countText}</strong></p>
             <button class="btn-primary" onclick="selectSubject('${sub.id}')">View Test →</button>
         `;
         container.appendChild(card);
@@ -50,6 +140,11 @@ function renderSubjects() {
 }
 
 function selectSubject(subjectId) {
+    if (subjectId === "Geography") {
+        showSection('geography-list-section');
+        return;
+    }
+
     if (!allTestData[subjectId] || allTestData[subjectId].questions.length === 0) {
         alert("इस विषय के प्रश्न अभी जोड़े जा रहे हैं। कृपया दूसरा विषय चुनें।");
         return;
@@ -128,7 +223,6 @@ function loadQuestion() {
         optionsBox.appendChild(btn);
     });
 
-    // नेविगेशन बटन कंट्रोल
     document.getElementById('prev-btn').disabled = currentQIndex === 0;
     
     if (currentQIndex === currentQuestions.length - 1) {
@@ -196,30 +290,3 @@ function renderReview() {
         const card = document.createElement('div');
         card.className = `review-card ${isCorrect ? 'correct' : 'wrong'}`;
         card.innerHTML = `
-            <p><strong>प्रश्न ${idx + 1}: ${q.question}</strong></p>
-            <p style="margin-top:8px;">आपका उत्तर: <strong>${userAnsText}</strong> ${isCorrect ? '✅' : '❌'}</p>
-            ${!isCorrect ? `<p style="color:#16a34a;">सही उत्तर: <strong>${correctAnsText}</strong></p>` : ''}
-            <div class="explanation-box">
-                <strong>व्याख्या:</strong> ${q.explanation}
-            </div>
-        `;
-        container.appendChild(card);
-    });
-}
-
-function retakeTest() {
-    beginQuiz();
-}
-
-function goHome() {
-    clearInterval(timerInterval);
-    showSection('home-section');
-}
-
-function showSection(sectionId) {
-    ['home-section', 'instruction-section', 'quiz-section', 'result-section'].forEach(id => {
-        document.getElementById(id).classList.add('hidden');
-    });
-    document.getElementById(sectionId).classList.remove('hidden');
-    window.scrollTo(0, 0);
-}
