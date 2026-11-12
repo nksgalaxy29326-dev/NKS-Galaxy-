@@ -22,12 +22,69 @@
                 <h2>अपनी तैयारी जाँचें और अपनी प्रगति जानें</h2>
                 <p>नीचे दिए गए विषयों में से किसी एक को चुनकर ऑनलाइन टेस्ट शुरू करें</p>
             </div>
+            
             <div class="subject-grid" id="subject-list">
-                <!-- Subjects JS से लोड होंगे -->
+                <!-- Geography कार्ड (सबसे ऊपर) -->
+                <div class="subject-card">
+                    <h3>Geography (भूगोल)</h3>
+                    <p>भारत एवं विश्व का भूगोल</p>
+                    <p><strong>उपलब्ध टेस्ट: 2 (100 प्रश्न)</strong></p>
+                    <button class="btn-primary" onclick="openGeoTests()">View Test →</button>
+                </div>
+
+                <!-- अन्य विषय -->
+                <div class="subject-card">
+                    <h3>Physics (भौतिक विज्ञान)</h3>
+                    <p>महत्वपूर्ण वस्तुनिष्ठ प्रश्न</p>
+                    <p><strong>उपलब्ध प्रश्न: 2</strong></p>
+                    <button class="btn-primary" onclick="selectSubject('Physics')">View Test →</button>
+                </div>
+
+                <div class="subject-card">
+                    <h3>Chemistry (रसायन विज्ञान)</h3>
+                    <p>महत्वपूर्ण वस्तुनिष्ठ प्रश्न</p>
+                    <p><strong>उपलब्ध प्रश्न: 1</strong></p>
+                    <button class="btn-primary" onclick="selectSubject('Chemistry')">View Test →</button>
+                </div>
+
+                <div class="subject-card">
+                    <h3>Biology (जीव विज्ञान)</h3>
+                    <p>महत्वपूर्ण वस्तुनिष्ठ प्रश्न</p>
+                    <p><strong>उपलब्ध प्रश्न: 1</strong></p>
+                    <button class="btn-primary" onclick="selectSubject('Biology')">View Test →</button>
+                </div>
+
+                <div class="subject-card">
+                    <h3>History (इतिहास)</h3>
+                    <p>प्राचीन, मध्यकालीन और आधुनिक इतिहास</p>
+                    <p><strong>उपलब्ध प्रश्न: 2</strong></p>
+                    <button class="btn-primary" onclick="selectSubject('History')">View Test →</button>
+                </div>
+
+                <div class="subject-card">
+                    <h3>Polity (राजव्यवस्था)</h3>
+                    <p>भारतीय संविधान और शासन</p>
+                    <p><strong>उपलब्ध प्रश्न: 1</strong></p>
+                    <button class="btn-primary" onclick="selectSubject('Polity')">View Test →</button>
+                </div>
+
+                <div class="subject-card">
+                    <h3>Economics (अर्थशास्त्र)</h3>
+                    <p>भारतीय अर्थव्यवस्था</p>
+                    <p><strong>उपलब्ध प्रश्न: 1</strong></p>
+                    <button class="btn-primary" onclick="selectSubject('Economics')">View Test →</button>
+                </div>
+
+                <div class="subject-card">
+                    <h3>General Science (सामान्य विज्ञान)</h3>
+                    <p>दैनिक विज्ञान प्रश्नोत्तरी</p>
+                    <p><strong>उपलब्ध प्रश्न: 1</strong></p>
+                    <button class="btn-primary" onclick="selectSubject('General Science')">View Test →</button>
+                </div>
             </div>
         </section>
 
-        <!-- नया सेक्शन: Geography Test List (Test 1 & Test 2) -->
+        <!-- Geography Test List (Test 1 & Test 2) -->
         <section id="geography-list-section" class="hidden">
             <div class="card">
                 <button class="btn-back" onclick="goHome()">← वापस विषयों पर जाएँ</button>
@@ -135,6 +192,13 @@
         <p>© 2026 NKS Galaxy. All Rights Reserved.</p>
     </footer>
 
+    <script>
+        function openGeoTests() {
+            document.getElementById('home-section').classList.add('hidden');
+            document.getElementById('geography-list-section').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
