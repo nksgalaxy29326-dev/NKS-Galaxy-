@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NKS Galaxy - Online Test Series</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f0f4f8; color: #333; line-height: 1.6; }
+        .container { max-width: 1050px; margin: 0 auto; padding: 0 15px; }
+
+        .navbar { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 22px 0; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.15); }
+        .navbar h1 { font-size: 2.2rem; letter-spacing: 1px; }
+        .navbar p { font-size: 1rem; opacity: 0.9; margin-top: 4px; }
+
+        .welcome-banner { background: white; padding: 18px; margin: 20px 0; border-radius: 10px; text-align: center; border-left: 5px solid #2a5298; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+
+        .subject-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-bottom: 35px; }
+        .subject-card { background: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.08); transition: transform 0.2s; border-top: 4px solid #2a5298; display: flex; flex-direction: column; justify-content: space-between; }
+        .subject-card:hover { transform: translateY(-4px); }
+        .subject-card h3 { color: #1e3c72; font-size: 1.2rem; margin-bottom: 6px; }
+        .badge { display: inline-block; background: #e0e7ff; color: #1e3c72; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: bold; margin-bottom: 15px; }
+
+        .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 20px; }
+        .test-item { background: white; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+        .test-item h4 { color: #1e3c72; margin-bottom: 8px; }
+        .status-live { color: #16a34a; font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 8px; }
+        .status-soon { color: #64748b; font-size: 0.8rem; display: block; margin-bottom: 8px; }
+
+        button { cursor: pointer; border: none; border-radius: 6px; padding: 10px 16px; font-size: 0.95rem; font-weight: 600; transition: 0.2s; width: 100%; }
+        .btn-primary { background: #2a5298; color: white; }
+        .btn-primary:hover { background: #1e3c72; }
+        .btn-live { background: #16a34a; color: white; }
+        .btn-live:hover { background: #15803d; }
+        .btn-soon { background: #e2e8f0; color: #475569; }
+        .btn-back { background: #1e3c72; color: white; width: auto; padding: 8px 18px; margin-bottom: 15px; }
+
+        .card-box { background: white; padding: 22px; margin: 20px 0; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+        .hidden { display: none !important; }
+        footer { text-align: center; padding: 20px; color: #64748b; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container">
+            <h1>NKS Galaxy</h1>
+            <p>Online Examination & Complete Test Series Portal</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="subjects-view">
+            <div class="welcome-banner">
+                <h2>अपनी तैयारी जाँचें और अपनी प्रगति जानें</h2>
+                <p>नीचे दिए गए 15 विषयों में से किसी एक को चुनें और अपने टेस्ट शुरू करें</p>
+            </div>
+            <div class="subject-grid" id="subjects-container"></div>
+        </section>
+
+        <section id="tests-view" class="hidden">
+            <div class="card-box">
+                <button class="btn-back" onclick="showHome()">← सभी विषयों पर वापस जाएँ</button>
+                <h2 id="selected-subject-title" style="color: #1e3c72;">विषय का नाम</h2>
+                <p id="selected-subject-subtitle" style="color: #64748b;">उपलब्ध टेस्ट सीरीज</p>
+                <div class="test-grid" id="tests-container"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 NKS Galaxy. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const subjects = [
+            { name: "Physics", count: 40, prefix: "physics" },
+            { name: "Chemistry", count: 25, prefix: "chemistry" },
+            { name: "Biology", count: 25, prefix: "biology" },
+            { name: "Ancient History", count: 50, prefix: "ancient" },
+            { name: "Modern History", count: 25, prefix: "modern" },
+            { name: "World History", count: 10, prefix: "world" },
+            { name: "Geography", count: 50, prefix: "bhugol" },
+            { name: "Polity", count: 50, prefix: "polity" },
+            { name: "Indian Economy", count: 25, prefix: "economy" },
+            { name: "Static GK", count: 50, prefix: "staticgk" },
+            { name: "Environment", count: 10, prefix: "environment" },
+            { name: "English", count: 100, prefix: "english" },
+            { name: "GK GS", count: 100, prefix: "gkgs" },
+            { name: "Current Affairs 2026", count: 50, prefix: "ca2026" },
+            { name: "Current Affairs 2027", count: 100, prefix: "ca2027" }
+        ];
+
+        // जैसे-जैसे आप नए टेस्ट अपलोड करें, उनके नाम यहाँ लिखते जाएं
+        const uploadedFiles = [
+            // उदाहरण: "biology1.html", "bhugol1.html"
+        ];
+
+        function renderSubjects() {
+            const container = document.getElementById('subjects-container');
+            container.innerHTML = "";
+
+            subjects.forEach(sub => {
+                const card = document.createElement('div');
+                card.className = 'subject-card';
+                card.innerHTML = `
+                    <div>
+                        <h3>${sub.name}</h3>
+                        <span class="badge">${sub.count} Tests</span>
+                    </div>
+                    <button class="btn-primary" onclick="openSubject('${sub.name}', ${sub.count}, '${sub.prefix}')">Open Tests →</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openSubject(name, totalTests, prefix) {
+            document.getElementById('selected-subject-title').innerText = `${name} (${totalTests} Tests)`;
+            document.getElementById('selected-subject-subtitle').innerText = `नीचे दिए गए टेस्ट में से किसी एक को चुनें:`;
+
+            const testsContainer = document.getElementById('tests-container');
+            testsContainer.innerHTML = "";
+
+            for (let i = 1; i <= totalTests; i++) {
+                const fileName = `${prefix}${i}.html`;
+                const isUploaded = uploadedFiles.includes(fileName);
+
+                const item = document.createElement('div');
+                item.className = 'test-item';
+                
+                if (isUploaded) {
+                    item.innerHTML = `
+                        <h4>Test ${i}</h4>
+                        <span class="status-live">● उपलब्ध (Live)</span>
+                        <button class="btn-live" onclick="window.location.href='${fileName}'">Start Test →</button>
+                    `;
+                } else {
+                    item.innerHTML = `
+                        <h4>Test ${i}</h4>
+                        <span class="status-soon">जल्द आ रहा है</span>
+                        <button class="btn-soon" onclick="alert('${name} - Test ${i} अभी तैयार किया जा रहा है। जल्द ही उपलब्ध होगा!')">Coming Soon</button>
+                    `;
+                }
+                testsContainer.appendChild(item);
+            }
+
+            document.getElementById('subjects-view').classList.add('hidden');
+            document.getElementById('tests-view').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function showHome() {
+            document.getElementById('tests-view').classList.add('hidden');
+            document.getElementById('subjects-view').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        renderSubjects();
+    </script>
+</body>
+</html>
