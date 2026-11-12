@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - पंचवर्षीय योजना (Advanced Online Test)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1100px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:13px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>पंचवर्षीय योजना (Five-Year Plans)</b></p>
+  <p>SSC | Railway | UPSSSC | Other Competitive Exams</p>
+  <p>कुल प्रश्न: 75 | कुल अंक: 75 | समय: 15 मिनट</p>
+</header>
+
+<div class="container">
+
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>ऑनलाइन मॉक टेस्ट निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें।</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+
+    <ul style="padding-left:20px;color:#334155">
+      <li>कुल प्रश्न: <b>75</b> | कुल समय: <b>15 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">हल किए गए: <b id="answered">0</b>/75 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">15:00</div>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="submitTest(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया (Answered)</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा (Marked)</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष (Not Answered)</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="submitTest(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+
+  </section>
+
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>आपका परीक्षा परिणाम (Scorecard)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+
+    <div class="stats">
+      <div class="stat"><strong id="score">0/75</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (75)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+
+</div>
+
+<script>
+const RAW_Q = [
+["भारत में आर्थिक नियोजन की अवधारणा किस देश से प्रेरित है?",["अमेरिका","सोवियत संघ (USSR)","ब्रिटेन","फ्रांस"],1],
+["'प्लान्ड इकोनॉमी फॉर इंडिया' पुस्तक के लेखक कौन हैं?",["जवाहरलाल नेहरू","एम. विश्वेश्वरैया","दादाभाई नौरोजी","पी.सी. महालनोबिस"],1],
+["'बॉम्बे प्लान' किस वर्ष प्रस्तुत किया गया था?",["1934","1938","1944","1950"],2],
+["'जन योजना' का निर्माण किसने किया था?",["जयप्रकाश नारायण","एम. एन. रॉय","श्रीमन्नारायण अग्रवाल","महात्मा गांधी"],1],
+["'गांधीवादी योजना' किसने तैयार की थी?",["विनोबा भावे","श्रीमन्नारायण अग्रवाल","मोरारजी देसाई","सरदार पटेल"],1],
+["'सर्वोदय योजना' किसके द्वारा प्रस्तुत की गई थी?",["जयप्रकाश नारायण","आचार्य नरेंद्र देव","राम मनोहर लोहिया","गुलजारीलाल नंदा"],0],
+["योजना आयोग का गठन कब हुआ?",["26 जनवरी 1950","15 मार्च 1950","1 अप्रैल 1951","6 अगस्त 1952"],1],
+["योजना आयोग के प्रथम अध्यक्ष कौन थे?",["गुलजारीलाल नंदा","जवाहरलाल नेहरू","राजेंद्र प्रसाद","सी.डी. देशमुख"],1],
+["योजना आयोग के प्रथम उपाध्यक्ष कौन थे?",["गुलजारीलाल नंदा","वी.टी. कृष्णामाचारी","के.सी. नियोगी","डी.आर. गडगिल"],0],
+["राष्ट्रीय विकास परिषद का गठन कब हुआ?",["15 मार्च 1950","1 अप्रैल 1951","6 अगस्त 1952","2 अक्टूबर 1952"],2],
+["पंचवर्षीय योजनाओं को अंतिम स्वीकृति कौन देता था?",["वित्त मंत्रालय","संसद","राष्ट्रीय विकास परिषद","राष्ट्रपति"],2],
+["प्रथम पंचवर्षीय योजना कब शुरू हुई?",["15 अगस्त 1950","1 अप्रैल 1951","1 जनवरी 1951","2 अक्टूबर 1951"],1],
+["प्रथम पंचवर्षीय योजना किस मॉडल पर आधारित थी?",["महालनोबिस","हेरोड-डोमार","गडगिल","आगत-निर्गत"],1],
+["प्रथम योजना में किस क्षेत्र को प्राथमिकता दी गई?",["भारी उद्योग","कृषि और सिंचाई","शिक्षा","परिवहन"],1],
+["भाखड़ा-नांगल, हीराकुंड और दामोदर घाटी परियोजनाएँ किस योजना में शुरू हुईं?",["प्रथम","द्वितीय","तृतीय","चौथी"],0],
+["सामुदायिक विकास कार्यक्रम कब शुरू हुआ?",["1951","1952","1954","1956"],1],
+["प्रथम योजना की वास्तविक विकास दर कितनी थी?",["2.5%","3.1%","3.6%","4.2%"],2],
+["द्वितीय योजना किस मॉडल पर आधारित थी?",["हेरोड-डोमार","पी.सी. महालनोबिस","सुखमय चक्रवर्ती","जॉन सैंडी"],1],
+["द्वितीय योजना का मुख्य उद्देश्य क्या था?",["कृषि आधुनिकीकरण","भारी एवं बुनियादी उद्योगों का विकास","गरीबी उन्मूलन","आत्मनिर्भरता"],1],
+["भिलाई इस्पात संयंत्र किस देश के सहयोग से बना?",["ब्रिटेन","पश्चिम जर्मनी","सोवियत संघ","फ्रांस"],2],
+["दुर्गापुर इस्पात संयंत्र किस देश की सहायता से बना?",["ब्रिटेन","जर्मनी","रूस","जापान"],0],
+["राउरकेला इस्पात संयंत्र किस देश के सहयोग से बना?",["ब्रिटेन","पश्चिम जर्मनी","अमेरिका","कनाडा"],1],
+["1956 की औद्योगिक नीति में किस समाज की स्थापना का लक्ष्य था?",["पूंजीवादी","समाजवादी ढांचे का समाज","साम्यवादी","गांधीवादी"],1],
+["तृतीय योजना की अवधि क्या थी?",["1960–1965","1961–1966","1962–1967","1966–1971"],1],
+["तृतीय योजना किस मॉडल पर आधारित थी?",["हेरोड-डोमार","जॉन सैंडी और सुखमय चक्रवर्ती","गडगिल","मनमोहन"],1],
+["तृतीय योजना का मुख्य लक्ष्य क्या था?",["आत्मनिर्भर और स्वतः स्फूर्त अर्थव्यवस्था","केवल उद्योग","जनसंख्या नियंत्रण","निर्यात"],0],
+["कौन-सी योजना अपने लक्ष्य से सर्वाधिक असफल रही?",["प्रथम","द्वितीय","तृतीय","पाँचवीं"],2],
+["तृतीय योजना की असफलता का मुख्य कारण क्या था?",["चीन युद्ध","पाक युद्ध","सूखा","उपरोक्त सभी"],3],
+["बोकारो इस्पात संयंत्र किस योजना के दौरान स्थापित हुआ?",["द्वितीय","तृतीय (1964)","चौथी","पाँचवीं"],1],
+["FCI और कृषि मूल्य आयोग की स्थापना किस वर्ष हुई?",["1961","1965","1969","1971"],1],
+["प्रथम योजना अवकाश की अवधि क्या थी?",["1965–1968","1966–1969","1967–1970","1969–1972"],1],
+["हरित क्रांति की शुरुआत किस अवधि में हुई?",["तृतीय योजना के प्रारंभ में","योजना अवकाश 1966–69","पाँचवीं","छठी"],1],
+["चौथी योजना किस फार्मूले पर आधारित थी?",["नेहरू-महालनोबिस","गडगिल फार्मूला","हेरोड-डोमार","लियोन्तिफ"],1],
+["चौथी योजना का मुख्य उद्देश्य क्या था?",["स्थिरता के साथ विकास और आत्मनिर्भरता","भारी उद्योग","गरीबी उन्मूलन","समावेशी विकास"],0],
+["14 प्रमुख बैंकों का राष्ट्रीयकरण किस योजना के दौरान हुआ?",["तृतीय","चौथी","पाँचवीं","छठी"],1],
+["ऑपरेशन फ्लड किस योजना में शुरू हुआ?",["तीसरी","चौथी (1970)","पाँचवीं","सातवीं"],1],
+["स्माइलिंग बुद्धा परमाणु परीक्षण किस योजना काल में हुआ?",["चौथी","पाँचवीं","छठी","तीसरी"],0],
+["पाँचवीं योजना का मुख्य प्रारूप किसने तैयार किया?",["पी.सी. महालनोबिस","डी.पी. धर","डी.आर. गडगिल","सी. रंगराजन"],1],
+["'गरीबी हटाओ' का नारा किस योजना में दिया गया?",["चौथी","पाँचवीं","छठी","सातवीं"],1],
+["न्यूनतम आवश्यकता कार्यक्रम किस योजना में शुरू हुआ?",["चौथी","पाँचवीं (1974)","छठी","आठवीं"],1],
+["बीस सूत्रीय कार्यक्रम कब शुरू हुआ?",["1971","1975","1978","1982"],1],
+["क्षेत्रीय ग्रामीण बैंकों की स्थापना किस योजना में हुई?",["चौथी","पाँचवीं","छठी","सातवीं"],1],
+["काम के बदले अनाज कार्यक्रम कब शुरू हुआ?",["1974","1977","1980","1985"],1],
+["कौन-सी योजना एक वर्ष पहले समाप्त कर दी गई?",["तीसरी","चौथी","पाँचवीं (1978)","सातवीं"],2],
+["अनवरत योजना की अवधारणा किस अर्थशास्त्री ने दी?",["गुन्नार मिर्डल","अमर्त्य सेन","रग्नार नर्क्से","कीन्स"],0],
+["रोलिंग प्लान किस सरकार ने लागू किया?",["इंदिरा गांधी","मोरारजी देसाई सरकार","राजीव गांधी","वी.पी. सिंह"],1],
+["रोलिंग प्लान को किसने समाप्त किया?",["जनता पार्टी","इंदिरा गांधी सरकार (1980)","नरसिम्हा राव","अटल बिहारी वाजपेयी"],1],
+["छठी योजना की अवधि क्या थी?",["1978–1983","1980–1985","1985–1990","1979–1984"],1],
+["छठी योजना किस मॉडल पर आधारित थी?",["हेरोड-डोमार","आगत-निर्गत मॉडल","महालनोबिस","गडगिल"],1],
+["NABARD की स्थापना किस समिति की सिफारिश पर हुई?",["नरसिम्हम","शिवरामन","तेंदुलकर","रंगराजन"],1],
+["IRDP का विस्तार किस योजना में हुआ?",["चौथी","छठी (1980)","आठवीं","नौवीं"],1],
+["सातवीं योजना की अवधि क्या थी?",["1984–1989","1985–1990","1986–1991","1987–1992"],1],
+["सातवीं योजना का मुख्य नारा क्या था?",["गरीबी हटाओ","भोजन, काम और उत्पादकता","तेज विकास","सबका साथ"],1],
+["किस योजना में निजी क्षेत्र को पहली बार वरीयता दी गई?",["पाँचवीं","छठी","सातवीं","नौवीं"],2],
+["जवाहर रोजगार योजना किस योजना में शुरू हुई?",["छठी","सातवीं","आठवीं","नौवीं"],1],
+["स्पीड पोस्ट और SEBI की स्थापना किस योजना के दौरान हुई?",["छठी","सातवीं","आठवीं","नौवीं"],1],
+["दूसरी बार वार्षिक योजनाएँ कब चलाई गईं?",["1966–1969","1978–1980","1990–1992","1997–1999"],2],
+["आठवीं योजना की अवधि क्या थी?",["1990–1995","1991–1996","1992–1997","1993–1998"],2],
+["आठवीं योजना का सर्वोच्च प्राथमिकता क्षेत्र क्या था?",["भारी उद्योग","मानव संसाधन विकास","कृषि सिंचाई","रक्षा"],1],
+["नई आर्थिक नीति किस योजना के दौरान लागू हुई?",["सातवीं","आठवीं","नौवीं","दसवीं"],1],
+["प्रधानमंत्री रोजगार योजना और मिड-डे मील किस योजना में शुरू हुईं?",["सातवीं","आठवीं","नौवीं","दसवीं"],1],
+["भारत WTO का सदस्य किस योजना काल में बना?",["सातवीं","आठवीं","नौवीं","दसवीं"],1],
+["नौवीं योजना का मुख्य विषय क्या था?",["तेज और समावेशी विकास","न्यायपूर्ण वितरण एवं समानता के साथ विकास","गरीबी उन्मूलन","धारणीय विकास"],1],
+["दसवीं योजना में GDP विकास दर का लक्ष्य कितना था?",["6.5%","7%","8%","9%"],2],
+["दसवीं योजना में प्रति व्यक्ति आय कितने वर्षों में दोगुनी करने का लक्ष्य था?",["5","8","10","15"],2],
+["ग्यारहवीं योजना की रूपरेखा किसने तैयार की?",["मोंटेक सिंह अहलूवालिया","सी. रंगराजन","अमर्त्य सेन","अरविंद पनगढ़िया"],1],
+["ग्यारहवीं योजना का मुख्य नारा क्या था?",["न्यायपूर्ण वितरण","तेज और अधिक समावेशी विकास","भोजन, काम और उत्पादकता","गरीबी हटाओ"],1],
+["RTE Act 2009 किस योजना के दौरान लागू हुआ?",["दसवीं","ग्यारहवीं","बारहवीं","नौवीं"],1],
+["बारहवीं योजना की अवधि क्या थी?",["2010–2015","2012–2017","2014–2019","2011–2016"],1],
+["बारहवीं योजना की मुख्य थीम क्या थी?",["तेज और अधिक समावेशी विकास","तेज, अधिक समावेशी और धारणीय विकास","आत्मनिर्भर भारत","पूर्ण रोजगार"],1],
+["बारहवीं योजना में संशोधित GDP विकास दर का लक्ष्य कितना था?",["7.5%","8%","8.5%","9%"],1],
+["योजना आयोग के अंतिम उपाध्यक्ष कौन थे?",["के.सी. पंत","मोंटेक सिंह अहलूवालिया","अरविंद पनगढ़िया","राजीव कुमार"],1],
+["नीति आयोग की स्थापना कब हुई?",["15 अगस्त 2014","1 जनवरी 2015","1 अप्रैल 2015","26 जनवरी 2015"],1],
+["NITI Aayog का पूरा नाम क्या है?",["National Institute for Transforming India","National Institution for Transforming India","National Integration for Transforming India","New Institution for Technical India"],1],
+["नीति आयोग किस सिद्धांत पर कार्य करता है?",["Top-Down Approach","Bottom-Up Approach और सहकारी संघवाद","केंद्रीकृत नियोजन","केवल राज्य सरकार नियंत्रण"],1]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 900;
+let timerInterval = null;
+let submitted = false;
+let student = "";
+
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / ${Q.length}</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark Review" : "Mark for Review";
+  updateStatus(i);
+}
+
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+
+  if(remaining <= 120){
+    timerEl.classList.add("blink");
+  }
+
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+
+function submitTest(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+  if(!auto){
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न नहीं किए हैं। क्या आप वाकई टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप टेस्ट सबमिट करना चाहते हैं?";
+    if(!confirm(msg)) return;
+  }
+
+  submitted = true;
+  clearInterval(timerInterval);
+
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+
+  document.getElementById("greeting").textContent =
+    student + ", आपका टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+
+  document.getElementById("score").textContent = correct + "/75";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+
+  let message = correct >= 68 ? "🏆 शानदार! आपकी तैयारी उत्कृष्ट स्तर की है।" :
+                correct >= 60 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 53 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 45 ? "📘 अच्छी शुरुआत! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+
+  document.getElementById("motivation").textContent = message;
+  let used = 900 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+
+    if(type !== "all" && type !== status) return "";
+
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
