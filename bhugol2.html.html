@@ -1,0 +1,369 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Coaching Center | Anup Kumar</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#edf3fb;color:#172033;font-family:Arial,"Noto Sans Devanagari",sans-serif}
+.banner{max-width:1250px;margin:auto;background:white;padding:5px}
+.banner img{display:block;width:100%;height:auto;border-radius:8px}
+.sticky{position:sticky;top:0;z-index:100;background:#102b55;color:white;box-shadow:0 3px 12px #0003}
+.stickyrow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 13px}
+.student{font-size:16px;font-weight:bold}
+.coaching{font-size:12px;color:#ffdf79;margin-top:4px}
+.timerbox{flex-shrink:0;background:white;color:#b91c1c;border:2px solid #ffcc45;border-radius:9px;padding:6px 10px;text-align:center;font-weight:bold}
+.timerlabel{font-size:11px;color:#444}
+#timer{font-size:23px;font-variant-numeric:tabular-nums}
+.danger{background:#fee2e2;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.65}}
+.progresswrap{padding:0 13px 8px;font-size:12px}
+.progressbg{height:6px;background:#ffffff40;border-radius:8px;margin-top:5px}
+#progress{height:6px;width:0;background:#ffcc45;transition:width .2s}
+.container{max-width:920px;margin:16px auto;padding:0 12px}
+.card{background:white;border-radius:12px;padding:17px;margin-bottom:15px;box-shadow:0 3px 12px #0000000b}
+h2{text-align:center;color:#123d79;margin:4px 0 15px}
+.info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.info div{background:#f1f5f9;border-radius:7px;padding:9px;font-size:14px;overflow-wrap:anywhere}
+.notice{background:#fff7d6;padding:12px;border-radius:8px;line-height:1.8;font-size:14px;margin-top:12px}
+.start-screen{text-align:center;padding:20px 10px}
+.start-screen p{line-height:1.9}
+.start-btn{background:#15803d;color:white;font-size:20px;padding:15px 35px;border-radius:10px;box-shadow:0 4px 0 #14532d}
+.start-btn:hover{background:#166534}
+.qnum{font-size:14px;font-weight:bold;color:#1d4ed8}
+.question{font-size:19px;font-weight:bold;line-height:1.7;margin:10px 0 15px}
+.options{display:grid;gap:9px}
+.option{display:flex;align-items:flex-start;gap:9px;padding:12px;border:1px solid #cbd5e1;border-radius:9px;cursor:pointer;line-height:1.6;background:white}
+.option:hover{background:#eff6ff}
+.option input{margin-top:5px;flex-shrink:0}
+.option.selected{background:#dbeafe;border-color:#2563eb}
+.option.correct{background:#dcfce7!important;border-color:#16a34a!important}
+.option.wrong{background:#fee2e2!important;border-color:#dc2626!important}
+.buttons{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:18px}
+button{border:0;border-radius:8px;padding:12px 16px;font-size:15px;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.blue{background:#1d4ed8;color:white}
+.green{background:#15803d;color:white}
+.gray{background:#e2e8f0;color:#172033}
+.hidden{display:none!important}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.jump{width:38px;height:38px;padding:0;background:#e2e8f0;border:1px solid #cbd5e1}
+.jump.answered{background:#bfdbfe;border-color:#2563eb}
+.jump.current{outline:3px solid #f59e0b}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:15px 0}
+.stat{text-align:center;padding:13px 6px;background:#eff6ff;border-radius:9px}
+.stat strong{display:block;color:#1d4ed8;font-size:25px}
+.stat small{font-size:13px}
+#success{background:#dcfce7;color:#14532d;padding:17px;border-radius:9px;line-height:1.9;font-weight:bold;font-size:17px;margin:14px 0}
+#other{background:#f1f5f9;padding:13px;border-radius:9px;line-height:1.8}
+.review{border-left:5px solid #64748b}
+.good{color:#15803d}.bad{color:#dc2626}.skip{color:#b45309}
+.footer{text-align:center;color:#64748b;font-size:12px;padding:14px}
+@media(max-width:480px){
+ .stickyrow{padding:8px}.student{font-size:14px}.coaching{font-size:10px}
+ #timer{font-size:20px}.timerbox{padding:6px}
+ .info{grid-template-columns:1fr}.card{padding:13px}.question{font-size:17px}
+ .start-btn{font-size:18px;padding:13px 25px}
+}
+@media print{
+ .sticky,.buttons,.nav,.footer,#startScreen{display:none!important}
+ body{background:white}.card{box-shadow:none;break-inside:avoid}
+ #result{display:block!important}
+}
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <img src="nks-header.png" alt="Baba Saheb, India Map and NKS Coaching Center"
+       onerror="this.style.display='none'">
+</div>
+
+<header class="sticky">
+  <div class="stickyrow">
+    <div>
+      <div class="student">विद्यार्थी: Anup Kumar</div>
+      <div class="coaching">NKS Coaching Center | Class 9</div>
+    </div>
+    <div class="timerbox" id="timerbox">
+      <div class="timerlabel">शेष समय</div>
+      <div id="timer">08:00</div>
+    </div>
+  </div>
+  <div class="progresswrap">
+    <span id="progressText">टेस्ट शुरू करने के लिए Start Test दबाएँ</span>
+    <div class="progressbg"><div id="progress"></div></div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="card" id="startScreen">
+  <h2>NKS Coaching Center</h2>
+  <p style="text-align:center;font-size:19px;font-weight:bold">भारत के पड़ोसी देश एवं स्थिति</p>
+  <div class="info">
+    <div><b>Student Name:</b> Anup Kumar</div>
+    <div><b>Mother Name:</b> Pratibha Devi</div>
+    <div><b>Father Name:</b> Heera Lal</div>
+    <div><b>Village Name:</b> Thata</div>
+    <div><b>Class:</b> 9</div>
+    <div><b>Date:</b> 19/10/2026</div>
+    <div><b>कुल प्रश्न:</b> 50</div>
+    <div><b>समय:</b> 8 मिनट</div>
+  </div>
+  <div class="notice">
+    <b>टेस्ट के नियम:</b><br>
+    • हर सही उत्तर के लिए 1 अंक।<br>
+    • गलत उत्तर पर कोई अंक नहीं कटेगा।<br>
+    • प्रश्न और विकल्प रैंडम क्रम में आएँगे।<br>
+    • समय समाप्त होने पर टेस्ट अपने आप सबमिट होगा।<br>
+    • 80% से अधिक अंक आने पर विशेष बधाई संदेश मिलेगा।
+  </div>
+  <div class="start-screen">
+    <p>क्या आप टेस्ट शुरू करने के लिए तैयार हैं?</p>
+    <button class="start-btn" id="startBtn">▶ Start Test</button>
+  </div>
+</section>
+
+<section class="card hidden" id="testArea">
+  <div id="questionContainer"></div>
+  <div class="buttons">
+    <button class="gray" id="prevBtn">← पिछला प्रश्न</button>
+    <button class="blue" id="nextBtn">अगला प्रश्न →</button>
+  </div>
+  <hr style="border:0;border-top:1px solid #e2e8f0;margin:20px 0">
+  <b>प्रश्न सूची</b>
+  <p style="font-size:13px;color:#64748b">नीले नंबर वाले प्रश्नों के उत्तर चुने गए हैं।</p>
+  <div class="nav" id="questionNav"></div>
+  <div style="text-align:center;margin-top:20px">
+    <button class="green" id="submitBtn">टेस्ट सबमिट करें</button>
+  </div>
+</section>
+
+<section class="card hidden" id="result">
+  <h2>टेस्ट का परिणाम</h2>
+  <p id="resultHeading" style="text-align:center;font-weight:bold"></p>
+  <div class="stats">
+    <div class="stat"><strong id="correctCount">0</strong><small>सही उत्तर</small></div>
+    <div class="stat"><strong id="wrongCount">0</strong><small>गलत उत्तर</small></div>
+    <div class="stat"><strong id="skipCount">0</strong><small>बिना हल किए</small></div>
+    <div class="stat"><strong id="marks">0/50</strong><small>कुल अंक</small></div>
+    <div class="stat" style="grid-column:1/-1"><strong id="percentage">0%</strong><small>Percentage</small></div>
+  </div>
+  <div id="success" class="hidden"></div>
+  <div id="other" class="hidden"></div>
+  <h3>प्रत्येक प्रश्न की उत्तर समीक्षा</h3>
+  <p style="font-size:14px">हरे रंग में सही उत्तर और लाल रंग में गलत चुना गया उत्तर दिखाई देगा।</p>
+  <div id="reviewContainer"></div>
+  <button class="blue" onclick="window.print()">रिजल्ट प्रिंट करें</button>
+</section>
+
+<div class="footer">NKS Coaching Center | मेहनत ही सफलता की कुंजी है।</div>
+</main>
+
+<script>
+"use strict";
+
+const bank = [
+{q:"वर्तमान में भारत में कुल कितने राज्य हैं?",a:"28",o:["27","28","29","30"]},
+{q:"वर्तमान में भारत में कुल कितने केंद्रशासित प्रदेश हैं?",a:"8",o:["7","8","9","10"]},
+{q:"भारत के उत्तर-पश्चिम दिशा में कौन-कौन से पड़ोसी देश स्थित हैं?",a:"पाकिस्तान और अफगानिस्तान",o:["चीन और नेपाल","पाकिस्तान और अफगानिस्तान","बांग्लादेश और म्यांमार","श्रीलंका और मालदीव"]},
+{q:"भारत के उत्तर दिशा में कौन-कौन से पड़ोसी देश स्थित हैं?",a:"चीन, नेपाल और भूटान",o:["चीन, नेपाल और भूटान","पाकिस्तान और अफगानिस्तान","बांग्लादेश और म्यांमार","श्रीलंका और मालदीव"]},
+{q:"भारत के पूर्व दिशा में कौन-कौन से पड़ोसी देश स्थित हैं?",a:"बांग्लादेश और म्यांमार",o:["पाकिस्तान और अफगानिस्तान","चीन और नेपाल","बांग्लादेश और म्यांमार","मालदीव और श्रीलंका"]},
+{q:"भारत के दक्षिण में समुद्र पार स्थित दो पड़ोसी द्वीप राष्ट्र कौन-से हैं?",a:"श्रीलंका और मालदीव",o:["इंडोनेशिया और सिंगापुर","श्रीलंका और मालदीव","मॉरीशस और मेडागास्कर","फिलीपींस और थाईलैंड"]},
+{q:"भारत और श्रीलंका को पृथक करने वाली जलसंधि का नाम क्या है?",a:"पाक जलसंधि (Palk Strait)",o:["मलक्का जलसंधि","पाक जलसंधि (Palk Strait)","बेरिंग जलसंधि","सुंडा जलसंधि"]},
+{q:"भारत और श्रीलंका के मध्य कौन-सी खाड़ी स्थित है?",a:"मन्नार की खाड़ी",o:["मन्नार की खाड़ी","खंभात की खाड़ी","कच्छ की खाड़ी","मेक्सिको की खाड़ी"]},
+{q:"मालदीव भारत के किस द्वीप समूह के दक्षिण में स्थित है?",a:"लक्षद्वीप",o:["अंडमान और निकोबार","लक्षद्वीप","न्यू मूर द्वीप","व्हीलर द्वीप"]},
+{q:"भारत का कौन-सा पड़ोसी द्वीप देश अरब सागर में स्थित है?",a:"मालदीव",o:["श्रीलंका","मालदीव","बांग्लादेश","म्यांमार"]},
+
+{q:"भारत की उत्तर-पश्चिमी सीमा किन देशों से लगती है?",a:"पाकिस्तान और अफगानिस्तान",o:["पाकिस्तान और अफगानिस्तान","चीन और म्यांमार","नेपाल और भूटान","बांग्लादेश और भूटान"]},
+{q:"भारत की उत्तरी सीमा किन देशों के साथ साझा होती है?",a:"चीन, नेपाल और भूटान",o:["चीन, नेपाल और भूटान","अफगानिस्तान और पाकिस्तान","म्यांमार और बांग्लादेश","श्रीलंका और मालदीव"]},
+{q:"भारत की पूर्वी सीमा पर कौन-से दो देश स्थित हैं?",a:"बांग्लादेश और म्यांमार",o:["चीन और नेपाल","बांग्लादेश और म्यांमार","पाकिस्तान और अफगानिस्तान","भूटान और चीन"]},
+{q:"भारत की सबसे लंबी अंतर्राष्ट्रीय स्थलीय सीमा किस देश के साथ लगती है?",a:"बांग्लादेश",o:["चीन","पाकिस्तान","बांग्लादेश","नेपाल"]},
+{q:"भारत और पाकिस्तान के बीच अंतर्राष्ट्रीय सीमा भारत की किस दिशा में स्थित है?",a:"उत्तर-पश्चिम",o:["उत्तर-पश्चिम","उत्तर-पूर्व","दक्षिण-पश्चिम","दक्षिण-पूर्व"]},
+{q:"भारत और चीन के बीच सीमा किस दिशा में स्थित है?",a:"उत्तर",o:["दक्षिण","उत्तर","पूर्व","पश्चिम"]},
+{q:"नेपाल की सीमा भारत के किन 5 राज्यों से लगती है?",a:"उत्तराखंड, उत्तर प्रदेश, बिहार, पश्चिम बंगाल और सिक्किम",o:["उत्तराखंड, उत्तर प्रदेश, बिहार, पश्चिम बंगाल और सिक्किम","पंजाब, हरियाणा, उत्तर प्रदेश, बिहार और असम","सिक्किम, असम, अरुणाचल प्रदेश, मेघालय और त्रिपुरा","राजस्थान, गुजरात, मध्य प्रदेश, बिहार और ओडिशा"]},
+{q:"भूटान की सीमा भारत के किन राज्यों को स्पर्श करती है?",a:"सिक्किम, पश्चिम बंगाल, असम और अरुणाचल प्रदेश",o:["सिक्किम, पश्चिम बंगाल, असम और अरुणाचल प्रदेश","बिहार, झारखंड, ओडिशा और पश्चिम बंगाल","मेघालय, त्रिपुरा, मिजोरम और मणिपुर","उत्तराखंड, उत्तर प्रदेश, हिमाचल प्रदेश और सिक्किम"]},
+{q:"बांग्लादेश की सीमा भारत के किन राज्यों से लगती है?",a:"पश्चिम बंगाल, असम, मेघालय, त्रिपुरा और मिजोरम",o:["पश्चिम बंगाल, असम, मेघालय, त्रिपुरा और मिजोरम","सिक्किम, बिहार, उत्तर प्रदेश, पश्चिम बंगाल और असम","अरुणाचल प्रदेश, नागालैंड, मणिपुर और मिजोरम","ओडिशा, झारखंड, पश्चिम बंगाल, बिहार और छत्तीसगढ़"]},
+{q:"म्यांमार की सीमा भारत के किन पूर्वोत्तर राज्यों से लगती है?",a:"अरुणाचल प्रदेश, नागालैंड, मणिपुर और मिजोरम",o:["अरुणाचल प्रदेश, नागालैंड, मणिपुर और मिजोरम","असम, मेघालय, त्रिपुरा और सिक्किम","पश्चिम बंगाल, ओडिशा, बिहार और असम","नागालैंड, त्रिपुरा, असम और मेघालय"]},
+
+{q:"भारत के दो प्रमुख द्वीप समूह कौन-कौन से हैं?",a:"अंडमान-निकोबार और लक्षद्वीप",o:["अंडमान-निकोबार और लक्षद्वीप","दीव और दमन","साल्सेट और एलिफेंटा","श्रीहरिकोटा और पंबन"]},
+{q:"अंडमान और निकोबार द्वीप समूह किस समुद्री क्षेत्र में स्थित है?",a:"बंगाल की खाड़ी",o:["अरब सागर","बंगाल की खाड़ी","हिंद महासागर","मन्नार की खाड़ी"]},
+{q:"लक्षद्वीप द्वीप समूह किस सागर में स्थित है?",a:"अरब सागर",o:["बंगाल की खाड़ी","अरब सागर","अंडमान सागर","लाल सागर"]},
+{q:"अंडमान और निकोबार द्वीप समूह भारत की मुख्य भूमि के किस दिशा में स्थित है?",a:"दक्षिण-पूर्व",o:["दक्षिण-पश्चिम","दक्षिण-पूर्व","उत्तर-पूर्व","उत्तर-पश्चिम"]},
+{q:"लक्षद्वीप समूह भारत की मुख्य भूमि के किस दिशा में स्थित है?",a:"दक्षिण-पश्चिम",o:["दक्षिण-पश्चिम","दक्षिण-पूर्व","उत्तर-पश्चिम","उत्तर-पूर्व"]},
+{q:"भारत का दक्षिणतम बिंदु इंदिरा पॉइंट किस द्वीप पर स्थित है?",a:"ग्रेट निकोबार द्वीप",o:["कार निकोबार","मध्य अंडमान","ग्रेट निकोबार द्वीप","लिटिल अंडमान"]},
+{q:"भारत का एकमात्र सक्रिय ज्वालामुखी किस द्वीप पर स्थित है?",a:"बैरन द्वीप",o:["नारकोंडम द्वीप","बैरन द्वीप","अमीनदीवी द्वीप","मिनीकॉय द्वीप"]},
+{q:"श्रीलंका भारत की मुख्य भूमि से किस दिशा में स्थित है?",a:"दक्षिण",o:["पूर्व","पश्चिम","उत्तर","दक्षिण"]},
+{q:"मालदीव की स्थिति भारत के किस भाग के दक्षिण-पश्चिम में है?",a:"लक्षद्वीप क्षेत्र",o:["अंडमान क्षेत्र","लक्षद्वीप क्षेत्र","कच्छ क्षेत्र","सुंदरवन क्षेत्र"]},
+{q:"भारत के द्वीप समूहों का सामरिक महत्त्व मुख्यतः क्यों है?",a:"समुद्री सीमाओं की सुरक्षा और समुद्री मार्ग निगरानी के लिए",o:["पर्यटन को बढ़ावा देने के लिए","कृषि उत्पादन बढ़ाने के लिए","समुद्री सीमाओं की सुरक्षा और समुद्री मार्ग निगरानी के लिए","खनिज निष्कर्षण के लिए"]},
+
+{q:"क्षेत्रफल की दृष्टि से भारत से बड़े छह देश कौन-से हैं?",a:"रूस, कनाडा, संयुक्त राज्य अमेरिका, चीन, ब्राजील और ऑस्ट्रेलिया",o:["रूस, कनाडा, संयुक्त राज्य अमेरिका, चीन, ब्राजील और ऑस्ट्रेलिया","रूस, चीन, अमेरिका, ब्राजील, अर्जेंटीना और फ्रांस","कनाडा, अमेरिका, चीन, ऑस्ट्रेलिया, भारत और रूस","रूस, ब्राजील, दक्षिण अफ्रीका, चीन, कनाडा और ऑस्ट्रेलिया"]},
+{q:"क्षेत्रफल की दृष्टि से भारत विश्व में किस स्थान पर आता है?",a:"सातवाँ",o:["पाँचवाँ","छठा","सातवाँ","आठवाँ"]},
+{q:"भारत का कुल क्षेत्रफल लगभग कितना है?",a:"32.8 लाख वर्ग किलोमीटर",o:["28.5 लाख वर्ग किमी","32.8 लाख वर्ग किलोमीटर","35.2 लाख वर्ग किमी","40.0 लाख वर्ग किमी"]},
+{q:"संपूर्ण विश्व के कुल क्षेत्रफल का कितना प्रतिशत भाग भारत के पास है?",a:"लगभग 2.4%",o:["लगभग 2.4%","लगभग 3.2%","लगभग 4.1%","लगभग 5.0%"]},
+{q:"भारत की कुल स्थलीय सीमा की लंबाई लगभग कितनी है?",a:"15,200 किलोमीटर",o:["7,516.6 किमी","12,000 किमी","15,200 किलोमीटर","18,200 किमी"]},
+{q:"भारत की समुद्री तटरेखा की गणना में किन द्वीप समूहों को शामिल किया जाता है?",a:"अंडमान-निकोबार और लक्षद्वीप दोनों",o:["केवल अंडमान-निकोबार","केवल लक्षद्वीप","अंडमान-निकोबार और लक्षद्वीप दोनों","इनमें से कोई नहीं"]},
+{q:"द्वीपों सहित भारत की कुल समुद्री तटरेखा की लंबाई कितनी है?",a:"7,516.6 किलोमीटर",o:["6,100 किमी","7,516.6 किलोमीटर","8,200 किमी","15,200 किमी"]},
+{q:"भारत के मुख्य भूभाग का अक्षांशीय विस्तार कितना है?",a:"8°4′ उत्तर से 37°6′ उत्तर तक",o:["6°4′ उत्तर से 35°6′ उत्तर तक","8°4′ उत्तर से 37°6′ उत्तर तक","8°4′ दक्षिण से 37°6′ दक्षिण तक","10°2′ उत्तर से 38°4′ उत्तर तक"]},
+{q:"भारत के मुख्य भूभाग का देशांतरीय विस्तार कितना है?",a:"68°7′ पूर्व से 97°25′ पूर्व तक",o:["68°7′ पूर्व से 97°25′ पूर्व तक","68°7′ पश्चिम से 97°25′ पश्चिम तक","65°5′ पूर्व से 95°20′ पूर्व तक","70°8′ पूर्व से 99°15′ पूर्व तक"]},
+{q:"भारत का मानक समय किस देशांतर रेखा पर आधारित है?",a:"82°30′ पूर्वी देशांतर",o:["23°30′ पूर्वी देशांतर","82°30′ पूर्वी देशांतर","97°25′ पूर्वी देशांतर","68°7′ पूर्वी देशांतर"]},
+
+{q:"प्राचीन काल से अंतर्राष्ट्रीय संपर्क में समुद्री तथा स्थल मार्गों का क्या महत्त्व रहा है?",a:"व्यापार और सांस्कृतिक आदान-प्रदान के लिए",o:["केवल सैन्य अभियानों के लिए","व्यापार और सांस्कृतिक आदान-प्रदान के लिए","धार्मिक रूपांतरण के लिए","केवल पर्यटन विकास के लिए"]},
+{q:"स्वेज नहर का उद्घाटन किस वर्ष हुआ था?",a:"1869 में",o:["1850","1869 में","1901","1914"]},
+{q:"स्वेज नहर खुलने से भारत और यूरोप के बीच समुद्री दूरी लगभग कितनी कम हो गई?",a:"लगभग 7,000 किलोमीटर",o:["लगभग 3,000 किमी","लगभग 5,000 किमी","लगभग 7,000 किलोमीटर","लगभग 10,000 किमी"]},
+{q:"प्राचीन काल में भारत के विचारों का विश्व में प्रसार मुख्य रूप से किन माध्यमों से हुआ?",a:"व्यापार, यात्राओं और सांस्कृतिक संपर्कों से",o:["व्यापार, यात्राओं और सांस्कृतिक संपर्कों से","उपनिवेश स्थापित करके","केवल किताबों के मुद्रण से","सैन्य आक्रमणों से"]},
+{q:"प्राचीन काल में भारत के कौन-से प्रसिद्ध ग्रंथों की कहानियाँ दूसरे देशों तक पहुँचीं?",a:"रामायण और पंचतंत्र",o:["रामायण और पंचतंत्र","महाभारत और वेद","उपनिषद और महावंश","पुराण और जातक कथाएँ"]},
+{q:"भारत की कौन-सी गणितीय प्रणालियाँ विश्व के विभिन्न भागों तक प्रसारित हुईं?",a:"भारतीय अंक और दशमलव प्रणाली",o:["बीजीय समीकरण और रेखागणित","भारतीय अंक और दशमलव प्रणाली","त्रिकोणमिति और कैलकुलस","सांख्यिकी और लघुगणक"]},
+{q:"प्राचीन काल में भारत के व्यापारिक संपर्कों के माध्यम से मुख्यतः किन वस्त्रों का निर्यात किया जाता था?",a:"मलमल और अन्य वस्त्र",o:["रेशम और ऊन","मलमल और अन्य वस्त्र","जूट और नायलॉन","सूती और सिंथेटिक कपड़े"]},
+{q:"भारत की भौगोलिक स्थिति ने इसके अंतर्राष्ट्रीय व्यापार को किस प्रकार लाभ पहुँचाया?",a:"इसे पूर्व और पश्चिम के समुद्री व्यापार मार्गों से जोड़कर",o:["इसे पूर्व और पश्चिम के समुद्री व्यापार मार्गों से जोड़कर","इसे अन्य महाद्वीपों से पूरी तरह अलग करके","केवल एक ही दिशा में व्यापार सीमित करके","केवल थल मार्गों पर निर्भर करके"]},
+{q:"हिंद महासागर में भारत की केंद्रीय स्थिति का सबसे बड़ा लाभ क्या है?",a:"एशिया, अफ्रीका और यूरोप के समुद्री मार्गों से सीधा संपर्क",o:["एशिया, अफ्रीका और यूरोप के समुद्री मार्गों से सीधा संपर्क","अत्यधिक ठंड से बचाव","अत्यधिक वर्षा होना","केवल पड़ोसियों से व्यापार होना"]},
+{q:"भारत की भौगोलिक स्थिति और आकार का अध्ययन करना क्यों महत्त्वपूर्ण है?",a:"देश की सीमाओं, जलवायु, समय और अंतरराष्ट्रीय संबंधों को समझने के लिए",o:["केवल परीक्षा उत्तीर्ण करने के लिए","देश की सीमाओं, जलवायु, समय और अंतरराष्ट्रीय संबंधों को समझने के लिए","केवल नदियों की जानकारी के लिए","केवल राज्यों के नाम याद रखने के लिए"]}
+];
+
+const TOTAL=50, DURATION=480;
+let questions=[],answers=[],current=0,remaining=DURATION,interval=null,started=false,submitted=false;
+
+function shuffle(arr){
+ let a=arr.slice();
+ for(let i=a.length-1;i>0;i--){
+  const j=Math.floor(Math.random()*(i+1));
+  [a[i],a[j]]=[a[j],a[i]];
+ }
+ return a;
+}
+function esc(s){
+ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function prepare(){
+ questions=shuffle(bank).slice(0,TOTAL).map(item=>({
+  q:item.q,a:item.a,options:shuffle(item.o)
+ }));
+ answers=new Array(TOTAL).fill(null);
+}
+function render(){
+ if(submitted)return;
+ const q=questions[current];
+ let html=`<div class="qnum">प्रश्न ${current+1} / ${TOTAL}</div>
+ <div class="question">${esc(q.q)}</div><div class="options">`;
+ q.options.forEach((opt,i)=>{
+  html+=`<label class="option ${answers[current]===opt?"selected":""}">
+  <input type="radio" name="answer" ${answers[current]===opt?"checked":""}
+  onchange="choose(${i})">
+  <span><b>${String.fromCharCode(65+i)}.</b> ${esc(opt)}</span></label>`;
+ });
+ document.getElementById("questionContainer").innerHTML=html+"</div>";
+ document.getElementById("prevBtn").disabled=current===0;
+ document.getElementById("nextBtn").disabled=current===TOTAL-1;
+ document.getElementById("progressText").textContent=`प्रश्न ${current+1} / ${TOTAL}`;
+ document.getElementById("progress").style.width=((current+1)/TOTAL*100)+"%";
+ renderNav();
+}
+function choose(i){
+ if(submitted||!started)return;
+ answers[current]=questions[current].options[i];
+ render();
+}
+function renderNav(){
+ const nav=document.getElementById("questionNav");nav.innerHTML="";
+ questions.forEach((q,i)=>{
+  const b=document.createElement("button");
+  b.type="button";
+  b.className="jump"+(answers[i]!==null?" answered":"")+(i===current?" current":"");
+  b.textContent=i+1;
+  b.onclick=()=>{if(!submitted){current=i;render();}};
+  nav.appendChild(b);
+ });
+}
+document.getElementById("prevBtn").onclick=()=>{if(current>0&&!submitted){current--;render();}};
+document.getElementById("nextBtn").onclick=()=>{if(current<TOTAL-1&&!submitted){current++;render();}};
+
+function updateTimer(){
+ const m=Math.floor(remaining/60),s=remaining%60;
+ document.getElementById("timer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+ document.getElementById("timerbox").classList.toggle("danger",remaining<=60);
+}
+function start(){
+ if(started)return;
+ started=true;
+ document.getElementById("startScreen").classList.add("hidden");
+ document.getElementById("testArea").classList.remove("hidden");
+ prepare();current=0;remaining=DURATION;
+ render();updateTimer();
+ interval=setInterval(()=>{
+  if(submitted){clearInterval(interval);return;}
+  remaining--;
+  if(remaining<=0){remaining=0;updateTimer();finish(true);return;}
+  updateTimer();
+ },1000);
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+document.getElementById("startBtn").addEventListener("click",start);
+
+document.getElementById("submitBtn").onclick=()=>{
+ if(submitted)return;
+ const skipped=answers.filter(a=>a===null).length;
+ if(confirm(skipped?`आपने ${skipped} प्रश्न छोड़ दिए हैं। क्या टेस्ट सबमिट करें?`:"क्या आप टेस्ट सबमिट करना चाहते हैं?")){
+  finish(false);
+ }
+};
+
+function finish(auto){
+ if(submitted)return;
+ submitted=true;clearInterval(interval);
+ let correct=0,wrong=0,skipped=0;
+ questions.forEach((q,i)=>{
+  if(answers[i]===null)skipped++;
+  else if(answers[i]===q.a)correct++;
+  else wrong++;
+ });
+ const pct=correct/TOTAL*100;
+ document.getElementById("correctCount").textContent=correct;
+ document.getElementById("wrongCount").textContent=wrong;
+ document.getElementById("skipCount").textContent=skipped;
+ document.getElementById("marks").textContent=correct+"/"+TOTAL;
+ document.getElementById("percentage").textContent=pct.toFixed(2).replace(/\.00$/,"")+"%";
+ document.getElementById("resultHeading").textContent=auto?"समय समाप्त! टेस्ट अपने आप सबमिट हो गया।":"आपका टेस्ट सबमिट हो गया।";
+ const success=document.getElementById("success"),other=document.getElementById("other");
+ if(pct>80){
+  success.textContent="अनूप आप बहुत अच्छे से पढ़ाई कर रहे हो, इसी तरह पढ़ते रहिए आपका High School में जरूर 90 Percent से पार रिजल्ट आएगा, Thank You Anup (आप अपने माता पिता का नाम इसी तरह रोशन करिए)";
+  success.classList.remove("hidden");other.classList.add("hidden");
+ }else{
+  other.innerHTML="<b>अनूप कुमार, प्रयास जारी रखिए!</b><br>आपने "+correct+" अंक प्राप्त किए हैं। उत्तर समीक्षा से अपनी गलतियाँ सुधारें और नियमित अभ्यास करें।";
+  other.classList.remove("hidden");success.classList.add("hidden");
+ }
+ renderReview();
+ document.getElementById("testArea").classList.add("hidden");
+ document.getElementById("startScreen").classList.add("hidden");
+ document.getElementById("result").classList.remove("hidden");
+ document.getElementById("timer").textContent=auto?"00:00":"समाप्त";
+ document.getElementById("timerbox").classList.remove("danger");
+ document.getElementById("progressText").textContent="टेस्ट पूरा हुआ";
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function renderReview(){
+ const container=document.getElementById("reviewContainer");container.innerHTML="";
+ questions.forEach((q,i)=>{
+  const selected=answers[i],correct=selected===q.a,skipped=selected===null;
+  const status=correct?"✓ सही उत्तर":skipped?"○ बिना हल किया":"✗ गलत उत्तर";
+  const cls=correct?"good":skipped?"skip":"bad";
+  const div=document.createElement("div");div.className="card review";
+  let optionsHTML="";
+  q.options.forEach(opt=>{
+   let cl="option";
+   if(opt===q.a)cl+=" correct";
+   else if(opt===selected&&!correct)cl+=" wrong";
+   optionsHTML+=`<div class="${cl}"><span>${esc(opt)}${opt===q.a?" ✓ (सही उत्तर)":""}${opt===selected&&!correct?" ✗ (आपका उत्तर)":""}</span></div>`;
+  });
+  div.innerHTML=`<div class="qnum">प्रश्न ${i+1}</div>
+  <div class="question">${esc(q.q)}</div><div class="${cls}" style="font-weight:bold">${status}</div>
+  <p><b>आपका चुना हुआ उत्तर:</b> ${selected===null?"उत्तर नहीं दिया":esc(selected)}</p>
+  <p><b>सही उत्तर:</b> ${esc(q.a)}</p><div class="options">${optionsHTML}</div>`;
+  container.appendChild(div);
+ });
+}
+</script>
+</body>
+</html>
