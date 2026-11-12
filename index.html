@@ -1,23 +1,140 @@
-function selectSubject(subjectId) {
-    // यदि विद्यार्थी Geography चुनता है, तो सीधे आपकी 50 प्रश्नों वाली फाइल खुलेगी
-    if (subjectId === "Geography") {
-        window.location.href = "bhugol.html";
-        return;
-    }
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NKS Galaxy - Online Test Series</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    if (!allTestData[subjectId] || allTestData[subjectId].questions.length === 0) {
-        alert("इस विषय के प्रश्न अभी जोड़े जा रहे हैं। कृपया दूसरा विषय चुनें।");
-        return;
-    }
+    <header class="navbar">
+        <div class="container">
+            <h1>NKS Galaxy</h1>
+            <p>Online Examination & Test Portal</p>
+        </div>
+    </header>
 
-    currentSubject = subjectId;
-    const testInfo = allTestData[subjectId];
+    <main class="container">
+        <!-- 1. Subject Dashboard -->
+        <section id="home-section">
+            <div class="welcome-banner">
+                <h2>अपनी तैयारी जाँचें और अपनी प्रगति जानें</h2>
+                <p>नीचे दिए गए विषयों में से किसी एक को चुनकर ऑनलाइन टेस्ट शुरू करें</p>
+            </div>
+            <div class="subject-grid" id="subject-list">
+                <!-- Subjects JS से लोड होंगे -->
+            </div>
+        </section>
 
-    document.getElementById('inst-subject-title').innerText = subjectId;
-    document.getElementById('inst-test-title').innerText = testInfo.testName;
-    document.getElementById('inst-total-q').innerText = testInfo.questions.length;
-    document.getElementById('inst-total-marks').innerText = testInfo.questions.length;
-    document.getElementById('inst-time').innerText = testInfo.duration;
+        <!-- नया सेक्शन: Geography Test List (Test 1 & Test 2) -->
+        <section id="geography-list-section" class="hidden">
+            <div class="card">
+                <button class="btn-back" onclick="goHome()">← वापस विषयों पर जाएँ</button>
+                <h2 style="color: #1e3c72; margin-bottom: 10px;">Geography (भूगोल) - टेस्ट सीरीज</h2>
+                <p style="color: #666; margin-bottom: 20px;">नीचे दिए गए टेस्ट में से किसी एक को चुनें:</p>
+                
+                <div class="subject-grid">
+                    <div class="subject-card">
+                        <h3>Geography - Test 1</h3>
+                        <p>कुल प्रश्न: 50 | पूर्णांक: 50</p>
+                        <button class="btn-primary" onclick="window.location.href='bhugol1.html'">Start Test 1 →</button>
+                    </div>
+                    <div class="subject-card">
+                        <h3>Geography - Test 2</h3>
+                        <p>कुल प्रश्न: 50 | पूर्णांक: 50</p>
+                        <button class="btn-primary" onclick="window.location.href='bhugol2.html'">Start Test 2 →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    showSection('instruction-section');
-}
+        <!-- 2. Test Instructions Screen -->
+        <section id="instruction-section" class="hidden">
+            <div class="card">
+                <button class="btn-back" onclick="goHome()">← वापस विषयों पर जाएँ</button>
+                <h2 id="inst-subject-title">विषय का नाम</h2>
+                <h3 id="inst-test-title">टेस्ट का नाम</h3>
+                <ul class="inst-list">
+                    <li><strong>कुल प्रश्न:</strong> <span id="inst-total-q">0</span></li>
+                    <li><strong>कुल अंक:</strong> <span id="inst-total-marks">0</span> (प्रत्येक सही उत्तर के लिए 1 अंक)</li>
+                    <li><strong>समय सीमा:</strong> <span id="inst-time">0</span> मिनट</li>
+                    <li>समय समाप्त होने पर टेस्ट अपने-आप सबमिट हो जाएगा।</li>
+                </ul>
+                <div class="student-input">
+                    <label for="student-name">अपना नाम लिखें:</label>
+                    <input type="text" id="student-name" placeholder="उदाहरण: राहुल कुमार">
+                </div>
+                <button class="btn-primary" onclick="beginQuiz()">START TEST</button>
+            </div>
+        </section>
+
+        <!-- 3. Active Quiz Screen -->
+        <section id="quiz-section" class="hidden">
+            <div class="quiz-header">
+                <div>
+                    <h3 id="quiz-subject-name">विषय</h3>
+                    <span id="question-counter">प्रश्न 1 / 10</span>
+                </div>
+                <div class="timer-box">
+                    ⏱ शेष समय: <span id="timer">00:00</span>
+                </div>
+            </div>
+
+            <div class="card question-card">
+                <h3 id="question-text">यहाँ प्रश्न दिखाई देगा?</h3>
+                <div class="options-container" id="options-box"></div>
+            </div>
+
+            <div class="quiz-footer">
+                <button class="btn-secondary" id="prev-btn" onclick="prevQuestion()">पिछला प्रश्न</button>
+                <button class="btn-primary" id="next-btn" onclick="nextQuestion()">अगला प्रश्न</button>
+                <button class="btn-success hidden" id="submit-btn" onclick="submitQuiz()">Submit Test</button>
+            </div>
+        </section>
+
+        <!-- 4. Result & Review Screen -->
+        <section id="result-section" class="hidden">
+            <div class="card result-summary">
+                <h2>परीक्षा परिणाम (Result)</h2>
+                <p class="student-greet">विद्यार्थी का नाम: <strong id="res-student-name">Student</strong></p>
+                
+                <div class="score-grid">
+                    <div class="score-box">
+                        <span class="score-num" id="res-score">0/0</span>
+                        <span class="score-label">प्राप्त अंक</span>
+                    </div>
+                    <div class="score-box">
+                        <span class="score-num" id="res-percent">0%</span>
+                        <span class="score-label">प्रतिशत (Percentage)</span>
+                    </div>
+                    <div class="score-box correct-bg">
+                        <span class="score-num" id="res-correct">0</span>
+                        <span class="score-label">सही उत्तर</span>
+                    </div>
+                    <div class="score-box wrong-bg">
+                        <span class="score-num" id="res-wrong">0</span>
+                        <span class="score-label">गलत / छोड़े गए</span>
+                    </div>
+                </div>
+
+                <div class="result-actions">
+                    <button class="btn-primary" onclick="retakeTest()">दोबारा टेस्ट दें (Retake)</button>
+                    <button class="btn-secondary" onclick="goHome()">अन्य विषय चुनें</button>
+                </div>
+            </div>
+
+            <div class="review-section">
+                <h3>प्रश्नों का विस्तृत विश्लेषण (Answer Review)</h3>
+                <div id="review-container"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 NKS Galaxy. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
