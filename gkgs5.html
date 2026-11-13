@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - भारतीय भूगोल (100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1150px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display:flex;justify-content:center;align-items:center;
+  padding:15px;animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0);animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;padding:14px 18px;font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px;background:#f8fafc;display:flex;
+  justify-content:center;gap:12px;border-top:1px solid #e2e8f0;
+}
+
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>भारतीय भूगोल (Indian Geography) - मेगा मॉक टेस्ट</b></p>
+  <p>SSC | Railway | UPSSSC | All Competitive Exams</p>
+  <p>कुल प्रश्न: 100 | कुल अंक: 100 | समय: 20 मिनट</p>
+</header>
+
+<div class="container">
+
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>ऑनलाइन मॉक टेस्ट निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें।</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+
+    <ul style="padding-left:20px;color:#334155">
+      <li>कुल प्रश्न: <b>100</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">हल किए गए: <b id="answered">0</b>/100 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+
+  </section>
+
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>आपका परीक्षा परिणाम (Scorecard)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+
+</div>
+
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons">
+      <!-- Buttons dynamically injected -->
+    </div>
+  </div>
+</div>
+
+<script>
+const RAW_Q = [
+  ["भारत की सबसे लंबी नदी कौन सी है?", ["ब्रह्मपुत्र", "गंगा (2,525 किमी)", "गोदावरी", "यमुना"], 1],
+  ["गंगा नदी किन दो नदियों के देवप्रयाग में संगम से बनती है?", ["अलकनंदा और मंदाकिनी", "अलकनंदा और भागीरथी", "भागीरथी और भिलांगना", "अलकनंदा और पिंडर"], 1],
+  ["बांग्लादेश में गंगा नदी को किस नाम से जाना जाता है?", ["जमुना", "पद्मा", "मेघना", "सांगपो"], 1],
+  ["ब्रह्मपुत्र नदी को तिब्बत में किस नाम से जाना जाता है?", ["दिहांग", "यारलुंग सांगपो (Tsangpo)", "जमुना", "लोहित"], 1],
+  ["विश्व का सबसे बड़ा नदी द्वीप 'माजुली' (Majuli) किस नदी पर और किस राज्य में स्थित है?", ["गंगा - बिहार", "ब्रह्मपुत्र - असम", "गोदावरी - आंध्र प्रदेश", "कावेरी - तमिलनाडु"], 1],
+  ["प्रायद्वीपीय (दक्षिण) भारत की सबसे लंबी नदी कौन सी है, जिसे 'दक्षिण गंगा' या 'वृद्ध गंगा' कहा जाता है?", ["कृष्णा", "गोदावरी (1,465 किमी)", "कावेरी", "महानदी"], 1],
+  ["'दक्षिण भारत की गंगा' (धार्मिक महत्व के कारण) किस नदी को कहा जाता है?", ["गोदावरी", "कावेरी (कर्नाटक)", "कृष्णा", "तुंगभद्रा"], 1],
+  ["कौन सी दो प्रमुख नदियाँ पश्चिम की ओर बहते हुए अरब सागर में गिरती हैं और 'ज्वारनदमुख' (Estuary) बनाती हैं?", ["गोदावरी और कृष्णा", "नर्मदा और ताप्ती (तापी)", "महानदी और कावेरी", "दामोदर और स्वर्णरेखा"], 1],
+  ["नर्मदा नदी का उद्गम स्थल कहाँ है?", ["महाबलेश्वर", "अमरकंटक की पहाड़ियाँ (मध्य प्रदेश)", "मुलताई", "ब्रह्मगिरि"], 1],
+  ["कौन सी नदी कर्क रेखा (Tropic of Cancer) को दो बार काटती है?", ["लूनी", "माही नदी", "साबरमती", "चंबल"], 1],
+  ["राजस्थान के मरुस्थल की सबसे प्रमुख नदी कौन सी है, जो कच्छ के रण में विलुप्त हो जाती है?", ["बनास", "लूनी नदी", "घग्गर", "चंबल"], 1],
+  ["'बिहार का शोक' किस नदी को कहा जाता है?", ["गंडक", "कोसी नदी", "सोन", "दामोदर"], 1],
+  ["'बंगाल का शोक' किस नदी को कहा जाता था?", ["हुगली", "दामोदर नदी", "तीस्ता", "मयूराक्षी"], 1],
+  ["गंगा की सबसे लंबी सहायक नदी कौन सी है?", ["घाघरा", "यमुना", "सोन", "गंडक"], 1],
+  ["विश्व का सबसे बड़ा डेल्टा 'सुंदरवन डेल्टा' किन नदियों द्वारा बनाया जाता है?", ["कृष्णा और गोदावरी", "गंगा और ब्रह्मपुत्र", "सिंधु और झेलम", "महानदी और ब्राह्मणी"], 1],
+  ["सिंधु जल समझौता (1960) के तहत भारत सिंधु नदी प्रणाली के कुल जल का कितना प्रतिशत उपयोग कर सकता है?", ["50%", "20%", "40%", "80%"], 1],
+  ["कौन सी नदी तिब्बत के मानसरोवर झील के पास 'राक्षस ताल' से निकलती है और शिपकी ला दर्रे से भारत में प्रवेश करती है?", ["झेलम", "सतलुज नदी", "चिनाब", "रावी"], 1],
+  ["भारत का सबसे ऊँचा जलप्रपात 'कुंचिकल जलप्रपात' किस नदी पर और किस राज्य में है?", ["शरावती नदी - कर्नाटक", "वराही नदी - कर्नाटक", "नर्मदा नदी - मध्य प्रदेश", "स्वर्णरेखा नदी - झारखंड"], 1],
+  ["'शिवसमुद्रम जलप्रपात' किस नदी पर स्थित है?", ["कृष्णा", "कावेरी नदी (कर्नाटक)", "गोदावरी", "पेरियार"], 1],
+  ["उज्जैन शहर किस नदी के तट पर बसा है?", ["नर्मदा", "क्षिप्रा (शिप्रा) नदी", "बेतवा", "ताप्ती"], 1],
+  ["अयोध्या शहर किस नदी के किनारे स्थित है?", ["गंगा", "सरयू नदी", "गोमती", "यमुना"], 1],
+  ["हैदराबाद शहर किस नदी के तट पर स्थित है?", ["कृष्णा", "मूसी नदी", "गोदावरी", "तुंगभद्रा"], 1],
+  ["सूरत शहर किस नदी के किनारे बसा है?", ["नर्मदा", "ताप्ती नदी", "साबरमती", "माही"], 1],
+  ["नासिक शहर किस नदी के तट पर स्थित है?", ["कृष्णा", "गोदावरी नदी", "भीमा", "इंद्रावती"], 1],
+  ["विंध्य और सतपुड़ा पर्वत श्रृंखलाओं के बीच भ्रंश घाटी से होकर बहने वाली नदी कौन सी है?", ["ताप्ती", "नर्मदा नदी", "चंबल", "सोन"], 1],
+  ["भारत का सबसे ऊँचा बांध कौन सा है?", ["भाखड़ा बांध", "टिहरी बांध (भागीरथी नदी, उत्तराखंड)", "हीराकुंड बांध", "सरदार सरोवर बांध"], 1],
+  ["भारत का सबसे लंबा बांध कौन सा है?", ["टिहरी बांध", "हीराकुंड बांध (महानदी, ओडिशा)", "नागार्जुन सागर बांध", "मेट्टूर बांध"], 1],
+  ["'भाखड़ा नांगल बांध' किस नदी पर स्थित है?", ["ब्यास नदी", "सतलुज नदी", "रावी नदी", "चिनाब नदी"], 1],
+  ["'सरदार सरोवर बांध' किस नदी पर और किस राज्य में बना है?", ["ताप्ती नदी - महाराष्ट्र", "नर्मदा नदी - गुजरात", "माही नदी - राजस्थान", "गोदावरी नदी - तेलंगाना"], 1],
+  ["'नागार्जुन सागर बांध' किस नदी पर स्थित है?", ["कावेरी नदी", "कृष्णा नदी", "गोदावरी नदी", "पेन्नार नदी"], 1],
+  ["'इडुक्की बांध' किस नदी पर और किस राज्य में है?", ["कावेरी - कर्नाटक", "पेरियार नदी - केरल", "कृष्णा - आंध्र प्रदेश", "महानदी - छत्तीसगढ़"], 1],
+  ["'मेट्टूर बांध' किस नदी पर और किस राज्य में स्थित है?", ["कृष्णा - कर्नाटक", "कावेरी नदी - तमिलनाडु", "गोदावरी - महाराष्ट्र", "तुंगभद्रा - कर्नाटक"], 1],
+  ["'अलमाटी बांध' किस नदी पर स्थित है?", ["कावेरी", "कृष्णा नदी (कर्नाटक)", "गोदावरी", "शरावती"], 1],
+  ["जम्मू-कश्मीर में चिनाब नदी पर कौन सी प्रमुख जलविद्युत परियोजनाएँ स्थित हैं?", ["सलाल, बगलिहार और दुलहस्ती परियोजनाएँ", "उरी और तुलबुल", "किशनगंगा", "नाथपा झाकड़ी"], 0],
+  ["'रिहंद बांध' किस राज्य में स्थित है?", ["मध्य प्रदेश", "उत्तर प्रदेश (सोनभद्र)", "बिहार", "झारखंड"], 1],
+  ["'कोयना बांध' किस राज्य की सबसे बड़ी जलविद्युत परियोजना है?", ["गुजरात", "महाराष्ट्र", "कर्नाटक", "मध्य प्रदेश"], 1],
+  ["'फरक्का बैराज' किस नदी पर और किस राज्य में स्थित है?", ["ब्रह्मपुत्र - असम", "गंगा नदी - पश्चिम बंगाल", "कोसी - बिहार", "महानदी - ओडिशा"], 1],
+  ["'पोंग बांध' किस नदी पर बनाया गया है?", ["सतलुज", "ब्यास नदी (हिमाचल प्रदेश)", "रावी", "चिनाब"], 1],
+  ["भारत की सबसे बड़ी मीठे पानी की झील कौन सी है?", ["डल झील", "वुलर झील (जम्मू-कश्मीर)", "लोकटक झील", "कोलेरू झील"], 1],
+  ["भारत की सबसे बड़ी खारे पानी की तटीय झील (लैगून) कौन सी है?", ["पुलिकट झील", "चिल्का झील (ओडिशा)", "सांभर झील", "वेम्बनाड झील"], 1],
+  ["ोत्तर भारत की सबसे बड़ी मीठे पानी की झील 'लोकटक झील' किस राज्य में स्थित है?", ["असम", "मणिपुर", "मेघालय", "मिजोरम"], 1],
+  ["महाराष्ट्र की 'लोनार झील' किस प्रकार की झील है?", ["लैगून झील", "उल्कापिंड गिरने से बनी क्रेटर झील", "हिमानी झील", "गोखुर झील"], 1],
+  ["'उकाई बांध' किस नदी पर और किस राज्य में स्थित है?", ["नर्मदा - मध्य प्रदेश", "ताप्ती नदी - गुजरात", "माही - गुजरात", "साबरमती - राजस्थान"], 1],
+  ["'गांधी सागर', 'राणा प्रताप सागर' और 'जवाहर सागर' बांध किस नदी पर बने हैं?", ["बेतवा नदी", "चंबल नदी", "सोन नदी", "नर्मदा नदी"], 1],
+  ["भारत का सबसे पुराना बांध कौन सा माना जाता है?", ["हीराकुंड बांध", "कल्लनई बांध (कावेरी नदी, तमिलनाडु)", "मेट्टूर बांध", "भाखड़ा बांध"], 1],
+  ["भारत का पहला राष्ट्रीय उद्यान कौन सा है?", ["काजीरंगा", "जिम कॉर्बेट राष्ट्रीय उद्यान (उत्तराखंड)", "कान्हा", "गिर"], 1],
+  ["एक सींग वाले गैंडे के लिए प्रसिद्ध 'काजीरंगा राष्ट्रीय उद्यान' किस राज्य में है?", ["पश्चिम बंगाल", "असम", "अरुणाचल प्रदेश", "मेघालय"], 1],
+  ["एशियाई शेरों का एकमात्र प्राकृतिक निवास 'गिर राष्ट्रीय उद्यान' कहाँ स्थित है?", ["राजस्थान", "गुजरात", "मध्य प्रदेश", "महाराष्ट्र"], 1],
+  ["विश्व का एकमात्र तैरता हुआ राष्ट्रीय उद्यान 'केबुल लामजाओ' कहाँ स्थित है?", ["असम", "लोकटक झील, मणिपुर", "जम्मू-कश्मीर", "केरल"], 1],
+  ["भारत का सबसे बड़ा राष्ट्रीय उद्यान (क्षेत्रफल के आधार पर) कौन सा है?", ["सुंदरवन", "हेमिस राष्ट्रीय उद्यान (लद्दाख)", "डेजर्ट नेशनल पार्क", "नामदाफा"], 1],
+  ["भारत का सबसे छोटा राष्ट्रीय उद्यान कौन सा है?", ["साउथ बटन द्वीप राष्ट्रीय उद्यान (अंडमान और निकोबार)", "गुइंडी", "वन विहार", "सुल्तानपुर"], 0],
+  ["भारत में सर्वाधिक राष्ट्रीय उद्यान किस राज्य में स्थित हैं?", ["असम", "मध्य प्रदेश", "उत्तराखंड", "महाराष्ट्र"], 1],
+  ["नामीबिया और दक्षिण अफ्रीका से लाए गए चीतों को किस राष्ट्रीय उद्यान में बसाया गया है?", ["रणथंभौर", "कूनो राष्ट्रीय उद्यान (मध्य प्रदेश)", "सरिस्का", "पन्ना"], 1],
+  ["रॉयल बंगाल टाइगर और मैंग्रोव वनों के लिए प्रसिद्ध 'सुंदरवन राष्ट्रीय उद्यान' किस राज्य में है?", ["ओडिशा", "पश्चिम बंगाल", "असम", "आंध्र प्रदेश"], 1],
+  ["'रणथंभौर', 'सरिस्का' और 'केवलादेव घना' राष्ट्रीय उद्यान किस राज्य में स्थित हैं?", ["गुजरात", "राजस्थान", "हरियाणा", "मध्य प्रदेश"], 1],
+  ["'बांदीपुर', 'नागरहोल' और 'बन्नेरघट्टा' राष्ट्रीय उद्यान किस राज्य में हैं?", ["केरल", "कर्नाटक", "तमिलनाडु", "तेलंगाना"], 1],
+  ["'पेरियार', 'साइलेंट वैली' और 'एराविकुलम' राष्ट्रीय उद्यान किस राज्य में स्थित हैं?", ["तमिलनाडु", "केरल", "कर्नाटक", "आंध्र प्रदेश"], 1],
+  ["'सिमलीपाल' और 'भितरकनिका' राष्ट्रीय उद्यान किस राज्य में हैं?", ["पश्चिम बंगाल", "ओडिशा", "आंध्र प्रदेश", "छत्तीसगढ़"], 1],
+  ["'नंदा देवी' और 'फूलों की घाटी' राष्ट्रीय उद्यान किस राज्य में हैं?", ["हिमाचल प्रदेश", "उत्तराखंड", "सिक्किम", "जम्मू-कश्मीर"], 1],
+  ["उत्तर प्रदेश का एकमात्र राष्ट्रीय उद्यान कौन सा है?", ["चंद्रप्रभा", "दुधवा राष्ट्रीय उद्यान (लखीमपुर खीरी)", "पीलीभीत", "कतर्नियाघाट"], 1],
+  ["बिहार का एकमात्र राष्ट्रीय उद्यान कौन सा है?", ["राजगीर", "वाल्मीकि राष्ट्रीय उद्यान (पश्चिम चंपारण)", "भीमबांध", "कांवर झील"], 1],
+  ["'नामदाफा' और 'मौलिंग' राष्ट्रीय उद्यान किस राज्य में स्थित हैं?", ["मणिपुर", "अरुणाचल प्रदेश", "नागालैंड", "मिजोरम"], 1],
+  ["'नोकरेक' और 'बलफकरम' राष्ट्रीय उद्यान किस राज्य में हैं?", ["असम", "मेघालय", "त्रिपुरा", "सिक्किम"], 1],
+  ["'इंद्रावती' और 'कांगेर घाटी' राष्ट्रीय उद्यान किस राज्य में स्थित हैं?", ["झारखंड", "छत्तीसगढ़", "ओडिशा", "मध्य प्रदेश"], 1],
+  ["भारत में 'प्रोजेक्ट टाइगर' किस वर्ष शुरू की गई थी?", ["1972", "1973", "1986", "1992"], 1],
+  ["भारत का सबसे ऊँचा पर्वत शिखर कौन सा है?", ["माउंट एवरेस्ट", "गॉडविन ऑस्टिन / K2", "नंदा देवी", "धौलागिरी"], 1],
+  ["दक्षिण भारत (प्रायद्वीपीय भारत) की सबसे ऊँची चोटी कौन सी है?", ["डोड्डाबेट्टा", "अनामुडी (केरल - 2695 मीटर)", "महेंद्रगिरि", "गुरु शिखर"], 1],
+  ["'बनिहाल दर्रा' किस राज्य/केंद्र शासित प्रदेश में है?", ["हिमाचल प्रदेश", "जम्मू और कश्मीर", "उत्तराखंड", "सिक्किम"], 1],
+  ["'जोजिला दर्रा' किन दो स्थानों को आपस में जोड़ता है?", ["जम्मू और श्रीनगर", "श्रीनगर और लेह (लद्दाख)", "मनाली और लेह", "शिमला और तिब्बत"], 1],
+  ["'रोहतांग दर्रा' और 'शिपकी ला दर्रा' किस राज्य में हैं?", ["उत्तराखंड", "हिमाचल प्रदेश", "जम्मू-कश्मीर", "अरुणाचल प्रदेश"], 1],
+  ["'लिपुलेख', 'माना' और 'नीति' दर्रे किस राज्य में स्थित हैं?", ["हिमाचल प्रदेश", "उत्तराखंड", "सिक्किम", "लद्दाख"], 1],
+  ["'नाथू ला' और 'जेलेप ला' दर्रे किस राज्य में स्थित हैं?", ["अरुणाचल प्रदेश", "सिक्किम", "उत्तराखंड", "मणिपुर"], 1],
+  ["'बोमडिला', 'यांग्याप' और 'दिफू' दर्रे किस राज्य में स्थित हैं?", ["सिक्किम", "अरुणाचल प्रदेश", "नागालैंड", "मिजोरम"], 1],
+  ["'तुजू दर्रा' भारत के किस राज्य को म्यांमार से जोड़ता है?", ["अरुणाचल प्रदेश", "मणिपुर", "मिजोरम", "नागालैंड"], 1],
+  ["पश्चिमी घाट के प्रमुख दर्रे 'थाल घाट' और 'भोर घाट' किस राज्य में हैं?", ["केरल", "महाराष्ट्र", "कर्नाटक", "गुजरात"], 1],
+  ["'पाल घाट' दर्रा किन दो राज्यों को जोड़ता है?", ["महाराष्ट्र और गोवा", "केरल और तमिलनाडु", "कर्नाटक और केरल", "आंध्र प्रदेश और तेलंगाना"], 1],
+  ["'काराकोरम दर्रा' कहाँ स्थित है?", ["हिमाचल प्रदेश", "लद्दाख", "सिक्किम", "उत्तराखंड"], 1],
+  ["विश्व की सबसे प्राचीन वलित पर्वत श्रृंखला कौन सी है?", ["हिमालय", "अरावली पर्वत श्रृंखला", "सतपुड़ा", "पश्चिमी घाट"], 1],
+  ["पश्चिमी घाट और पूर्वी घाट का मिलन बिंदु किस पर्वत श्रृंखला पर होता है?", ["सतपुड़ा", "नीलगिरि पहाड़ियाँ", "इलायची पहाड़ियाँ", "विंध्याचल"], 1],
+  ["'गारो, खासी और जयंतिया' पहाड़ियाँ किस राज्य में स्थित हैं?", ["असम", "मेघालय", "त्रिपुरा", "नागालैंड"], 1],
+  ["अंडमान और निकोबार द्वीप समूह को कौन सा चैनल अलग करता है?", ["8 डिग्री चैनल", "9 डिग्री चैनल", "10 डिग्री चैनल", "डंकन पास"], 2],
+  ["भारत और श्रीलंका को कौन सी जलसंधि और खाड़ी अलग करती है?", ["मलक्का जलसंधि", "पाक जलडमरूमध्य और मन्नार की खाड़ी", "बेरिंग जलसंधि", "होर्मुज जलसंधि"], 1],
+  ["भारत का एकमात्र सक्रिय ज्वालामुखी कहाँ स्थित है?", ["नारकोंडम द्वीप", "बैरन द्वीप (अंडमान और निकोबार)", "मिनिकॉय", "पंबन द्वीप"], 1],
+  ["भारत की सबसे लंबी तटरेखा वाला राज्य कौन सा है?", ["आंध्र प्रदेश", "गुजरात", "तमिलनाडु", "महाराष्ट्र"], 1],
+  ["भारत के कितने राज्यों से होकर 'कर्क रेखा' गुजरती है?", ["6", "8", "7", "9"], 1],
+  ["भारत का मानक समय किस शहर के निकट से गुजरता है?", ["भोपाल", "नैनी / मिर्जापुर (प्रयागराज)", "जयपुर", "नागपुर"], 1],
+  ["भारत के साथ सबसे लंबी अंतर्राष्ट्रीय स्थलीय सीमा किस देश की लगती है?", ["चीन", "बांग्लादेश", "पाकिस्तान", "नेपाल"], 1],
+  ["भारत और चीन के बीच की सीमा रेखा को क्या कहा जाता है?", ["रेडक्लिफ रेखा", "मैकमोहन रेखा", "डूरंड रेखा", "38वीं समानांतर रेखा"], 1],
+  ["भारत की सबसे पुरानी तेल रिफाइनरी (1901) कहाँ स्थित है?", ["जामनगर", "डिगबोई (असम)", "मथुरा", "हल्दिया"], 1],
+  ["भारत में सर्वाधिक वर्षा किस मानसून से होती है?", ["उत्तर-पूर्वी मानसून", "दक्षिण-पश्चिम मानसून", "पश्चिमी विक्षोभ", "स्थानीय चक्रवात"], 1],
+  ["कपास की खेती के लिए सबसे उपयुक्त मिट्टी कौन सी है, जिसे 'रेगुर मिट्टी' भी कहते हैं?", ["जलोढ़ मिट्टी", "काली मिट्टी", "लैटेराइट मिट्टी", "लाल मिट्टी"], 1],
+  ["'सियाचिन ग्लेशियर' किस पर्वत श्रेणी में स्थित है?", ["पीर पंजाल", "काराकोरम श्रेणी", "धौलाधार", "शिवालिक"], 1],
+  ["हिमालय की सबसे बाहरी और नवीनतम पर्वत श्रृंखला कौन सी है?", ["हिमारि", "हिमाचल", "शिवालिक", "ट्रांस हिमालय"], 2],
+  ["'मैकाले की पहाड़ियाँ' की सबसे ऊँची चोटी कौन सी है?", ["धूपगढ़", "अमरकंटक", "पारसनाथ", "कलसुबाई"], 1],
+  ["'बनिहाल दर्रा' किस पर्वत श्रेणी में स्थित है?", ["जास्कर श्रेणी", "पीर पंजाल श्रेणी", "लद्दाख श्रेणी", "काराकोरम श्रेणी"], 1],
+  ["'बुर्जिल दर्रा' किस राज्य/केंद्र शासित प्रदेश में स्थित है?", ["हिमाचल प्रदेश", "जम्मू और कश्मीर", "उत्तराखंड", "सिक्किम"], 1],
+  ["'अष्टमुडी झील' किस राज्य में स्थित है?", ["तमिलनाडु", "केरल", "ओडिशा", "आंध्र प्रदेश"], 1],
+  ["'तवा बांध' किस राज्य में और किस नदी की सहायक नदी पर बना है?", ["महाराष्ट्र - गोदावरी", "मध्य प्रदेश - नर्मदा की सहायक तवा नदी", "गुजरात - ताप्ती", "छत्तीसगढ़ - महानदी"], 1],
+  ["'कंचनजंगा राष्ट्रीय उद्यान' किस राज्य में है?", ["उत्तराखंड", "सिक्किम", "हिमाचल प्रदेश", "अरुणाचल प्रदेश"], 1],
+  ["भारत का सबसे दक्षिणी बिंदु 'इंदिरा पॉइंट' कहाँ स्थित है?", ["कन्याकुमारी", "ग्रेट निकोबार द्वीप समूह", "लक्षद्वीप", "रामेश्वरम"], 1]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / ${Q.length}</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+
+  if(remaining <= 120){
+    timerEl.classList.add("blink");
+  }
+
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+
+  modal.classList.remove("hidden");
+}
+
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+
+  document.getElementById("greeting").textContent =
+    student + ", आपका टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+
+  let message = correct >= 90 ? "🏆 अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "📘 औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+
+  document.getElementById("motivation").textContent = message;
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+
+    if(type !== "all" && type !== status) return "";
+
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
