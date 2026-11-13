@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - आधुनिक भारतीय इतिहास (100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1150px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display:flex;justify-content:center;align-items:center;
+  padding:15px;animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0);animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;padding:14px 18px;font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px;background:#f8fafc;display:flex;
+  justify-content:center;gap:12px;border-top:1px solid #e2e8f0;
+}
+
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>आधुनिक भारतीय इतिहास (1857 से स्वतंत्रता तक) - मेगा मॉक टेस्ट</b></p>
+  <p>SSC | Railway | UPSSSC | All Competitive Exams</p>
+  <p>कुल प्रश्न: 100 | कुल अंक: 100 | समय: 20 मिनट</p>
+</header>
+
+<div class="container">
+
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>ऑनलाइन मॉक टेस्ट निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें।</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+
+    <ul style="padding-left:20px;color:#334155">
+      <li>कुल प्रश्न: <b>100</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">हल किए गए: <b id="answered">0</b>/100 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+
+  </section>
+
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>आपका परीक्षा परिणाम (Scorecard)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+
+</div>
+
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons">
+      <!-- Buttons dynamically injected -->
+    </div>
+  </div>
+</div>
+
+<script>
+const RAW_Q = [
+  ["1857 के विद्रोह का तात्कालिक कारण क्या था?", ["डलहौजी का व्यपगत सिद्धांत", "चरबी वाले कारतूसों का प्रयोग (एनफील्ड राइफल)", "भारतीय सैनिकों को कम वेतन मिलना", "ईसाई धर्म का प्रचार"], 1],
+  ["मंगल पांडे ने 29 मार्च 1857 को किस छावनी में विद्रोह किया था?", ["मेरठ", "बैरकपुर (34वीं नेटिव इन्फैंट्री)", "अंबाला", "नसीराबाद"], 1],
+  ["1857 की क्रांति की औपचारिक शुरुआत 10 मई 1857 को कहाँ से हुई थी?", ["दिल्ली", "कानपुर", "मेरठ", "झाँसी"], 2],
+  ["1857 के विद्रोह के समय भारत का गवर्नर-जनरल कौन था?", ["लॉर्ड डलहौजी", "लॉर्ड कैनिंग", "लॉर्ड कर्जन", "लॉर्ड एलनबरो"], 1],
+  ["1857 के विद्रोह के समय ब्रिटेन का प्रधानमंत्री कौन था?", ["विंस्टन चर्चिल", "लॉर्ड पामर्स्टन", "क्लीमेंट एटली", "विलियम ग्लैडस्टोन"], 1],
+  ["दिल्ली में 1857 के विद्रोह का वास्तविक सैन्य नेतृत्व किसने किया था?", ["बहादुर शाह जफर", "जनरल बख्त खान", "नाना साहेब", "कुंवर सिंह"], 1],
+  ["कानपुर में 1857 के विद्रोह का नेतृत्व किसने किया था?", ["तात्या टोपे", "नाना साहेब (धोंडू पंत)", "बेगम हजरत महल", "खान बहादुर खान"], 1],
+  ["लखनऊ (अवध) में 1857 के विद्रोह का नेतृत्व किसने किया था?", ["रानी लक्ष्मीबाई", "बेगम हजरत महल", "रानी अवंतीबाई", "जीनत महल"], 1],
+  ["बिहार के जगदीशपुर में 1857 की क्रांति का नेतृत्व किसने किया था?", ["अमर सिंह", "बाबू कुंवर सिंह", "पीर अली", "बिरसा मुंडा"], 1],
+  ["तात्या टोपे का वास्तविक नाम क्या था?", ["नरेंद्रनाथ दत्त", "रामचंद्र पांडुरंग", "मूलशंकर", "गदाधर चट्टोपाध्याय"], 1],
+  ["1857 के विद्रोह को किसने 'भारत का प्रथम स्वतंत्रता संग्राम' कहा था?", ["आर.सी. मजूमदार", "वी.डी. सावरकर", "एस.एन. सेन", "बेंजामिन डिजरायली"], 1],
+  ["1857 के विद्रोह का सरकारी इतिहासकार कौन था?", ["ताराचंद", "सुरेंद्र नाथ सेन (S.N. Sen)", "वी.डी. सावरकर", "विपिन चंद्र"], 1],
+  ["इलाहाबाद (प्रयागराज) में 1857 के विद्रोह का नेतृत्व किसने किया था?", ["मौलवी अहमदुल्लाह", "मौलवी लियाकत अली", "खान बहादुर खान", "अजीमुल्लाह खान"], 1],
+  ["'ब्रह्म समाज' (1828) की स्थापना किसने की थी?", ["स्वामी दयानंद सरस्वती", "राजा राममोहन राय", "स्वामी विवेकानंद", "केशव चंद्र सेन"], 1],
+  ["'सती प्रथा' का अंत 1829 में राजा राममोहन राय के प्रयासों से किस गवर्नर-जनरल ने किया?", ["लॉर्ड रिपन", "लॉर्ड विलियम बेंटिक", "लॉर्ड डलहौजी", "लॉर्ड कॉर्नवालिस"], 1],
+  ["'आर्य समाज' (1875) की स्थापना बंबई में किसने की थी?", ["स्वामी विवेकानंद", "स्वामी दयानंद सरस्वती", "आत्माराम पांडुरंग", "ज्योतिबा फुले"], 1],
+  ["\"वेदों की ओर लौटो\" (Back to the Vedas) का नारा किसने दिया था?", ["राजा राममोहन राय", "स्वामी दयानंद सरस्वती", "रामकृष्ण परमहंस", "बाल गंगाधर तिलक"], 1],
+  ["'सत्यशोधक समाज' (1873) और 'गुलामगिरी' पुस्तक के लेखक कौन हैं?", ["डॉ. बी.आर. अंबेडकर", "ज्योतिबा फुले", "पेरियार ई.वी. रामास्वामी", "नारायण गुरु"], 1],
+  ["'रामकृष्ण मिशन' की स्थापना 1897 में किसने की थी?", ["रामकृष्ण परमहंस", "स्वामी विवेकानंद", "देवेंद्रनाथ टैगोर", "ईश्वर चंद्र विद्यासागर"], 1],
+  ["'विधवा पुनर्विवाह अधिनियम' (1856) पारित कराने में किसकी प्रमुख भूमिका थी?", ["राजा राममोहन राय", "ईश्वर चंद्र विद्यासागर", "महादेव गोविंद रानाडे", "डी.के. कर्वे"], 1],
+  ["'प्रार्थना समाज' (1867) की स्थापना किसने की थी?", ["आत्माराम पांडुरंग", "स्वामी दयानंद", "एनी बेसेंट", "हेनरी विवियन डेरोजियो"], 0],
+  ["'यंग बंगाल आंदोलन' के प्रवर्तक कौन थे?", ["राजा राममोहन राय", "हेनरी विवियन डेरोजियो", "सुरेंद्रनाथ बनर्जी", "अरविंद घोष"], 1],
+  ["'थियोसोफिकल सोसाइटी' का अंतर्राष्ट्रीय मुख्यालय भारत में कहाँ खोला गया था?",["कलकत्ता", "अड्यार (मद्रास, 1882)", "बंबई", "पुणे"], 1],
+  ["'अलीगढ़ आंदोलन' के संस्थापक कौन थे?", ["मोहम्मद अली जिन्ना", "सर सैयद अहमद खान", "अबुल कलाम आजाद", "बдрुद्दीन तैयबजी"], 1],
+  ["'संवाद कौमुदी' और 'मिरात-उल-अखबार' का प्रकाशन किसने किया था?", ["बाल गंगाधर तिलक", "राजा राममोहन राय", "महात्मा गांधी", "दादाभाई नौरोजी"], 1],
+  ["भारतीय राष्ट्रीय कांग्रेस (INC) की स्थापना कब और किसके द्वारा की गई?", ["1884 - सुरेंद्रनाथ बनर्जी", "28 दिसंबर 1885 - ए.ओ. ह्यूम (A.O. Hume)", "1886 - दादाभाई नौरोजी", "1885 - लॉर्ड डफरिन"], 1],
+  ["भारतीय राष्ट्रीय कांग्रेस के प्रथम अध्यक्ष कौन थे?", ["ए.ओ. ह्यूम", "व्योमेश चंद्र बनर्जी (W.C. Bonnerjee)", "दादाभाई नौरोजी", "बद्रुद्दीन तैयबजी"], 1],
+  ["कांग्रेस के प्रथम अधिवेशन (बंबई, 1885) में कितने प्रतिनिधियों ने भाग लिया था?", ["52", "72", "101", "120"], 1],
+  ["कांग्रेस की स्थापना के समय भारत का वायसराय कौन था?", ["लॉर्ड रिपन", "लॉर्ड डफरिन", "लॉर्ड लिटन", "लॉर्ड कर्जन"], 1],
+  ["भारतीय राष्ट्रीय कांग्रेस के प्रथम मुस्लिम अध्यक्ष कौन थे?", ["अबुल कलाम आजाद", "बद्रुद्दीन तैयबजी (मद्रास अधिवेशन, 1887)", "रहमतुल्लाह सयानी", "हकीम अजमल खान"], 1],
+  ["भारतीय राष्ट्रीय कांग्रेस के प्रथम अंग्रेज अध्यक्ष कौन थे?", ["ए.ओ. ह्यूम", "जॉर्ज यूल (इलाहाबाद अधिवेशन, 1888)", "विलियम वेडरबर्न", "हेनरी कॉटन"], 1],
+  ["'ग्रैंड ओल्ड मैन ऑफ इंडिया' (भारत के वयोवृद्ध पुरुष) किसे कहा जाता है?", ["गोपाल कृष्ण गोखले", "दादाभाई नौरोजी", "फिरोजशाह मेहता", "मदन मोहन मालवीय"], 1],
+  ["'धन के बहिर्गमन' (Drain of Wealth) का सिद्धांत किसने प्रतिपादित किया था?", ["आर.सी. दत्त", "दादाभाई नौरोजी", "महादेव गोविंद रानाडे", "जवाहरलाल नेहरू"], 1],
+  ["ब्रिटिश हाउस ऑफ कॉमन्स का चुनाव जीतने वाले पहले भारतीय कौन थे?", ["सुरेंद्रनाथ बनर्जी", "दादाभाई नौरोजी (1892)", "गोपाल कृष्ण गोखले", "विट्ठलभाई पटेल"], 1],
+  ["कांग्रेस के किस अधिवेशन में पहली बार 'वंदे मातरम' गाया गया था?", ["1885 बंबई", "1896 कलकत्ता अधिवेशन (अध्यक्ष: रहमतुल्लाह सयानी)", "1905 बनारस", "1911 कलकत्ता"], 1],
+  ["बंगाल विभाजन की घोषणा लॉर्ड कर्जन द्वारा कब की गई और यह कब प्रभावी हुआ?", ["घोषणा 19 जुलाई 1905; प्रभावी 16 अक्टूबर 1905", "घोषणा 7 अगस्त 1905; प्रभावी 15 अगस्त 1905", "घोषणा 20 जून 1905; प्रभावी 2 अक्टूबर 1905", "घोषणा 12 दिसंबर 1905; प्रभावी 1 जनवरी 1906"], 0],
+  ["बंगाल विभाजन के विरोध में 'स्वदेशी आंदोलन' की औपचारिक घोषणा कब की गई?", ["7 अगस्त 1905 (कलकत्ता टाउन हॉल से)", "16 अक्टूबर 1905", "28 दिसंबर 1905", "1 जनवरी 1906"], 0],
+  ["'आमार सोनार बांग्ला' गीत की रचना किसने की थी?", ["बंकिम चंद्र चटर्जी", "रवींद्रनाथ टैगोर", "अरविंद घोष", "द्विजेंद्रलाल रॉय"], 1],
+  ["किस कांग्रेस अधिवेशन में पहली बार 'स्वराज' शब्द का प्रयोग किया गया?", ["1905 बनारस", "1906 कलकत्ता अधिवेशन (अध्यक्ष: दादाभाई नौरोजी)", "1907 सूरत", "1916 लखनऊ"], 1],
+  ["'अखिल भारतीय मुस्लिम लीग' की स्थापना 1906 में कहाँ हुई थी?", ["अलीगढ़", "ढाका (सलीमुल्लाह खान और आगा खान द्वारा)", "लाहौर", "लखनऊ"], 1],
+  ["कांग्रेस का प्रथम विभाजन (नरम दल और गरम दल) किस अधिवेशन में हुआ?", ["1906 कलकत्ता", "1907 सूरत अधिवेशन (अध्यक्ष: रासबिहारी घोष)", "1909 लाहौर", "1911 कलकत्ता"], 1],
+  ["\"स्वराज मेरा जन्मसिद्ध अधिकार है और मैं इसे लेकर रहूँगा\" किसने कहा था?", ["लाला लाजपत राय", "बाल गंगाधर तिलक", "विपिन चंद्र पाल", "भगत सिंह"], 1],
+  ["'गीता रहस्य' पुस्तक की रचना बाल गंगाधर तिलक ने किस जेल में की थी?", ["सेलुलर जेल", "मांडले जेल (बर्मा)", "यरवदा जेल", "नैनी जेल"], 1],
+  ["'मॉर्ले-मिंटो सुधार' (भारतीय परिषद अधिनियम 1909) की सबसे प्रमुख विशेषता क्या थी?", ["प्रांतों में द्वैध शासन", "मुसलमानों के लिए पृथक निर्वाचन मंडल (सांप्रदायिक निर्वाचन)", "महिलाओं को मताधिकार", "संघीय न्यायालय"], 1],
+  ["बंगाल विभाजन को किस वर्ष रद्द किया गया और राजधानी कलकत्ता से दिल्ली स्थानांतरित करने की घोषणा हुई?", ["1909", "1911 (दिल्ली दरबार में लॉर्ड हार्डिंग द्वितीय द्वारा)", "1912", "1916"], 1],
+  ["कांग्रेस के किस अधिवेशन में पहली बार 'जन गण मन' गाया गया था?", ["1896 कलकत्ता", "1911 कलकत्ता अधिवेशन (अध्यक्ष: बिशन नारायण धर)", "1916 लखनऊ", "1929 लाहौर"], 1],
+  ["'गदर पार्टी' की स्थापना 1913 में सैन फ्रांसिस्को (अमेरिका) में किसने की थी?", ["श्यामजी कृष्ण वर्मा", "लाला हरदयाल और सोहन सिंह भाकना", "मैडम भीकाजी कामा", "रासबिहारी बोस"], 1],
+  ["'भारतीय क्रांति की जननी' किसे कहा जाता है, जिन्होंने 1907 में स्टटगार्ट (जर्मनी) में तिरंगा फहराया था?", ["एनी बेसेंट", "मैडम भीकाजी कामा", "सरोजिनी नायडू", "अरुणा आसफ अली"], 1],
+  ["1916 में 'होमरूल लीग आंदोलन' की शुरुआत किसने की थी?", ["बाल गंगाधर तिलक (अप्रैल 1916) और एनी बेसेंट (सितंबर 1916)", "महात्मा गांधी और जवाहरलाल नेहरू", "गोपाल कृष्ण गोखले और फिरोजशाह मेहता", "लाला लाजपत राय और अजीत सिंह"], 0],
+  ["1916 के 'लखनऊ अधिवेशन' (लखनऊ समझौता) की अध्यक्षता किसने की थी?", ["बाल गंगाधर तिलक", "अंबिका चरण मजूमदार", "एनी बेसेंट", "मदन मोहन मालवीय"], 1],
+  ["भारतीय राष्ट्रीय कांग्रेस की प्रथम महिला अध्यक्ष कौन थीं?", ["सरोजिनी नायडू", "एनी बेसेंट (1917 कलकत्ता अधिवेशन)", "नेल्ली सेनगुप्ता", "सुचेता कृपलानी"], 1],
+  ["भारतीय राष्ट्रीय कांग्रेस की प्रथम भारतीय महिला अध्यक्ष कौन थीं?", ["एनी बेसेंट", "सरोजिनी नायडू (1925 कानपुर अधिवेशन)", "विजयालक्ष्मी पंडित", "राजकुमारी अमृत कौर"], 1],
+  ["महात्मा गांधी के राजनीतिक गुरु कौन थे?", ["बाल गंगाधर तिलक", "गोपाल कृष्ण गोखले", "दादाभाई नौरोजी", "महादेव गोविंद रानाडे"], 1],
+  ["'सर्वेंट्स ऑफ इंडिया सोसाइटी' (1905) की स्थापना किसने की थी?", ["बाल गंगाधर तिलक", "गोपाल कृष्ण गोखले", "लाला लाजपत राय", "मदन मोहन मालवीय"], 1],
+  ["'मोंटेग्यू-चेम्सफोर्ड सुधार' किस अधिनियम को कहा जाता है?", ["भारत शासन अधिनियम 1909", "भारत शासन अधिनियम 1919", "भारत शासन अधिनियम 1935", "भारतीय स्वतंत्रता अधिनियम 1947"], 1],
+  ["महात्मा गांधी दक्षिण अफ्रीका से भारत कब लौटे थे?", ["9 जनवरी 1914", "9 जनवरी 1915 (प्रवासी भारतीय दिवस)", "2 अक्टूबर 1915", "15 अगस्त 1916"], 1],
+  ["भारत में महात्मा गांधी का पहला सफल सत्याग्रह कौन सा था?", ["खेड़ा सत्याग्रह", "चंपारण सत्याग्रह (1917 - तिनकठिया प्रथा के विरुद्ध)", "अहमदाबाद मिल हड़ताल", "असहयोग आंदोलन"], 1],
+  ["महात्मा गांधी ने भारत में पहली बार भूख हड़ताल किस आंदोलन में की थी?", ["चंपारण", "अहमदाबाद मिल मजदूर हड़ताल (1918)", "खेड़ा", "रौलेट"], 1],
+  ["रौलेट एक्ट (काला कानून) किस वर्ष पारित हुआ था?", ["1917", "1919", "1920", "1922"], 1],
+  ["जलियांवाला बाग हत्याकांड कब घटित हुआ था?", ["13 अप्रैल 1919 (अमृतसर में जनरल डायर द्वारा)", "10 अप्रैल 1919", "19 मार्च 1919", "13 अप्रैल 1920"], 0],
+  ["जलियांवाला बाग हत्याकांड के विरोध में किसने अपनी 'नाइटहुड' (Knighthood) की उपाधि लौटा दी थी?", ["महात्मा गांधी", "रवींद्रनाथ टैगोर", "शंकरन नायर", "तेज बहादुर सप्रू"], 1],
+  ["जलियांवाला बाग हत्याकांड की जांच के लिए ब्रिटिश सरकार ने कौन सा आयोग गठित किया था?", ["साइमन आयोग", "हंटर आयोग (Hunter Commission)", "बटलर आयोग", "ली आयोग"], 1],
+  ["असहयोग आंदोलन (Non-Cooperation Movement) की शुरुआत कब हुई थी?", ["1 अगस्त 1920", "13 अप्रैल 1919", "5 फरवरी 1922", "12 मार्च 1930"], 0],
+  ["किस घटना के कारण महात्मा गांधी ने फरवरी 1922 में असहयोग आंदोलन वापस ले लिया?", ["जलियांवाला बाग कांड", "चौरी-चौरा कांड (4/5 फरवरी 1922, गोरखपुर)", "काकोरी कांड", "गांधी-इरविन समझौता"], 1],
+  ["'स्वराज पार्टी' की स्थापना 1 जनवरी 1923 को किसने की थी?", ["महात्मा गांधी और नेहरू", "चित्तरंजन दास और मोतीलाल नेहरू", "सुभाष चंद्र बोस और विट्ठलभाई पटेल", "लाला लाजपत राय और मालवीय"], 1],
+  ["महात्मा गांधी ने भारतीय राष्ट्रीय कांग्रेस के किस एकमात्र अधिवेशन की अध्यक्षता की थी?", ["1922 गया", "1924 बेलगाम अधिवेशन (कर्नाटक)", "1929 लाहौर", "1931 कराची"], 1],
+  ["'हिंदुस्तान रिपब्लिकन एसोसिएशन' (HRA) की स्थापना 1924 में कानपुर में किसने की थी?", ["भगत सिंह", "सचिंद्रनाथ सान्याल, राम प्रसाद बिस्मिल और जोगेश चंद्र चटर्जी", "चंद्रशेखर आजाद", "सूर्य सेन"], 1],
+  ["काकोरी ट्रेन एक्शन (काकोरी कांड) कब घटित हुआ था?", ["9 अगस्त 1925", "13 अप्रैल 1919", "8 अप्रैल 1929", "23 मार्च 1931"], 0],
+  ["'हिंदुस्तान सोशलिस्ट रिपब्लिकन एसोसिएशन' (HSRA) की स्थापना 1928 में दिल्ली के फिरोजशाह कोटला में किसने की?", ["चंद्रशेखर आजाद और भगत सिंह", "राम प्रसाद बिस्मिल", "सुभाष चंद्र बोस", "रासबिहारी बोस"], 0],
+  ["साइमन कमीशन भारत कब आया था?", ["नवंबर 1927", "3 फरवरी 1928 (बंबई में)", "दिसंबर 1928", "जनवरी 1929"], 1],
+  ["साइमन कमीशन का विरोध करते समय लाठीचार्ज में घायल होने से किस नेता की मृत्यु हुई थी?", ["बाल गंगाधर तिलक", "लाला लाजपत राय", "गोविंद बल्लभ पंत", "मोतीलाल नेहरू"], 1],
+  ["'नेहरू रिपोर्ट' (1928) किसने तैयार की थी?", ["जवाहरलाल नेहरू", "मोतीलाल नेहरू", "अरुण नेहरू", "तेज बहादुर सप्रू"], 1],
+  ["कांग्रेस के किस अधिवेशन में 'पूर्ण स्वराज' (Complete Independence) का प्रस्ताव पारित किया गया?", ["1928 कलकत्ता", "1929 लाहौर अधिवेशन (अध्यक्ष: जवाहरलाल नेहरू)", "1931 कराची", "1936 लखनऊ"], 1],
+  ["प्रथम स्वतंत्रता दिवस (पूर्ण स्वराज दिवस) कब मनाया गया था?", ["15 अगस्त 1930", "26 जनवरी 1930", "31 दिसंबर 1929", "12 मार्च 1930"], 1],
+  ["महात्मा गांधी ने ऐतिहासिक 'दांडी मार्च' कब शुरू किया और कब नमक कानून तोड़ा?", ["12 मार्च 1930 से 6 अप्रैल 1930", "6 अप्रैल 1930 से 1 मई 1930", "26 जनवरी 1930 से 12 मार्च 1930", "5 मार्च 1931 से 23 मार्च 1931"], 0],
+  ["उत्तर-पश्चिम सीमा प्रांत में 'लाल कुर्ती आंदोलन' (खुदाई खिदमतगार) किसने चलाया था?", ["मौलाना अबुल कलाम आजाद", "खान अब्दुल गफ्फार खान (सीमांत गांधी)", "मोहम्मद अली जिन्ना", "हसरत मोहानी"], 1],
+  ["'गांधी-इरविन समझौता' (दिल्ली पैक्ट) कब हुआ था?", ["5 मार्च 1931", "23 मार्च 1931", "24 सितंबर 1932", "16 अगस्त 1932"], 0],
+  ["भगत सिंह, राजगुरु और सुखदेव को फांसी कब दी गई थी?", ["8 अप्रैल 1929", "23 मार्च 1931", "27 फरवरी 1931", "13 मार्च 1940"], 1],
+  ["1931 के कराची अधिवेशन में कौन सा महत्वपूर्ण प्रस्ताव पारित हुआ?", ["पूर्ण स्वराज", "मौलिक अधिकार और राष्ट्रीय आर्थिक कार्यक्रम", "भारत छोड़ो", "असहयोग"], 1],
+  ["महात्मा गांधी ने किस एकमात्र गोलमेज सम्मेलन में भाग लिया था?", ["प्रथम (1930)", "द्वितीय गोलमेज सम्मेलन (1931)", "तृतीय (1932)", "तीनों में"], 1],
+  ["तीनों गोलमेज सम्मेलनों में भाग लेने वाले भारतीय नेता कौन थे?", ["गांधी और नेहरू", "डॉ. बी.आर. अंबेडकर और तेज बहादुर सप्रू", "सरदार पटेल और राजेंद्र प्रसाद", "सुभाष चंद्र बोस और जिन्ना"], 1],
+  ["'पूना समझौता' (Poona Pact - 24 सितंबर 1932) किनके बीच हुआ था?", ["गांधी और इरविन", "महात्मा गांधी और डॉ. बी.आर. अंबेडकर (यरवदा जेल में)", "गांधी और जिन्ना", "नेहरू और अंबेडकर"], 1],
+  ["'हरिजन सेवक संघ' की स्थापना 1932 में किसने की थी?", ["डॉ. बी.आर. अंबेडकर", "महात्मा गांधी", "ज्योतिबा फुले", "ठक्कर बापा"], 1],
+  ["भारत शासन अधिनियम 1935 की सबसे प्रमुख विशेषता क्या थी?", ["प्रांतों में द्वैध शासन", "प्रांतीय स्वायत्तता (केंद्र में द्वैध शासन)", "सांप्रदायिक निर्वाचन समाप्त", "भारत का विभाजन"], 1],
+  ["सुभाष चंद्र बोस ने 1939 में कांग्रेस अध्यक्ष पद से इस्तीफा देने के बाद किस दल की स्थापना की थी?", ["स्वराज पार्टी", "फॉरवर्ड ब्लॉक (Forward Bloc)", "आजाद हिंद फौज", "गदर पार्टी"], 1],
+  ["मुसिलम लीग के किस अधिवेशन में पहली बार अलग 'पाकिस्तान' की मांग का प्रस्ताव पारित हुआ?", ["1930 इलाहाबाद", "1940 लाहौर अधिवेशन (अध्यक्ष: मोहम्मद अली जिन्ना)", "1943 कराची", "1946 दिल्ली"], 1],
+  ["1940 के 'व्यक्तिगत सत्याग्रह' के प्रथम और द्वितीय सत्याग्रही कौन थे?", ["प्रथम: विनोबा भावे, द्वितीय: जवाहरलाल नेहरू", "प्रथम: गांधी, द्वितीय: पटेल", "प्रथम: नेहरू, द्वितीय: राजेंद्र प्रसाद", "प्रथम: ब्रह्मदत्त, द्वितीय: विनोबा भावे"], 0],
+  ["किस मिशन के प्रस्तावों को महात्मा गांधी ने 'पोस्ट-डेटेड चेक' कहा था?", ["साइमन कमीशन", "क्रिप्स मिशन (1942)", "कैबिनेट मिशन", "वेवेल योजना"], 1],
+  ["'भारत छोड़ो आंदोलन' कब शुरू हुआ और इसमें गांधीजी ने कौन सा नारा दिया?", ["8/9 अगस्त 1942 - \"करो या मरो\" (Do or Die)", "15 अगस्त 1942 - \"दिल्ली चलो\"", "2 अक्टूबर 1942 - \"भारत छोड़ो\"", "26 जनवरी 1942 - \"जय हिंद\""], 0],
+  ["भारत छोड़ो आंदोलन के दौरान बंबई के ग्वालिया टैंक मैदान में तिरंगा किसने फहराया था?", ["सरोजिनी नायडू", "अरुणा आसफ अली", "उषा मेहता", "सुचेता कृपलानी"], 1],
+  ["1942 के भारत छोड़ो आंदोलन के दौरान पहली समानांतर सरकार कहाँ बनी थी?", ["सतारा", "बलिया (उत्तर प्रदेश - चित्तू पांडे के नेतृत्व में)", "तामलुक", "तालचेर"], 1],
+  ["'आजाद हिंद फौज' (INA) की कमान सुभाष चंद्र बोस ने 1943 में कहाँ संभाली थी?", ["टोक्यो", "सिंगापुर", "रंगून", "बर्लिन"], 1],
+  ["महात्मा गांधी को सर्वप्रथम 'राष्ट्रपिता' कहकर किसने संबोधित किया था?", ["रवींद्रनाथ टैगोर", "सुभाष चंद्र बोस (सिंगापुर रेडियो से, 1944)", "जवाहरलाल नेहरू", "सरदार वल्लभभाई पटेल"], 1],
+  ["'कैबिनेट मिशन' भारत कब आया था?", ["1942", "1945", "मार्च 1946 में (पैथिक लॉरेंस, क्रिप्स, एलेक्जेंडर)", "जून 1947"], 2],
+  ["अंतरिम सरकार (1946) में गृह और सूचना प्रसारण मंत्री कौन थे?", ["जवाहरलाल नेहरू", "सरदार वल्लभभाई पटेल", "डॉ. राजेंद्र प्रसाद", "बलदेव सिंह"], 1],
+  ["भारत विभाजन की 'माउंटबेटन योजना' कब प्रस्तुत की गई थी?", ["20 फरवरी 1947", "3 जून 1947", "18 जुलाई 1947", "15 अगस्त 1947"], 1],
+  ["भारत की स्वतंत्रता के समय भारतीय राष्ट्रीय कांग्रेस के अध्यक्ष कौन थे?", ["जवाहरलाल नेहरू", "जे.बी. कृपलानी", "मौलाना अबुल कलाम आजाद", "पट्टाभि सीतारमैया"], 1],
+  ["भारत की स्वतंत्रता के समय ब्रिटेन का प्रधानमंत्री कौन था?", ["विंस्टन चर्चिल", "क्लीमेंट एटली (लेबर पार्टी)", "लॉर्ड माउंटबेटन", "रैमसे मैकडोनाल्ड"], 1],
+  ["स्वतंत्र भारत के प्रथम और अंतिम भारतीय गवर्नर-जनरल कौन थे?", ["लॉर्ड माउंटबेटन", "चक्रवर्ती राजगोपालाचारी (C. Rajagopalachari)", "डॉ. राजेंद्र प्रसाद", "डॉ. सर्वपल्ली राधाकृष्णन"], 1],
+  ["'वंदे मातरम' किस उपन्यास से लिया गया है?", ["गोरा", "आनंदमठ (बंकिम चंद्र चटर्जी)", "गीतांजलि", "नील दर्पण"], 1]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / ${Q.length}</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+
+  if(remaining <= 120){
+    timerEl.classList.add("blink");
+  }
+
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+
+  modal.classList.remove("hidden");
+}
+
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+
+  document.getElementById("greeting").textContent =
+    student + ", आपका टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+
+  let message = correct >= 90 ? "🏆 अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "📘 औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+
+  document.getElementById("motivation").textContent = message;
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+
+    if(type !== "all" && type !== status) return "";
+
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
