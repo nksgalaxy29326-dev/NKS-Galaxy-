@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - खेलकूद एवं पुरस्कार (100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1150px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display:flex;justify-content:center;align-items:center;
+  padding:15px;animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0);animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;padding:14px 18px;font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px;background:#f8fafc;display:flex;
+  justify-content:center;gap:12px;border-top:1px solid #e2e8f0;
+}
+
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>खेलकूद एवं प्रमुख पुरस्कार (Sports & Awards) - मेगा मॉक टेस्ट</b></p>
+  <p>SSC | Railway | UPSSSC | All Competitive Exams</p>
+  <p>कुल प्रश्न: 100 | कुल अंक: 100 | समय: 20 मिनट</p>
+</header>
+
+<div class="container">
+
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>ऑनलाइन मॉक टेस्ट निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें।</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+
+    <ul style="padding-left:20px;color:#334155">
+      <li>कुल प्रश्न: <b>100</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">हल किए गए: <b id="answered">0</b>/100 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+
+  </section>
+
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>आपका परीक्षा परिणाम (Scorecard)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+
+</div>
+
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons">
+      <!-- Buttons dynamically injected -->
+    </div>
+  </div>
+</div>
+
+<script>
+const RAW_Q = [
+  ["'डूरंड कप', 'संतोष ट्रॉफी', 'रोवर्स कप' और 'सुब्रतो कप' किस खेल से संबंधित हैं?", ["हॉकी", "फुटबॉल", "क्रिकेट", "बैडमिंटन"], 1],
+  ["'रंगास्वामी कप', 'आगा खान कप', 'बेगम रसूल ट्रॉफी', 'अजलान शाह कप' और 'ध्यानचंद ट्रॉफी' किस खेल से जुड़े हैं?", ["फुटबॉल", "हॉकी", "पोलो", "गोल्फ"], 1],
+  ["'रणजी ट्रॉफी', 'दिलीप ट्रॉफी', 'देवधर ट्रॉफी', 'ईरानी कप', 'विजय हजारे ट्रॉफी' और 'सैयद मुश्ताक अली ट्रॉफी' किस खेल से संबंधित हैं?", ["हॉकी", "क्रिकेट", "टेनिस", "कबड्डी"], 1],
+  ["'थॉमस कप' और 'उबेर कप' किस खेल की विश्व चैंपियनशिप ट्रॉफियाँ हैं?", ["लॉन टेनिस", "बैडमिंटन", "टेबल टेनिस", "स्कवैश"], 1],
+  ["'डेविस कप' और 'बिली जीन किंग कप' किस खेल से संबंधित हैं?", ["बैडमिंटन", "लॉन टेनिस", "गोल्फ", "पोलो"], 1],
+  ["'राइडर कप' और 'वॉकर कप' किस खेल की प्रतिष्ठित ट्रॉफियाँ हैं?", ["पोलो", "गोल्फ", "घुड़दौड़", "नौकायन"], 1],
+  ["'बटरफ्लाई स्ट्रोक', 'फ्रीस्टाइल', 'ब्रेस्टस्ट्रोक' और 'बैकस्ट्रोक' शब्दावली किस खेल से जुड़ी हैं?", ["जिम्नास्टिक", "तैराकी", "एथलेटिक्स", "मुक्केबाजी"], 1],
+  ["'चाइनामैन', 'गुगली', 'सिली पॉइंट', 'डकेट' और 'नाइटवॉचमैन' शब्द किस खेल में प्रयुक्त होते हैं?", ["बेसबॉल", "क्रिकेट", "गोल्फ", "हॉकी"], 1],
+  ["'गैम्बिट', 'चेकमेट', 'स्टेलमेट' और 'फिडे' किस खेल से संबंधित हैं?", ["ब्रिज", "शतरंज", "बिलियर्ड्स", "कैरम"], 1],
+  ["'ड्यूस', 'लव', 'स्मैश', 'ग्रैंड स्लैम' और 'एस' शब्दावली मुख्य रूप से किस खेल से संबंधित हैं?", ["लॉन टेनिस और बैडमिंटन", "फुटबॉल", "मुक्केबाजी", "कुश्ती"], 0],
+  ["'बुल्स आई' शब्द किस खेल से संबंधित है?", ["मुक्केबाजी", "निशानेबाजी और तीरंदाजी", "पोलो", "गोल्फ"], 1],
+  ["'कैडी', 'बर्डी', 'ईगल', 'बोगी' और 'टी' किस खेल की शब्दावली हैं?", ["गोल्फ", "पोलो", "हॉकी", "बास्केटबॉल"], 0],
+  ["विभिन्न खेलों में एक पक्ष में खिलाड़ियों की सही संख्या क्या है?", ["क्रिकेट, फुटबॉल, हॉकी (11); रग्बी (15); बेसबॉल, खो-खो (9); कबड्डी, वाटर पोलो, नेटबॉल (7); वॉलीबॉल (6); बास्केटबॉल (5); पोलो (4)", "कबड्डी (11), खो-खो (7)", "बास्केटबॉल (7), वॉलीबॉल (9)", "पोलो (6), रग्बी (11)"], 0],
+  ["वर्ष के चार 'ग्रैंड स्लैम' टेनिस टूर्नामेंटों का सही कैलेंडर क्रम और उनके कोर्ट की सतह क्या है?", ["ऑस्ट्रेलियन ओपन (हार्ड) → फ्रेंच ओपन (क्ले) → विंबलडन (ग्रास) → यूएस ओपन (हार्ड)", "विंबलडन → फ्रेंच ओपन → ऑस्ट्रेलियन ओपन → यूएस ओपन", "फ्रेंच ओपन → ऑस्ट्रेलियन ओपन → यूएस ओपन → विंबलडन", "यूएस ओपन → विंबलडन → फ्रेंच ओपन → ऑस्ट्रेलियन ओपन"], 0],
+  ["आधुनिक ओलंपिक खेलों की शुरुआत 1896 में कहाँ से हुई थी?", ["पेरिस", "एथेंस", "लंदन", "रोम"], 1],
+  ["ओलंपिक ध्वज के पाँच आपस में जुड़े छल्ले किन पाँच महाद्वीपों का प्रतिनिधित्व करते हैं?", ["नीला (यूरोप), पीला (एशिया), काला (अफ्रीका), हरा (ऑस्ट्रेलिया), लाल (अमेरिका)", "केवल पाँच देश", "पाँच महासागर", "पाँच खेल"], 0],
+  ["ओलंपिक में व्यक्तिगत स्वर्ण पदक जीतने वाले पहले भारतीय खिलाड़ी कौन थे?", ["के.डी. जाधव", "अभिनव बिंद्रा", "नीरज चोपड़ा", "कर्णम मल्लेश्वरी"], 1],
+  ["एक ही ओलंपिक संस्करण में दो पदक जीतने वाली स्वतंत्र भारत की पहली एथलीट कौन बनीं?", ["पी.वी. सिंधु", "मनु भाकर", "मीराबाई चानू", "विनेश फोगाट"], 1],
+  ["भारत में 'राष्ट्रीय खेल दिवस' प्रतिवर्ष 29 अगस्त को किस महान खिलाड़ी की जयंती पर मनाया जाता है?", ["मिल्खा सिंह", "मेजर ध्यानचंद", "के.डी. जाधव", "सचिन तेंदुलकर"], 1],
+  ["प्रथम एशियाई खेलों का आयोजन 1951 में कहाँ किया गया था?", ["टोक्यो", "नई दिल्ली", "बीजिंग", "जकार्ता"], 1],
+  ["प्रथम राष्ट्रमंडल खेल 1930 में कहाँ आयोजित हुए थे?", ["लंदन", "हैमिल्टन", "सिडनी", "नई दिल्ली"], 1],
+  ["'खेलो इंडिया यूथ गेम्स' का पहला संस्करण 2018 में कहाँ आयोजित किया गया था?", ["पुणे", "नई दिल्ली", "गुवाहाटी", "पंचकूला"], 1],
+  ["भारत ने पहला क्रिकेट विश्व कप किस देश को हराकर जीता था?", ["ऑस्ट्रेलिया", "वेस्टइंडीज", "इंग्लैंड", "पाकिस्तान"], 1],
+  ["'ब्लैक पर्ल' के नाम से किस महान फुटबॉल खिलाड़ी को जाना जाता था?", ["डिएगो माराडोना", "पेले", "लियोनेल मेसी", "क्रिस्टियानो रोनाल्डो"], 1],
+  ["'मैराथन दौड़' की मानक दूरी कितनी होती है?", ["21.097 किमी", "42.195 किमी", "50 किमी", "10 किमी"], 1],
+  ["'भारत रत्न' की शुरुआत किस वर्ष हुई और इसके प्रथम प्राप्तकर्ता कौन थे?", ["1954 - डॉ. राधाकृष्णन, राजगोपालाचारी और सी.वी. रमन", "1950 - जवाहरलाल नेहरू", "1952 - डॉ. राजेंद्र प्रसाद", "1955 - महात्मा गांधी"], 0],
+  ["भारत रत्न प्राप्त करने वाले पहले गैर-भारतीय व्यक्ति कौन थे?", ["नेल्सन मंडेला", "खान अब्दुल गफ्फार खान", "मदर टेरेसा", "मार्टिन लूथर किंग"], 1],
+  ["मरणोपरांत भारत रत्न प्राप्त करने वाले पहले व्यक्ति कौन थे?", ["डॉ. बी.आर. अंबेडकर", "लाल बहादुर शास्त्री", "सरदार वल्लभभाई पटेल", "भूपेन हजारिका"], 1],
+  ["भारत रत्न प्राप्त करने वाले पहले और एकमात्र खिलाड़ी कौन हैं?", ["मेजर ध्यानचंद", "सचिन तेंदुलकर", "कपिल देव", "विश्वनाथन आनंद"], 1],
+  ["भारत का सर्वोच्च खेल सम्मान कौन सा है?", ["अर्जुन पुरस्कार", "मेजर ध्यानचंद खेल रत्न पुरस्कार", "द्रोणाचार्य पुरस्कार", "मौलाना अबुल कलाम आजाद ट्रॉफी"], 1],
+  ["भारत का सर्वोच्च सैन्य पुरस्कार कौन सा है?", ["महावीर चक्र", "परमवीर चक्र", "वीर चक्र", "कीर्ति चक्र"], 1],
+  ["'नोबेल पुरस्कार' की शुरुआत 1901 में हुई और यह कुल कितने क्षेत्रों में दिया जाता है?", ["5 क्षेत्रों में", "6 क्षेत्रों में", "7 क्षेत्रों में", "4 क्षेत्रों में"], 1],
+  ["नोबेल पुरस्कार प्राप्त करने वाले पहले भारतीय और पहले एशियाई व्यक्ति कौन थे?", ["सी.वी. रमन", "रवींद्रनाथ टैगोर", "मदर टेरेसा", "अमर्त्य सेन"], 1],
+  ["भारतीय मूल के किस वैज्ञानिक को 1968 में चिकित्सा का नोबेल मिला?", ["सुब्रह्मण्यन चंद्रशेखर", "डॉ. हरगोविंद खुराना", "वेंकटरमन रामकृष्णन", "अभिजीत बनर्जी"], 1],
+  ["दो अलग-अलग विज्ञान क्षेत्रों में नोबेल पुरस्कार जीतने वाली एकमात्र व्यक्ति कौन हैं?", ["मैरी क्यूरी", "लिनस पॉलिंग", "जॉन बार्डीन", "फ्रेडरिक सेंगर"], 0],
+  ["'रेमन मैग्सेसे पुरस्कार' प्राप्त करने वाले पहले भारतीय कौन थे?", ["किरण बेदी", "आचार्य विनोबा भावे", "रवीश कुमार", "अरविंद केजरीवाल"], 1],
+  ["भारत का सर्वोच्च साहित्यिक सम्मान 'ज्ञानपीठ पुरस्कार' प्राप्त करने वाले प्रथम व्यक्ति कौन थे?", ["सुमित्रानंदन पंत", "जी. शंकर कुरुप", "आशापूर्णा देवी", "अमिताभ घोष"], 1],
+  ["'सरस्वती सम्मान', 'व्यास सम्मान' और 'बिहारी पुरस्कार' किस संस्था द्वारा प्रदान किए जाते हैं?", ["साहित्य अकादमी", "के.के. बिड़ला फाउंडेशन", "भारतीय ज्ञानपीठ", "नेशनल बुक ट्रस्ट"], 1],
+  ["भारतीय सिनेमा का सर्वोच्च पुरस्कार 'दादासाहेब फाल्के पुरस्कार' सर्वप्रथम किसे दिया गया था?", ["पृथ्वीराज कपूर", "देविका रानी", "सत्यजीत रे", "अमिताभ बच्चन"], 1],
+  ["'ऑस्कर पुरस्कार' जीतने वाले पहले भारतीय कौन थे?", ["ए.आर. रहमान और गुलजार", "भानु अथैया", "एम.एम. कीरावनी", "कार्तिकी गोंसाल्विस"], 1],
+  ["'ग्रैमी पुरस्कार' जीतने वाले पहले भारतीय कौन थे?", ["जाकिर हुसैन", "पंडित रविशंकर", "तन्वी शाह", "रिकी केज"], 1],
+  ["'एबेल पुरस्कार' किस क्षेत्र का सर्वोच्च अंतर्राष्ट्रीय पुरस्कार है, जिसे 'गणित का नोबेल' कहा जाता है?", ["कंप्यूटर विज्ञान", "गणित", "वास्तुकला", "पत्रकारिता"], 1],
+  ["विज्ञान एवं प्रौद्योगिकी के क्षेत्र में भारत का प्रतिष्ठित 'शांति स्वरूप भटनागर पुरस्कार' किस संस्था द्वारा दिया जाता है?", ["ISRO", "CSIR", "DRDO", "NITI Aayog"], 1],
+  ["'कलिंग पुरस्कार' किस अंतर्राष्ट्रीय संगठन द्वारा दिया जाता है?", ["WHO", "यूनेस्को", "UNICEF", "UNDP"], 1],
+  ["'बोरलॉग पुरस्कार' किस क्षेत्र में उत्कृष्ट योगदान के लिए दिया जाता है?", ["चिकित्सा", "कृषि और पर्यावरण", "साहित्य", "संगीत"], 1],
+  ["'पुलित्जर पुरस्कार' किस क्षेत्र में दिया जाता है?", ["पत्रकारिता, साहित्य और संगीत", "खेलकूद", "फिल्म अभिनय", "अंतर अंतरिक्ष अनुसंधान"], 0],
+  ["'मिस वर्ल्ड' का खिताब जीतने वाली पहली भारतीय और एशियाई महिला कौन थीं?", ["सुष्मिता सेन", "रीता फारिया", "दीया मिर्जा", "तनुश्री दत्ता"], 1],
+  ["'गांधी शांति पुरस्कार' के प्रथम प्राप्तकर्ता कौन थे?", ["नेल्सन मंडेला", "जूलियस न्येरेरे", "शेख मुजीबुर रहमान", "बाबा आमटे"], 1],
+  ["भारत में पद्म पुरस्कारों की शुरुआत किस वर्ष की गई थी?", ["1950", "1954", "1961", "1971"], 1],
+  ["'तानसेन सम्मान' और 'कालिदास सम्मान' किस राज्य सरकार द्वारा प्रदान किए जाने वाले पुरस्कार हैं?", ["उत्तर प्रदेश", "मध्य प्रदेश", "राजस्थान", "महाराष्ट्र"], 1],
+  ["विश्व का सबसे बड़ा क्रिकेट स्टेडियम 'नरेंद्र मोदी स्टेडियम' कहाँ स्थित है?", ["मुंबई", "अहमदाबाद", "कोलकाता", "नई दिल्ली"], 1],
+  ["भारत का सबसे बड़ा हॉकी स्टेडियम 'बिरसा मुंडा' कहाँ स्थित है?", ["भुवनेश्वर", "राउरकेला", "नई दिल्ली", "चंडीगढ़"], 1],
+  ["'फ्लाइंग सिख', 'पय्योली एक्सप्रेस', 'ढींग एक्सप्रेस' और 'हरियाणा हरिकेन' क्रमशः किन खिलाड़ियों के उपनाम हैं?", ["मिल्खा सिंह, पी.टी. उषा, हिमा दास, कपिल देव", "नीरज चोपड़ा, दुती चंद, मैरी कॉम, वीरेंद्र सहवाग", "अभिनव बिंद्रा, साइना नेहवाल, सानिया मिर्जा, युवराज सिंह", "के.डी. जाधव, कर्णम मल्लेश्वरी, मीराबाई चानू, एम.एस. धोनी"], 0],
+  ["'लाइटनिंग किड' और 'कैप्टन कूल' किन खिलाड़ियों के उपनाम हैं?", ["विश्वनाथन आनंद और महेंद्र सिंह धोनी", "आर. प्रज्ञानानंद और विराट कोहली", "पंकज आडवाणी और रोहित शर्मा", "लिएंडर पेस और राहुल द्रविड़"], 0],
+  ["'पंकज आडवाणी' किस खेल के विश्व प्रसिद्ध भारतीय चैंपियन हैं?", ["गोल्फ", "बिलियर्ड्स और स्नूकर", "शतरंज", "स्कवैश"], 1],
+  ["'भवानी देवी' किस खेल से जुड़ी भारत की पहली ओलंपिक खिलाड़ी हैं?", ["तलवारबाजी", "जिम्नास्टिक", "नौकायन", "घुड़सवारी"], 0],
+  ["'अदिति अशोक' किस खेल से संबंधित प्रमुख भारतीय खिलाड़ी हैं?", ["गोल्फ", "लॉन टेनिस", "निशानेबाजी", "बैडमिंटन"], 0],
+  ["'शरत कमल' और 'मनिका बत्रा' किस खेल के प्रसिद्ध भारतीय खिलाड़ी हैं?", ["बैडमिंटन", "टेबल टेनिस", "स्कवैश", "लॉन टेनिस"], 1],
+  ["'लवलीना बोरगोहेन', 'निखत जरीन' और 'विजेंदर सिंह' किस खेल से संबंधित हैं?", ["कुश्ती", "मुक्केबाजी", "भारोत्तोलन", "तीरंदाजी"], 1],
+  ["'2028 ग्रीष्मकालीन ओलंपिक खेल' कहाँ आयोजित किए जाएंगे?", ["ब्रिस्बेन", "लॉस एंजिल्स", "पेरिस", "टोक्यो"], 1],
+  ["'2026 फीफा फुटबॉल विश्व कप' की मेजबानी कौन से देश करेंगे?", ["कतर", "अमेरिका, कनाडा और मेक्सिको", "स्पेन, पुर्तगाल और मोरक्को", "सऊदी अरब"], 1],
+  ["'2026 राष्ट्रमंडल खेल' कहाँ आयोजित होने निर्धारित हुए हैं?", ["बर्मिंघम", "ग्लासगो", "नई दिल्ली", "गोल्ड कोस्ट"], 1],
+  ["'2026 एशियाई खेल' कहाँ आयोजित होंगे?", ["हांगझोऊ", "आइची-नागोया", "दोहा", "रियाद"], 1],
+  ["'आईसीसी पुरुष क्रिकेट विश्व कप 2027' की मेजबानी कौन से देश करेंगे?", ["भारत और श्रीलंका", "दक्षिण अफ्रीका, जिम्बाब्वे और नामीबिया", "ऑस्ट्रेलिया और न्यूजीलैंड", "इंग्लैंड और आयरलैंड"], 1],
+  ["'संतोष ट्रॉफी' किस खेल की राष्ट्रीय चैंपियनशिप है?", ["हॉकी", "फुटबॉल", "क्रिकेट", "बास्केटबॉल"], 1],
+  ["'प्रो कबड्डी लीग' की शुरुआत किस वर्ष हुई थी?", ["2008", "2014", "2013", "2016"], 1],
+  ["बैडमिंटन कोर्ट की लंबाई कितनी होती है और शटलकॉक में कितने पंख होते हैं?", ["13.4 मीटर और 16 पंख", "20 मीटर और 12 पंख", "15 मीटर और 18 पंख", "10 मीटर और 10 पंख"], 0],
+  ["क्रिकेट पिच की मानक लंबाई कितनी होती है?", ["20 गज", "22 गज", "24 गज", "18 गज"], 1],
+  ["'द वॉल' और 'मिस्टर 360' किन क्रिकेटरों के उपनाम हैं?", ["राहुल द्रविड़ और एबी डिविलियर्स", "सचिन तेंदुलकर और विराट कोहली", "वी.वी.एस. लक्ष्मण और सूर्यकुमार यादव", "अनिल कुंबले और हरभजन सिंह"], 0],
+  ["'सुल्तान अजलान शाह कप' किस देश में आयोजित होने वाला वार्षिक अंतर्राष्ट्रीय हॉकी टूर्नामेंट है?", ["भारत", "मलेशिया", "पाकिस्तान", "नीदरलैंड्स"], 1],
+  ["'लॉरियस वर्ल्ड स्पोर्ट्स अवार्ड' जीतने वाले पहले और एकमात्र भारतीय खिलाड़ी कौन हैं?", ["सचिन तेंदुलकर", "नीरज चोपड़ा", "विराट कोहली", "पी.वी. सिंधु"], 0],
+  ["'विजडन' द्वारा 'लीडिंग क्रिकेटर इन the वर्ल्ड' नामित होने वाले पहले भारतीय खिलाड़ी कौन थे?", ["वीरेंद्र सहवाग", "कपिल देव", "सुनील गावस्कर", "एम.एस. धोनी"], 0],
+  ["किस देश को 'क्रिकेट का जन्मदाता' कहा जाता है?", ["ऑस्ट्रेलिया", "इंग्लैंड", "भारत", "दक्षिण अफ्रीका"], 1],
+  ["'चेस' खेल की उत्पत्ति किस देश में मानी जाती है?", ["रूस", "भारत", "चीन", "ईरान"], 1],
+  ["'कबड्डी' किस देश का राष्ट्रीय खेल है?", ["भारत", "बांग्लादेश", "ईरान", "इंडोनेशिया"], 1],
+  ["'बेसबॉल' किस देश का राष्ट्रीय खेल है?", ["कनाडा", "संयुक्त राज्य अमेरिका", "जापान", "स्पेन"], 1],
+  ["'वॉकर कप' किस खेल से संबंधित है?", ["गोल्फ", "हॉकी", "फुटबॉल", "टेनिस"], 0],
+  ["'बर्धवान ट्रॉफी' किस खेल से संबंधित है?", ["भारोत्तोलन", "मुक्केबाजी", "कुश्ती", "निशानेबाजी"], 0],
+  ["'एजरा कप' किस खेल से जुड़ा है?", ["पोलो", "गोल्फ", "घुड़दौड़", "नौकायन"], 0],
+  ["'लिबरो' शब्द किस खेल से संबंधित है?", ["वॉलीबॉल", "बास्केटबॉल", "फुटबॉल", "हॉकी"], 0],
+  ["'डबल फॉल्ट' शब्द किस खेल में प्रयुक्त होता है?", ["लॉन टेनिस", "क्रिकेट", "फुटबॉल", "हॉकी"], 0],
+  ["'ग्रीन पार्क स्टेडियम' किस शहर में स्थित है?", ["लखनऊ", "कानपुर", "वाराणसी", "कटक"], 1],
+  ["'एम. चिन्नास्वामी स्टेडियम' और 'एम.ए. चिदंबरम स्टेडियम' क्रमशः किन शहरों में स्थित हैं?", ["बेंगलुरु और चेन्नई", "हैदराबाद और विशाखापत्तनम", "मुंबई और पुणे", "कोलकाता और गुवाहाटी"], 0],
+  ["भारत का सर्वोच्च 'पर्यावरण पुरस्कार' कौन सा है?", ["इंदिरा गांधी पर्यावरण पुरस्कार", "अमृता देवी बिश्नोई पुरस्कार", "चैंपियंस ऑफ द अर्थ", "उपरोक्त सभी"], 3],
+  ["'दादासाहेब फाल्के पुरस्कार' प्राप्त करने वाले प्रथम मरणोपरांत कलाकार कौन थे?", ["पृथ्वीराज कपूर", "विनोद खन्ना", "राज कपूर", "देव आनंद"], 0],
+  ["'मिस यूनिवर्स' का खिताब जीतने वाली पहली भारतीय महिला कौन थीं?", ["सुष्मिता सेन", "रीता फारिया", "ऐश्वर्या राय", "लारा दत्ता"], 0],
+  ["'नोबेल शांति पुरस्कार' प्राप्त करने वाली पहली भारतीय महिला कौन थीं?", ["मदर टेरेसा", "इंदिरा गांधी", "सरोजिनी नायडू", "अरुंधति रॉय"], 0],
+  ["'अर्थशास्त्र का नोबेल पुरस्कार' जीतने वाले पहले भारतीय और एशियाई अर्थशास्त्री कौन थे?", ["डॉ. अमर्त्य सेन", "अभिजीत बनर्जी", "डॉ. मनमोहन सिंह", "रघुराम राजन"], 0],
+  ["'बुकर पुरस्कार' जीतने वाली पहली भारतीय मूल की लेखिका कौन थीं?", ["अरुंधति रॉय", "किरण देसाई", "गीतांजलि श्री", "झुम्पा लाहिड़ी"], 0],
+  ["भारत का सर्वोच्च 'साहित्य अकादमी पुरस्कार' कितनी भाषाओं में दिया जाता है?", ["22 भाषाएँ", "24 भाषाएँ", "18 भाषाएँ", "14 भाषाएँ"], 1],
+  ["'अर्जुन पुरस्कार' की शुरुआत किस वर्ष हुई थी और इसमें वर्तमान में कितनी राशि दी जाती है?", ["1961 - 15 लाख", "1985 - 10 लाख", "1991 - 25 लाख", "1954 - 5 लाख"], 0],
+  ["'ध्यानचंद पुरस्कार' की शुरुआत कब हुई थी?", ["2002 में", "1991 में", "1985 में", "1961 में"], 0],
+  ["भारतीय ओलंपिक संघ की पहली महिला अध्यक्ष कौन बनीं?", ["पी.टी. उषा", "मैरी कॉम", "कर्णम मल्लेश्वरी", "अंजू बॉबी जॉर्ज"], 0],
+  ["'भारत का पहला राष्ट्रीय खेल विश्वविद्यालय' कहाँ स्थापित किया गया है?", ["पटियाला", "इंफाल", "मेरठ", "ग्वालियर"], 1],
+  ["'शतरंज ग्रैंडमास्टर' बनने वाले पहले भारतीय खिलाड़ी कौन थे?", ["विश्वनाथन आनंद", "कोनेरू हम्पी", "ड. गुकेश", "आर. प्रज्ञानानंद"], 0],
+  ["'टेस्ट क्रिकेट में तिहरा शतक' लगाने वाले पहले भारतीय बल्लेबाज कौन थे?", ["वीरेंद्र सहवाग", "सचिन तेंदुलकर", "सुनील गावस्कर", "वी.वी.एस. लक्ष्मण"], 0],
+  ["'वनडे अंतर्राष्ट्रीय क्रिकेट में दोहरा शतक' लगाने वाले विश्व के पहले पुरुष बल्लेबाज कौन थे?", ["सचिन तेंदुलकर", "वीरेंद्र सहवाग", "क्रिस गेल", "रोहित शर्मा"], 0],
+  ["'बी.सी. रॉय पुरस्कार' किस क्षेत्र में दिया जाता है?", ["चिकित्सा", "पत्रकारिता", "वास्तुकला", "खेलकूद"], 0],
+  ["'चमेली देवी जैन पुरस्कार' किस क्षेत्र में उत्कृष्ट योगदान के लिए दिया जाता है?", ["पत्रकारिता", "विज्ञान", "संगीत", "खेलकूद"], 0],
+  ["'तेंजिंग नॉर्गे राष्ट्रीय साहसिक पुरस्कार' किस क्षेत्र में दिया जाता है?", ["भूमि, जल और वायु में साहसिक कार्यों", "केवल शतरंज", "साहित्य लेखन", "फिल्म निर्देशन"], 0]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / ${Q.length}</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+
+  if(remaining <= 120){
+    timerEl.classList.add("blink");
+  }
+
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+
+  modal.classList.remove("hidden");
+}
+
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+
+  document.getElementById("greeting").textContent =
+    student + ", आपका टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+
+  let message = correct >= 90 ? "🏆 अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "📘 औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+
+  document.getElementById("motivation").textContent = message;
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+
+    if(type !== "all" && type !== status) return "";
+
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
