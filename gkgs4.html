@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - भारतीय संविधान (100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1150px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display:flex;justify-content:center;align-items:center;
+  padding:15px;animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0);animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;padding:14px 18px;font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px;background:#f8fafc;display:flex;
+  justify-content:center;gap:12px;border-top:1px solid #e2e8f0;
+}
+
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>भारतीय संविधान एवं राजव्यवस्था (Indian Polity) - मेगा मॉक टेस्ट</b></p>
+  <p>SSC | Railway | UPSSSC | All Competitive Exams</p>
+  <p>कुल प्रश्न: 100 | कुल अंक: 100 | समय: 20 मिनट</p>
+</header>
+
+<div class="container">
+
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>ऑनलाइन मॉक टेस्ट निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें।</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+
+    <ul style="padding-left:20px;color:#334155">
+      <li>कुल प्रश्न: <b>100</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">हल किए गए: <b id="answered">0</b>/100 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+
+  </section>
+
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>आपका परीक्षा परिणाम (Scorecard)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+
+</div>
+
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons">
+      <!-- Buttons dynamically injected -->
+    </div>
+  </div>
+</div>
+
+<script>
+const RAW_Q = [
+  ["भारतीय संविधान सभा की पहली बैठक कब हुई थी?", ["26 नवंबर 1946", "9 दिसंबर 1946 (अस्थायी अध्यक्ष: डॉ. सच्चिदानंद सिन्हा)", "11 दिसंबर 1946 (स्थायी अध्यक्ष: डॉ. राजेंद्र प्रसाद)", "13 दिसंबर 1946 (उद्देश्य प्रस्ताव: जवाहरलाल नेहरू)"], 1],
+  ["संविधान सभा की 'प्रारूप समिति' (Drafting Committee) के अध्यक्ष कौन थे?", ["डॉ. राजेंद्र प्रसाद", "डॉ. बी.आर. अंबेडकर (29 अगस्त 1947 को गठित, कुल 7 सदस्य)", "बी.एन. राव (संवैधानिक सलाहकार)", "सरदार वल्लभभाई पटेल"], 1],
+  ["भारतीय संविधान को कब अंगीकृत (अपनाया) किया गया और यह कब पूर्णतः लागू हुआ?", ["अंगीकृत: 26 नवंबर 1949; लागू: 26 जनवरी 1950", "अंगीकृत: 15 अगस्त 1947; लागू: 26 नवंबर 1949", "अंगीकृत: 24 जनवरी 1950; लागू: 26 जनवरी 1950", "अंगीकृत: 26 जनवरी 1949; लागू: 26 जनवरी 1950"], 0],
+  ["मूल संविधान में कितने भाग, अनुच्छेद और अनुसूचियाँ थीं?", ["22 भाग, 395 अनुच्छेद, 8 अनुसूचियाँ (वर्तमान में 12 अनुसूचियाँ हैं)", "25 भाग, 448 अनुच्छेद, 12 अनुसूचियाँ", "20 भाग, 350 अनुच्छेद, 10 अनुसूचियाँ", "22 भाग, 395 अनुच्छेद, 10 अनुसूचियाँ"], 0],
+  ["भारतीय संविधान की 8वीं अनुसूची में कितनी भाषाओं का उल्लेख है?", ["14 भाषाएँ (मूल संविधान में)", "18 भाषाएँ", "22 भाषाएँ", "24 भाषाएँ"], 2],
+  ["संविधान की 10वीं अनुसूची (दल-बदल विरोधी कानून) किस संशोधन द्वारा जोड़ी गई?", ["42वाँ संशोधन", "52वाँ संशोधन (1985)", "61वाँ संशोधन", "73वाँ संशोधन"], 1],
+  ["संविधान का कौन सा भाग 'नागरिकता' (Citizenship) से संबंधित है?", ["भाग 1 (अनुच्छेद 1–4)", "भाग 2 (अनुच्छेद 5–11)", "भाग 3 (अनुच्छेद 12–35)", "भाग 4 (अनुच्छेद 36–51)"], 1],
+  ["भारतीय संविधान के किस भाग को 'भारत का मैग्नाकार्टा' (Magna Carta) कहा जाता है?", ["भाग 2", "भाग 3 (मौलिक अधिकार)", "भाग 4", "भाग 4A"], 1],
+  ["अनुच्छेद 14 किस मौलिक अधिकार से संबंधित है?", ["अस्पृश्यता का अंत", "विधि के समक्ष समता और विधियों का समान संरक्षण", "उपाधियों का अंत", "धर्म की स्वतंत्रता"], 1],
+  ["अनुच्छेद 17 का संबंध किससे है?", ["उपाधियों का अंत (अनुच्छेद 18)", "अस्पृश्यता (छुआछूत) का अंत", "वाक् एवं अभिव्यक्ति की स्वतंत्रता", "प्राण एवं दैहिक स्वतंत्रता"], 1],
+  ["प्रेस की स्वतंत्रता (Freedom of Press) किस अनुच्छेद में निहित है?", ["अनुच्छेद 19(1)(a)", "अनुच्छेद 20", "अनुच्छेद 21", "अनुच्छेद 25"], 0],
+  ["'प्राण एवं दैहिक स्वतंत्रता का अधिकार' किस अनुच्छेद में दिया गया है?", ["अनुच्छेद 19", "अनुच्छेद 20", "अनुच्छेद 21", "अनुच्छेद 22"], 2],
+  ["अनुच्छेद 21A (6 से 14 वर्ष के बच्चों को मुफ्त और अनिवार्य शिक्षा) किस संविधान संशोधन द्वारा जोड़ा गया?", ["42वाँ संशोधन", "44वाँ संशोधन", "86वाँ संशोधन (2002)", "91वाँ संशोधन"], 2],
+  ["किस अनुच्छेद के तहत 14 वर्ष से कम आयु के बच्चों को कारखानों या जोखिम भरे कामों में लगाना निषिद्ध है?", ["अनुच्छेद 23 (मानव तस्करी और बलात श्रम निषेध)", "अनुच्छेद 24", "अनुच्छेद 25", "अनुच्छेद 29"], 1],
+  ["डॉ. बी.आर. अंबेडकर ने किस अनुच्छेद को 'संविधान की आत्मा और हृदय' कहा है?", ["प्रस्तावना", "अनुच्छेद 32 (संवैधानिक उपचारों का अधिकार)", "अनुच्छेद 21", "अनुच्छेद 19"], 1],
+  ["सर्वोच्च न्यायालय को 5 प्रकार की रिट जारी करने की शक्ति किस अनुच्छेद से मिलती है?", ["अनुच्छेद 32 (और उच्च न्यायालय को अनुच्छेद 226 से)", "अनुच्छेद 124", "अनुच्छेद 143", "अनुच्छेद 214"], 0],
+  ["राज्य के नीति निदेशक तत्व (DPSP - भाग 4) किस देश के संविधान से लिए गए हैं?", ["अमेरिका", "आयरलैंड", "कनाडा", "ऑस्ट्रेलिया"], 1],
+  ["'समान नागरिक संहिता' (Uniform Civil Code - UCC) का उल्लेख किस अनुच्छेद में है?", ["अनुच्छेद 40", "अनुच्छेद 44", "अनुच्छेद 45", "अनुच्छेद 48A"], 1],
+  ["कार्यपालिका से न्यायपालिका के पृथक्करण का प्रावधान किस अनुच्छेद में है?", ["अनुच्छेद 48", "अनुच्छेद 50", "अनुच्छेद 51", "अनुच्छेद 39A"], 1],
+  ["अंतर्राष्ट्रीय शांति और सुरक्षा की अभिवृद्धि किस अनुच्छेद में वर्णित है?", ["अनुच्छेद 49", "अनुच्छेद 50", "अनुच्छेद 51", "अनुच्छेद 51A"], 2],
+  ["'मौलिक कर्तव्य' (भाग 4A, अनुच्छेद 51A) किस समिति की सिफारिश पर संविधान में जोड़े गए?", ["सरकारिया समिति", "सरदार स्वर्ण सिंह समिति (42वें संशोधन 1976 द्वारा)", "वर्मा समिति", "बलवंत राय मेहता समिति"], 1],
+  ["भारत के राष्ट्रपति पद का उल्लेख किस अनुच्छेद में है?", ["अनुच्छेद 52", "अनुच्छेद 54", "अनुच्छेद 61", "अनुच्छेद 72"], 0],
+  ["राष्ट्रपति पर 'महाभियोग' (Impeachment) चलाने की प्रक्रिया किस अनुच्छेद में है?", ["अनुच्छेद 56", "अनुच्छेद 60", "अनुच्छेद 61", "अनुच्छेद 72"], 2],
+  ["राष्ट्रपति की 'क्षमादान की शक्ति' (Pardoning Power) किस अनुच्छेद में है?", ["अनुच्छेद 61", "अनुच्छेद 72", "अनुच्छेद 123", "अनुच्छेद 143"], 1],
+  ["भारत के उपराष्ट्रपति का उल्लेख किस अनुच्छेद में है, जो राज्यसभा का पदेन सभापति होता है?", ["अनुच्छेद 63 और 64", "अनुच्छेद 52 और 53", "अनुच्छेद 74 और 75", "अनुच्छेद 76 और 78"], 0],
+  ["भारत के महान्यायवादी (Attorney General of India) की नियुक्ति का प्रावधान किस अनुच्छेद में है?", ["अनुच्छेद 76", "अनुच्छेद 148", "अनुच्छेद 165", "अनुच्छेद 280"], 0],
+  ["संसद का गठन किस अनुच्छेद में वर्णित है?", ["अनुच्छेद 79", "अनुच्छेद 85", "अनुच्छेद 108", "अनुच्छेद 110"], 0],
+  ["संसद के दोनों सदनों की 'संयुक्त बैठक' किस अनुच्छेद के तहत राष्ट्रपति बुलाता है?", ["अनुच्छेद 105", "अनुच्छेद 108", "अनुच्छेद 110", "अनुच्छेद 112"], 1],
+  ["'धन विधेयक' (Money Bill) की परिभाषा किस अनुच्छेद में दी गई है?", ["अनुच्छेद 108", "अनुच्छेद 110", "अनुच्छेद 112", "अनुच्छेद 117"], 1],
+  ["वार्षिक वित्तीय विवरण किस अनुच्छेद में है?", ["अनुच्छेद 110", "अनुच्छेद 112", "अनुच्छेद 116", "अनुच्छेद 266"], 1],
+  ["राष्ट्रपति को 'अध्यादेश' जारी करने की शक्ति किस अनुच्छेद से प्राप्त है?", ["अनुच्छेद 123", "अनुच्छेद 143", "अनुच्छेद 352", "अनुच्छेद 356"], 0],
+  ["सर्वोच्च न्यायालय की स्थापना और गठन किस अनुच्छेद में वर्णित है?", ["अनुच्छेद 124", "अनुच्छेद 129", "अनुच्छेद 143", "अनुच्छेद 214"], 0],
+  ["किस अनुच्छेद के तहत राष्ट्रपति सर्वोच्च न्यायालय से सलाह मांग सकता है?", ["अनुच्छेद 131", "अनुच्छेद 137", "अनुच्छेद 143", "अनुच्छेद 148"], 2],
+  ["भारत के नियंत्रक एवं महालेखा परीक्षक (CAG) का उल्लेख किस अनुच्छेद में है?", ["अनुच्छेद 76", "अनुच्छेद 148", "अनुच्छेद 280", "अनुच्छेद 324"], 1],
+  ["राज्यपाल की नियुक्ति किस अनुच्छेद के तहत राष्ट्रपति द्वारा की जाती है?", ["अनुच्छेद 153 और अनुच्छेद 155", "अनुच्छेद 161", "अनुच्छेद 163", "अनुच्छेद 213"], 0],
+  ["'वित्त आयोग' के गठन का प्रावधान किस अनुच्छेद में है?", ["अनुच्छेद 266", "अनुच्छेद 267", "अनुच्छेद 280", "अनुच्छेद 300A"], 2],
+  ["अखिल भारतीय सेवाओं का सृजन राज्यसभा किस अनुच्छेद के तहत कर सकती है?", ["अनुच्छेद 312", "अनुच्छेद 315", "अनुच्छेद 324", "अनुच्छेद 249"], 0],
+  ["'भारत का निर्वाचन आयोग' किस अनुच्छेद में वर्णित है?", ["अनुच्छेद 280", "अनुच्छेद 315", "अनुच्छेद 324", "अनुच्छेद 338"], 2],
+  ["राष्ट्रीय अनुसूचित जाति आयोग (NCSC) और जनजाति आयोग (NCST) किन अनुच्छेदों में हैं?", ["अनुच्छेद 338 और 338A", "अनुच्छेद 340 और 341", "अनुच्छेद 330 और 332", "अनुच्छेद 350 और 351"], 0],
+  ["संघ की राजभाषा हिंदी और लिपि देवनागरी होगी—यह किस अनुच्छेद में कहा गया है?", ["अनुच्छेद 343", "अनुच्छेद 348", "अनुच्छेद 350A", "अनुच्छेद 351"], 0],
+  ["'राष्ट्रीय आपातकाल' किस अनुच्छेद के तहत लगाया जाता है?", ["अनुच्छेद 352", "अनुच्छेद 356", "अनुच्छेद 360", "अनुच्छेद 368"], 0],
+  ["संविधान संशोधन की प्रक्रिया किस अनुच्छेद में और किस देश के संविधान से ली गई है?", ["अनुच्छेद 368 - दक्षिण अफ्रीका", "अनुच्छेद 360 - अमेरिका", "अनुच्छेद 356 - कनाडा", "अनुच्छेद 370 - ब्रिटेन"], 0],
+  ["'प्रथम संविधान संशोधन अधिनियम, 1951' द्वारा संविधान में क्या जोड़ा गया?", ["9वीं अनुसूची", "10वीं अनुसूची", "मौलिक कर्तव्य", "पंचायती राज"], 0],
+  ["भाषाई आधार पर राज्यों के पुनर्गठन से संबंधित संविधान संशोधन कौन सा है?", ["1वाँ संशोधन (1951)", "7वाँ संशोधन (1956)", "10वाँ संशोधन (1961)", "14वाँ संशोधन (1962)"], 1],
+  ["'सिंधी भाषा' को 8वीं अनुसूची में 15वीं भाषा के रूप में किस संशोधन द्वारा जोड़ा गया?", ["21वाँ संशोधन (1967)", "71वाँ संशोधन", "92वाँ संशोधन", "42वाँ संशोधन"], 0],
+  ["'सिक्किम' को किस संविधान संशोधन द्वारा भारत का 22वाँ पूर्ण राज्य बनाया गया?", ["35वाँ संशोधन", "36वाँ संशोधन (1975)", "53वाँ संशोधन", "56वाँ संशोधन"], 1],
+  ["किस संविधान संशोधन को 'लघु संविधान' (Mini Constitution) कहा जाता है?", ["42वाँ संविधान संशोधन अधिनियम, 1976", "44वाँ संविधान संशोधन अधिनियम, 1978", "1वाँ संविधान संशोधन अधिनियम, 1951", "73वाँ संविधान संशोधन अधिनियम, 1992"], 0],
+  ["42वें संविधान संशोधन (1976) द्वारा प्रस्तावना में कौन से तीन नए शब्द जोड़े गए?", ["समाजवादी, पंथनिरपेक्ष और अखंडता", "लोकतांत्रिक, गणराज्य और न्याय", "स्वतंत्रता, समता और बंधुत्व", "संप्रभु, समाजवादी और संघीय"], 0],
+  ["'संपत्ति के अधिकार' को मौलिक अधिकारों से हटाकर अनुच्छेद 300A के तहत कानूनी अधिकार किस संशोधन द्वारा बनाया गया?", ["42वाँ संशोधन", "44वाँ संशोधन (1978)", "52वाँ संशोधन", "86वाँ संशोधन"], 1],
+  ["44वें संविधान संशोधन (1978) द्वारा राष्ट्रीय आपातकाल में 'आंतरिक अशांति' शब्द के स्थान पर क्या जोड़ा गया?", ["सशस्त्र विद्रोह (Armed Rebellion)", "बाह्य आक्रमण", "गृह युद्ध", "संवैधानिक विफलता"], 0],
+  ["किस संविधान संशोधन द्वारा मतदान की न्यूनतम आयु 21 वर्ष से घटाकर 18 वर्ष कर दी गई?", ["52वाँ संशोधन", "61वाँ संशोधन (1989)", "69वाँ संशोधन", "73वाँ संशोधन"], 1],
+  ["दिल्ली को 'राष्ट्रीय राजधानी क्षेत्र' (NCT) का विशेष दर्जा किस संशोधन द्वारा दिया गया?", ["61वाँ संशोधन", "69वाँ संशोधन (1991)", "70वाँ संशोधन", "74वाँ संशोधन"], 1],
+  ["किस संविधान संशोधन द्वारा मंत्रिपरिषद का आकार 15% तक सीमित किया गया?", ["89वाँ संशोधन", "91वाँ संशोधन (2003)", "97वाँ संशोधन", "99वाँ संशोधन"], 1],
+  ["'सहकारी समितियों' को संवैधानिक दर्जा किस संशोधन द्वारा दिया गया?", ["92वाँ संशोधन", "97वाँ संशोधन (2011)", "100वाँ संशोधन", "102वाँ संशोधन"], 1],
+  ["भारत और बांग्लादेश के बीच 'भूमि सीमा समझौता' किस संशोधन से संबंधित है?", ["99वाँ संशोधन", "100वाँ संशोधन (2015)", "101वाँ संशोधन", "102वाँ संशोधन"], 1],
+  ["'वस्तु एवं सेवा कर' (GST) लागू करने से संबंधित संविधान संशोधन कौन सा है?", ["100वाँ संशोधन", "101वाँ संशोधन (2016)", "102वाँ संशोधन", "103वाँ संशोधन"], 1],
+  ["'राष्ट्रीय पिछड़ा वर्ग आयोग' (NCBC) को संवैधानिक दर्जा किस संशोधन द्वारा मिला?", ["101वाँ संशोधन", "102वाँ संशोधन (2018)", "103वाँ संशोधन", "104वाँ संशोधन"], 1],
+  ["आर्थिक रूप से कमजोर वर्गों (EWS) के लिए 10% आरक्षण किस संशोधन द्वारा प्रदान किया गया?", ["102वाँ संशोधन", "103वाँ संशोधन (2019)", "104वाँ संशोधन", "105वाँ संशोधन"], 1],
+  ["लोकसभा और विधानसभाओं में एंग्लो-इंडियन आरक्षण को किस संशोधन द्वारा समाप्त किया गया?", ["103वाँ संशोधन", "104वाँ संशोधन (2019)", "105वाँ संशोधन", "106वाँ संशोधन"], 1],
+  ["राज्यों को अपनी स्वयं की OBC सूची बनाने का अधिकार बहाल करने वाला संशोधन कौन सा है?", ["104वाँ संशोधन", "105वाँ संशोधन (2021)", "106वाँ संशोधन", "102वाँ संशोधन"], 1],
+  ["'नारी शक्ति वंदन अधिनियम' कौन सा संविधान संशोधन है?", ["104वाँ संशोधन", "105वाँ संशोधन", "106वाँ संविधान संशोधन अधिनियम, 2023", "107वाँ संशोधन"], 2],
+  ["किस अनुच्छेद के तहत नए राज्यों का निर्माण और सीमाओं में परिवर्तन संसद कर सकती है?", ["अनुच्छेद 1", "अनुच्छेद 2", "अनुच्छेद 3", "अनुच्छेद 4"], 2],
+  ["'प्रस्तावना' में अब तक कितनी बार संशोधन किया गया है?", ["केवल एक बार (42वें संशोधन 1976 द्वारा)", "दो बार", "तीन बार", "कभी नहीं"], 0],
+  ["मौलिक अधिकारों को निलंबित करने की शक्ति किसके पास है?", ["संसद", "राष्ट्रपति (आपातकाल के दौरान, अनुच्छेद 359)", "सर्वोच्च न्यायालय", "प्रधानमंत्री"], 1],
+  ["किस अनुच्छेद में ग्राम पंचायतों के संगठन का उल्लेख है?", ["अनुच्छेद 38", "अनुच्छेद 40", "अनुच्छेद 42", "अनुच्छेद 46"], 1],
+  ["संसद के किसी सदन की बैठक के लिए न्यूनतम गणपूर्ति (Quorum) कितनी होती है?", ["कुल सदस्य संख्या का 1/4", "कुल सदस्य संख्या का 1/10 (अनुच्छेद 100)", "कुल सदस्य संख्या का 1/3", "कुल सदस्य संख्या का 1/5"], 1],
+  ["कोई विधेयक 'धन विधेयक' है या नहीं, इसका अंतिम निर्णय कौन करता है?", ["राष्ट्रपति", "लोकसभा अध्यक्ष (Speaker)", "वित्त मंत्री", "राज्यसभा सभापति"], 1],
+  ["राज्यसभा का सदस्य बनने के लिए न्यूनतम आयु कितनी होनी चाहिए?", ["21 वर्ष", "25 वर्ष", "30 वर्ष", "35 वर्ष"], 2],
+  ["किस अनुच्छेद के तहत राष्ट्रपति प्रधानमंत्री की नियुक्ति करता है?", ["अनुच्छेद 74", "अनुच्छेद 75(1)", "अनुच्छेद 78", "अनुच्छेद 84"], 1],
+  ["भारतीय संविधान में 'संयुक्त राज्य अमेरिका' से क्या लिया गया है?", ["मौलिक अधिकार, न्यायिक समीक्षा, स्वतंत्र न्यायपालिका, महाभियोग", "संसदीय प्रणाली और एकल नागरिकता", "समवर्ती सूची", "संघीय व्यवस्था"], 0],
+  ["भारतीय संविधान में 'आपातकालीन उपबंध' किस भाग में हैं?", ["भाग 15", "भाग 17", "भाग 18 (अनुच्छेद 352 से 360)", "भाग 20"], 2],
+  ["भारत में अब तक कितनी बार 'वित्तीय आपातकाल' घोषित किया गया है?", ["एक बार", "दो बार", "तीन बार", "कभी नहीं (शून्य बार)"], 3],
+  ["संविधान की किस अनुसूची में केंद्र और राज्यों के बीच शक्तियों के बंटवारे का उल्लेख है?", ["5वीं अनुसूची", "6वीं अनुसूची", "7वीं अनुसूची", "8वीं अनुसूची"], 2],
+  ["'शिक्षा' और 'वन' को किस संशोधन द्वारा राज्य सूची से समवर्ती सूची में डाला गया?", ["42वाँ संशोधन (1976)", "44वाँ संशोधन", "86वाँ संशोधन", "73वाँ संशोधन"], 0],
+  ["अनुच्छेद 226 के तहत कौन सा न्यायालय मौलिक अधिकारों के प्रवर्तन के लिए रिट जारी करता है?", ["सर्वोच्च न्यायालय", "उच्च न्यायालय (High Court)", "जिला न्यायालय", "सत्र न्यायालय"], 1],
+  ["भारत में कुल कितने उच्च न्यायालय (High Courts) हैं?", ["21", "24", "25 (नवीनतम: अमरावती)", "28"], 2],
+  ["किस अनुच्छेद में 'अंतर्राज्यीय परिषद' के गठन का प्रावधान है?", ["अनुच्छेद 262", "अनुच्छेद 263", "अनुच्छेद 279A", "अनुच्छेद 280"], 1],
+  ["'GST परिषद' का उल्लेख किस अनुच्छेद में है?", ["अनुच्छेद 266", "अनुच्छेद 279A", "अनुच्छेद 280", "अनुच्छेद 300A"], 1],
+  ["भारतीय संविधान में 'एकल नागरिकता' की अवधारणा किस देश से ली गई है?", ["अमेरिका", "ब्रिटेन (UK)", "कनाडा", "आयरलैंड"], 1],
+  ["संविधान की प्रस्तावना में 'स्वतंत्रता, समता और बंधुत्व' के आदर्श किस देश की क्रांति से प्रेरित हैं?", ["अमेरिकी क्रांति", "फ्रांसीसी क्रांति (1789)", "रूसी क्रांति", "औद्योगिक क्रांति"], 1],
+  ["संविधान की तीसरी अनुसूची का संबंध किससे है?", ["राज्यसभा में सीटों का आवंटन", "विभिन्न पदाधिकारियों द्वारा ली जाने वाली शपथ", "वेतन और भत्ते", "भाषाएँ"], 1],
+  ["किस अनुच्छेद के तहत राज्यसभा राज्य सूची के किसी विषय पर कानून बनाने का अधिकार दे सकती है?", ["अनुच्छेद 249", "अनुच्छेद 250", "अनुच्छेद 312", "अनुच्छेद 356"], 0],
+  ["'लोक लेखा समिति' (PAC) में कुल कितने सदस्य होते हैं?", ["15 सदस्य", "22 सदस्य (15 लोकसभा + 7 राज्यसभा)", "30 सदस्य", "10 सदस्य"], 1],
+  ["किस अनुच्छेद में 'ग्रामीण एवं कुटीर उद्योगों को प्रोत्साहन' देने की बात कही गई है?", ["अनुच्छेद 40", "अनुच्छेद 43", "अनुच्छेद 47", "अनुच्छेद 48"], 1],
+  ["अनुच्छेद 39A का संबंध किससे है?", ["समान न्याय और निःशुल्क विधिक सहायता", "ग्राम पंचायतों का गठन", "पर्यावरण संरक्षण", "गोवध निषेध"], 0],
+  ["11वाँ मौलिक कर्तव्य किस संशोधन द्वारा जोड़ा गया?", ["42वाँ संशोधन", "44वाँ संशोधन", "86वाँ संशोधन (2002)", "91वाँ संशोधन"], 2],
+  ["भारत के राष्ट्रपति के चुनाव से संबंधित विवादों का निपटारा कौन करता है?", ["भारत का निर्वाचन आयोग", "भारत का सर्वोच्च न्यायालय (अनुच्छेद 71)", "संसद", "उच्च न्यायालय"], 1],
+  ["भारत की पहली महिला लोकसभा अध्यक्ष कौन थीं?", ["सुमित्रा महाजन", "मीरा कुमार", "सरोजिनी नायडू", "सुषमा स्वराज"], 1],
+  ["किस अनुच्छेद के तहत केंद्र सरकार राज्यों को निर्देश दे सकती है और अनुपालन न होने पर राष्ट्रपति शासन लगाया जा सकता है?", ["अनुच्छेद 352", "अनुच्छेद 356 और 365", "अनुच्छेद 360", "अनुच्छेद 370"], 1],
+  ["भारत में सबसे पहले किस राज्य में 'राष्ट्रपति शासन' लागू किया गया था?", ["केरल", "पंजाब (पेप्सू क्षेत्र, 1951)", "उत्तर प्रदेश", "बिहार"], 1],
+  ["किस संविधान संशोधन द्वारा दादरा एवं नगर हवेली को केंद्र शासित प्रदेश बनाया गया?", ["10वाँ संशोधन (1961)", "12वाँ संशोधन", "14वाँ संशोधन", "36वाँ संशोधन"], 0],
+  ["'केशवानंद भारती बनाम केरल राज्य' (1973) के फैसले में सुप्रीम कोर्ट ने कौन सा सिद्धांत दिया?", ["संविधान के 'मूल ढांचे' का सिद्धांत", "निजता का अधिकार", "तीन तलाक असंवैधानिक", "आरटीआई मौलिक अधिकार है"], 0],
+  ["भारतीय संविधान के किस अनुच्छेद में 'धार्मिक कार्यों के प्रबंध की स्वतंत्रता' दी गई है?", ["अनुच्छेद 25", "अनुच्छेद 26", "अनुच्छेद 27", "अनुच्छेद 28"], 1],
+  ["अल्पसंख्यक वर्गों के हितों का संरक्षण किस अनुच्छेद में वर्णित है?", ["अनुच्छेद 29", "अनुच्छेद 25", "अनुच्छेद 21", "अनुच्छेद 15"], 0],
+  ["'राष्ट्रीय मानवाधिकार आयोग' (NHRC) किस प्रकार का निकाय है?", ["संवैधानिक निकाय", "सांविधिक (Statutory) निकाय", "कार्यकारी निकाय", "न्यायिक निकाय"], 1],
+  ["राष्ट्रपति अपना त्यागपत्र किसे सौंपता है?", ["भारत के मुख्य न्यायाधीश को", "उपराष्ट्रपति को", "लोकसभा अध्यक्ष को", "प्रधानमंत्री को"], 1],
+  ["सर्वोच्च न्यायालय के न्यायाधीशों की सेवानिवृत्ति आयु कितनी है?", ["60 वर्ष", "62 वर्ष", "65 वर्ष", "70 वर्ष"], 2],
+  ["किस अनुच्छेद में 'भारत का नाम और राज्य क्षेत्र' का वर्णन है?", ["अनुच्छेद 1", "अनुच्छेद 2", "अनुच्छेद 3", "अनुच्छेद 5"], 0],
+  ["संविधान सभा का 'अंतिम सत्र' कब आयोजित हुआ था?", ["26 नवंबर 1949", "24 जनवरी 1950", "26 जनवरी 1950", "22 जुलाई 1947"], 1],
+  ["भारतीय संविधान के पिता (जनक) के रूप में किसे जाना जाता है?", ["पंडित जवाहरलाल नेहरू", "डॉ. भीमराव रामजी अंबेडकर", "डॉ. राजेंद्र प्रसाद", "सरदार वल्लभभाई पटेल"], 1]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / ${Q.length}</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+
+  if(remaining <= 120){
+    timerEl.classList.add("blink");
+  }
+
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+
+  modal.classList.remove("hidden");
+}
+
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+
+  document.getElementById("greeting").textContent =
+    student + ", आपका टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+
+  let message = correct >= 90 ? "🏆 अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "📘 औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+
+  document.getElementById("motivation").textContent = message;
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+
+    if(type !== "all" && type !== status) return "";
+
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
