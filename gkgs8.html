@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - पुस्तकें एवं संगठन (100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1150px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display:flex;justify-content:center;align-items:center;
+  padding:15px;animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0);animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;padding:14px 18px;font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px;background:#f8fafc;display:flex;
+  justify-content:center;gap:12px;border-top:1px solid #e2e8f0;
+}
+
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>पुस्तकें, लेखक एवं अंतर्राष्ट्रीय संगठन (100 प्रश्न)</b></p>
+  <p>SSC | Railway | UPSSSC | All Competitive Exams</p>
+  <p>कुल प्रश्न: 100 | कुल अंक: 100 | समय: 20 मिनट</p>
+</header>
+
+<div class="container">
+
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>ऑनलाइन मॉक टेस्ट निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें।</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+
+    <ul style="padding-left:20px;color:#334155">
+      <li>कुल प्रश्न: <b>100</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">हल किए गए: <b id="answered">0</b>/100 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+
+  </section>
+
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>आपका परीक्षा परिणाम (Scorecard)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+
+</div>
+
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons">
+      <!-- Buttons dynamically injected -->
+    </div>
+  </div>
+</div>
+
+<script>
+const RAW_Q = [
+  ["'अर्थशास्त्र' (राजनीति और लोक प्रशासन पर आधारित ग्रंथ) के लेखक कौन हैं?", ["मेगस्थनीज", "चाणक्य / कौटिल्य / विष्णुगुप्त", "विशाखदत्त", "कल्हण"], 1],
+  ["'अष्टाध्यायी' किसने लिखा था?", ["पतंजलि", "पाणिनि", "भरत मुनि", "अमरसिंह"], 1],
+  ["'अभिज्ञानशाकुंतलम', 'मेघदूतम' और 'रघुवंशम' किसकी अमर रचनाएँ हैं?", ["बाणभट्ट", "महाकवि कालिदास", "तुलसीदास", "सूरदास"], 1],
+  ["'पंचतंत्र' के लेखक कौन हैं?", ["नारायण पंडित", "विष्णु शर्मा", "सोमदेव", "अश्वघोष"], 1],
+  ["'गीत गोविंद' के रचयिता कौन हैं?", ["कबीरदास", "जयदेव", "चंदबरदाई", "मलिक मोहम्मद जायसी"], 1],
+  ["'अकबरनामा' और 'आइन-ए-अकबरी' की रचना किसने की थी?", ["गुलबदन बेगम", "अबुल फजल", "बाबर", "जहांगीर"], 1],
+  ["'गीतांजलि' और 'गोरा' के लेखक कौन हैं?", ["बंकिम चंद्र चटर्जी", "रवींद्रनाथ टैगोर", "शरतचंद्र चट्टोपाध्याय", "मुंशी प्रेमचंद"], 1],
+  ["'सत्य के साथ मेरे प्रयोग' और 'हिंद स्वराज' किसकी पुस्तकें हैं?", ["जवाहरलाल नेहरू", "महात्मा गांधी", "सरदार पटेल", "डॉ. राजेंद्र प्रसाद"], 1],
+  ["'डिस्कवरी ऑफ इंडिया' और 'ग्लिम्प्सेस ऑफ वर्ल्ड हिस्ट्री' के लेखक कौन हैं?", ["महात्मा गांधी", "पंडित जवाहरलाल नेहरू", "सुभाष चंद्र बोस", "मौलाना अबुल कलाम आजाद"], 1],
+  ["'अनहैप्पी इंडिया' पुस्तक के लेखक कौन हैं?", ["बाल गंगाधर तिलक", "लाला लाजपत राय", "विपिन चंद्र पाल", "भगत सिंह"], 1],
+  ["'एनिहिलेशन ऑफ कास्ट' और 'वेटिंग फॉर ए वीजा' किसकी रचनाएँ हैं?", ["ज्योतिबा फुले", "डॉ. बी.आर. अंबेडकर", "पेरियार", "कांशीराम"], 1],
+  ["'विंग्स ऑफ फायर' और 'इग्नाइटेड माइंड्स' किसकी प्रसिद्ध पुस्तकें हैं?", ["विक्रम साराभाई", "डॉ. ए.पी.जे. अब्दुल कलाम", "होमी भाभा", "सतीश धवन"], 1],
+  ["'मालगुडी डेज' और 'द गाइड' के लेखक कौन हैं?", ["मुल्क राज आनंद", "आर.के. नारायण", "रस्किन बॉन्ड", "खुशवंत सिंह"], 1],
+  ["'द गॉड ऑफ स्मॉल थिंग्स' की लेखिका कौन हैं?", ["किरण देसाई", "अरुंधति रॉय", "झुम्पा लाहिड़ी", "अनीता देसाई"], 1],
+  ["'मिडनाइट्स चिल्ड्रन' और 'द सैटेनिक वर्सेज' के लेखक कौन हैं?", ["विक्रम सेठ", "सलमान रुश्दी", "अरविंद अडिगा", "अमिताव घोष"], 1],
+  ["'ए सूटेबल बॉय' और 'द गोल्डन गेट' किसने लिखी है?", ["सलमान रुश्दी", "विक्रम सेठ", "शशि थरूर", "चेतन भगत"], 1],
+  ["'एन एरा ऑफ डार्कनेस' और 'व्हाई आई एम ए हिंदू' के लेखक कौन हैं?", ["जयराम रमेश", "शशि थरूर", "रामचंद्र गुहा", "अमर्त्य सेन"], 1],
+  ["'प्लेइंग इट माय वे' किस खिलाड़ी की आत्मकथा है?", ["कपिल देव", "सचिन तेंदुलकर", "सौरव गांगुली", "युवराज सिंह"], 1],
+  ["'द रेस ऑफ माय लाइफ' किस भारतीय एथलीट की आत्मकथा है?", ["पी.टी. उषा", "मिल्खा सिंह", "अभिनव बिंद्रा", "मैरी कॉम"], 1],
+  ["'एस अगेंस्ट ऑड्स' और 'प्लेइंग टू विन' क्रमशः किन महिला खिलाड़ियों की आत्मकथाएँ हैं?", ["सानिया मिर्जा और साइना नेहवाल", "पी.वी. सिंधु और मिताली राज", "कर्णम मल्लेश्वरी और मीराबाई चानू", "हिमा दास और दुती चंद"], 0],
+  ["'माइंड मास्टर' किस प्रसिद्ध शतरंज खिलाड़ी की आत्मकथा है?", ["विश्वनाथन आनंद", "आर. प्रज्ञानानंद", "कोनेरू हम्पी", "डी. गुकेश"], 0],
+  ["'281 एंड बियॉन्ड' और 'नो स्पिन' किन क्रिकेटरों की आत्मकथाएँ हैं?", ["वी.वी.एस. लक्ष्मण और शेन वॉर्न", "राहुल द्रविड़ और अनिल कुंबले", "वीरेंद्र सहवाग और हरभजन सिंह", "एम.एस. धोनी और विराट कोहली"], 0],
+  ["'सनी डेज' किस महान बल्लेबाज की आत्मकथा है?", ["सुनील गावस्कर", "गुंडप्पा विश्वनाथ", "दिलीप वेंगसरकर", "मोहिंदर अमरनाथ"], 0],
+  ["'द इमॉर्टल्स ऑफ मेलुहा' के लेखक कौन हैं?", ["देवदत्त पटनायक", "अमीश त्रिपाठी", "अश्विन सांघी", "चेतन भगत"], 1],
+  ["'कामायनी' और 'आँसू' किस महान हिंदी कवि की कृतियाँ हैं?", ["सुमित्रानंदन पंत", "जयशंकर प्रसाद", "सूर्यकांत त्रिपाठी निराला", "महादेवी वर्मा"], 1],
+  ["'मधुशाला' के रचयिता कौन हैं?", ["रामधारी सिंह दिनकर", "हरिवंश राय बच्चन", "मैथिलीशरण गुप्त", "धर्मवीर भारती"], 1],
+  ["'राग दरबारी' के लेखक कौन हैं?", ["हरिशंकर परसाई", "श्रीलाल शुक्ल", "फणीश्वर नाथ रेणु", "भीष्म साहनी"], 1],
+  ["'रत्नावली', 'नागानंद' और 'प्रियदर्शिका' संस्कृत नाटकों की रचना किस सम्राट ने की थी?", ["समुद्रगुप्त", "हर्षवर्धन", "अशोक", "कनिष्क"], 1],
+  ["'मृच्छकटिकम' नाटक के लेखक कौन हैं?", ["शूद्रक", "भास", "भवभूति", "दंडी"], 0],
+  ["'किताब-उल-हिंद' अरबी भाषा में किसने लिखी थी?", ["इब्न बतूता", "अल-बरूनी", "मार्को पोलो", "फाह्यान"], 1],
+  ["'द वेल्थ ऑफ नेशंस' के लेखक कौन हैं?", ["कार्ल मार्क्स", "एडम स्मिथ", "जॉन मेनार्ड कीन्स", "अमर्त्य सेन"], 1],
+  ["'ओरिजिन ऑफ स्पीशीज' पुस्तक किसने लिखी थी?", ["आइजैक न्यूटन", "चार्ल्स डार्विन", "स्टीफन हॉकिंग", "गैलीलियो"], 1],
+  ["'वॉर एंड पीस' किस रूसी लेखक की महान कृति है?", ["लियो टॉलस्टॉय", "मैक्सिम गोर्की", "फ्योदोर दोस्तोवस्की", "बोरिस पास्तरनाक"], 0],
+  ["'हैरी पॉटर' श्रृंखला की लेखिका कौन हैं?", ["जे.के. रोलिंग", "अगाथा क्रिस्टी", "जॉर्ज ऑरवेल", "विलियम शेक्सपियर"], 0],
+  ["'लॉन्ग वॉक टू फ्रीडम' किस विश्व नेता की आत्मकथा है?", ["मार्टिन लूथर किंग जूनियर", "नेल्सन मंडेला", "बराक ओबामा", "विंस्टन चर्चिल"], 1],
+  ["'द डायरी ऑफ A यंग गर्ल' किसकी प्रसिद्ध डायरी है?", ["ऐनी फ्रैंक", "मलाला यूसुफजई", "हेलेन केलर", "इंदिरा गांधी"], 0],
+  ["'आनंदमठ' उपन्यास की रचना बंकिम चंद्र चटर्जी ने किस विद्रोह की पृष्ठभूमि पर की थी?", ["1857 का विद्रोह", "संन्यासी विद्रोह", "नील विद्रोह", "संथाल विद्रोह"], 1],
+  ["'लाइफ डिवाइन' और 'सावित्री' किसकी रचनाएँ हैं?", ["स्वामी विवेकानंद", "श्री अरविंद घोष", "रवींद्रनाथ टैगोर", "डॉ. सर्वपल्ली राधाकृष्णन"], 1],
+  ["'सत्यार्थ प्रकाश' ग्रंथ की रचना किसने की थी?", ["राजा राममोहन राय", "स्वामी दयानंद सरस्वती", "स्वामी विवेकानंद", "ईश्वर चंद्र विद्यासागर"], 1],
+  ["'द गोल्डन थ्रेशोल्ड' किसकी कविता संग्रह है?", ["सरोजिनी नायडू", "महादेवी वर्मा", "सुभद्रा कुमारी चौहान", "अमृता प्रीतम"], 0],
+  ["'टॉम्ब ऑफ सैंड' की लेखिका कौन हैं?", ["गीतांजलि श्री", "कृष्णा सोबती", "मन्नू भंडारी", "चित्रा मुद्गल"], 0],
+  ["'एग्जाम वॉरियर्स' पुस्तक के लेखक कौन हैं?", ["नरेन्द्र मोदी", "डॉ. मनमोहन सिंह", "प्रणब मुखर्जी", "अटल बिहारी वाजपेयी"], 0],
+  ["'बिलीव: व्हाट लाइफ एंड क्रिकेट टॉट मी' किस भारतीय क्रिकेटर की आत्मकथा है?", ["सुरेश रैना", "रोहित शर्मा", "शिखर धवन", "गौतम गंभीर"], 0],
+  ["'पाथेर पांचाली' उपन्यास के लेखक कौन हैं?", ["विभूतिभूषण बंद्योपाध्याय", "ताराशंकर बंद्योपाध्याय", "माणिक बंद्योपाध्याय", "सत्यजीत रे"], 0],
+  ["'इकोनॉमिक हिस्ट्री ऑफ इंडिया' पुस्तक किसने लिखी थी?", ["रमेश चंद्र दत्त", "दादाभाई नौरोजी", "गोपाल कृष्ण गोखले", "एम.जी. रानाडे"], 0],
+  ["'द पैलेस ऑफ इल्यूजन्स' की लेखिका कौन हैं?", ["चित्रा बनर्जी दिवाकरुणी", "सुधा मूर्ति", "ट्विंकल खन्ना", "शोभा डे"], 0],
+  ["'द अलकेमिस्ट' उपन्यास के लेखक कौन हैं?", ["पाउलो कोएल्हो", "डैन ब्राउन", "खालिद होसैनी", "हारुकी मुराकामी"], 0],
+  ["'रिपब्लिक' और 'पॉलिटिक्स' क्रमशः किन प्राचीन यूनानी दार्शनिकों की रचनाएँ हैं?", ["प्लेटो और अरस्तू", "सुकरात और हेरोडोटस", "होमर", "पाइथागोरस और आर्किमिडीज"], 0],
+  ["'अकबर' के शासनकाल में महाभारत का फारसी अनुवाद किसने किया था?", ["बदायूँनी और फैजी", "अबुल फजल", "बीरबल", "टोडरमल"], 0],
+  ["'सारे जहाँ से अच्छा हिंदोस्तां हमारा' की रचना किसने की थी?", ["मुहम्मद इकबाल", "मिर्जा गालिब", "फैज अहमद फैज", "राम प्रसाद बिस्मिल"], 0],
+  ["संयुक्त राष्ट्र संघ (UN) की स्थापना कब हुई और इसका मुख्यालय कहाँ है?", ["24 अक्टूबर 1945 - न्यूयॉर्क", "10 जनवरी 1920 - जिनेवा", "7 अप्रैल 1948 - पेरिस", "1 जनवरी 1995 - वाशिंगटन"], 0],
+  ["अंतर्राष्ट्रीय न्यायालय (ICJ) का मुख्यालय कहाँ स्थित है?", ["न्यूयॉर्क", "द हेग (नीदरलैंड)", "जिनेवा", "वियना"], 1],
+  ["विश्व बैंक और अंतर्राष्ट्रीय मुद्रा कोष (IMF) के मुख्यालय कहाँ स्थित हैं?", ["न्यूयॉर्क", "वाशिंगटन डी.सी.", "जिनेवा", "लंदन"], 1],
+  ["विश्व स्वास्थ्य संगठन (WHO) का मुख्यालय कहाँ है?", ["पेरिस", "जिनेवा", "न्यूयॉर्क", "रोम"], 1],
+  ["विश्व व्यापार संगठन (WTO) का मुख्यालय कहाँ स्थित है?", ["ब्रुसेल्स", "जिनेवा", "वियना", "पेरिस"], 1],
+  ["अंतर्राष्ट्रीय श्रम संगठन (ILO) का मुख्यालय कहाँ है?", ["जिनेवा", "लंदन", "न्यूयॉर्क", "बर्न"], 0],
+  ["यूनेस्को का मुख्यालय कहाँ स्थित है?", ["जिनेवा", "पेरिस", "रोम", "वियना"], 1],
+  ["यूनिसेफ का मुख्यालय कहाँ है?", ["जिनेवा", "न्यूयॉर्क", "पेरिस", "नैरोबी"], 1],
+  ["खाद्य एवं कृषि संगठन (FAO) का मुख्यालय कहाँ स्थित है?", ["पेरिस", "रोम", "जिनेवा", "मैड्रिड"], 1],
+  ["संयुक्त राष्ट्र पर्यावरण कार्यक्रम (UNEP) का मुख्यालय कहाँ है?", ["ग्लैंड", "नैरोबी", "जिनेवा", "मॉन्ट्रियल"], 1],
+  ["अंतर्राष्ट्रीय परमाणु ऊर्जा एजेंसी (IAEA) और ओपेक (OPEC) के मुख्यालय कहाँ स्थित हैं?", ["जिनेवा", "वियना", "ब्रुसेल्स", "रियाद"], 1],
+  ["नाटो (NATO) और यूरोपीय संघ के मुख्यालय कहाँ हैं?", ["पेरिस", "ब्रुसेल्स", "लंदन", "बर्लिन"], 1],
+  ["सार्क (SAARC) का सचिवालय (मुख्यालय) कहाँ है?", ["नई दिल्ली", "काठमांडू", "ढाका", "कोलंबो"], 1],
+  ["आसियन (ASEAN) का मुख्यालय कहाँ स्थित है?", ["बैंकॉक", "जकार्ता", "कुआलालंपुर", "सिंगापुर"], 1],
+  ["एशियाई विकास बैंक (ADB) का मुख्यालय कहाँ स्थित है?", ["टोक्यो", "मनीला", "शंघाई", "बीजिंग"], 1],
+  ["अंतर्राष्ट्रीय सौर गठबंधन (ISA) का मुख्यालय कहाँ स्थित है?", ["पेरिस", "गुरुग्राम", "नई दिल्ली", "अबू धाबी"], 1],
+  ["अंतर्राष्ट्रीय ओलंपिक समिति (IOC) का मुख्यालय कहाँ स्थित है?", ["जिनेवा", "लुसाने", "ज्यूरिख", "दुबई"], 1],
+  ["अंतर्राष्ट्रीय क्रिकेट परिषद (ICC) का मुख्यालय कहाँ स्थित है?", ["लंदन", "दुबई", "मुंबई", "मेलबर्न"], 1],
+  ["फीफा (FIFA) का मुख्यालय कहाँ है?", ["पेरिस", "ज्यूरिख", "मैड्रिड", "लंदन"], 1],
+  ["'विश्व मौसम विज्ञान संगठन' और 'विश्व बौद्धिक संपदा संगठन' के मुख्यालय कहाँ हैं?", ["जिनेवा", "पेरिस", "वियना", "मॉन्ट्रियल"], 0],
+  ["'रेड क्रॉस' का मुख्यालय कहाँ है?", ["जिनेवा", "लंदन", "न्यूयॉर्क", "ब्रुसेल्स"], 0],
+  ["'विश्व आर्थिक मंच' (WEF) का मुख्यालय कहाँ स्थित है?", ["दावोस", "कोलोग्नी / जिनेवा", "न्यूयॉर्क", "वाशिंगटन"], 1],
+  ["'संयुक्त राष्ट्र विकास कार्यक्रम' (UNDP) का मुख्यालय कहाँ है?", ["जिनेवा", "न्यूयॉर्क", "वाशिंगटन", "पेरिस"], 1],
+  ["'अंतर्राष्ट्रीय समुद्री संगठन' (IMO) का मुख्यालय कहाँ है?", ["जिनेवा", "लंदन", "रोम", "हैम्बर्ग"], 1],
+  ["'अंतर्राष्ट्रीय नागरिक उड्डयन संगठन' (ICAO) का मुख्यालय कहाँ स्थित है?", ["मॉन्ट्रियल", "जिनेवा", "पेरिस", "शिकागो"], 0],
+  ["'यूनिवर्सल पोस्टल यूनियन' (UPU) का मुख्यालय कहाँ स्थित है?", ["जिनेवा", "बर्न", "वियना", "पेरिस"], 1],
+  ["'आर्थिक सहयोग और विकास संगठन' (OECD) का मुख्यालय कहाँ है?", ["पेरिस", "जिनेवा", "वाशिंगटन", "ब्रुसेल्स"], 0],
+  ["'अंतर्राष्ट्रीय प्रकृति संरक्षण संघ' (IUCN) का मुख्यालय कहाँ है?", ["नैरोबी", "ग्लैंड", "जिनेवा", "वियना"], 1],
+  ["'विश्व वन्यजीव कोष' (WWF) का मुख्यालय कहाँ है?", ["ग्लैंड", "नैरोबी", "न्यूयॉर्क", "लंदन"], 0],
+  ["'संयुक्त राष्ट्र शरणार्थी उच्चायुक्त' (UNHCR) का मुख्यालय कहाँ स्थित है?", ["न्यूयॉर्क", "जिनेवा", "वियना", "रोम"], 1],
+  ["'संयुक्त राष्ट्र मानवाधिकार परिषद' (UNHRC) का मुख्यालय कहाँ स्थित है?", ["न्यूयॉर्क", "जिनेवा", "द हेग", "पेरिस"], 1],
+  ["'व्यापक परमाणु परीक्षण प्रतिबंध संधि संगठन' (CTBTO) का मुख्यालय कहाँ है?", ["जिनेवा", "वियना", "न्यूयॉर्क", "ब्रुसेल्स"], 1],
+  ["'रासायनिक हथियार निषेध संगठन' (OPCW) का मुख्यालय कहाँ स्थित है?", ["वियना", "द हेग", "जिनेवा", "पेरिस"], 1],
+  ["'इंटरपोल' का मुख्यालय कहाँ है?", ["पेरिस", "ल्यों", "लंदन", "ब्रुसेल्स"], 1],
+  ["'संयुक्त राष्ट्र विश्व पर्यटन संगठन' (UNWTO) का मुख्यालय कहाँ स्थित है?", ["पेरिस", "मैड्रिड", "रोम", "जिनेवा"], 1],
+  ["'UNCTAD' का मुख्यालय कहाँ स्थित है?", ["न्यूयॉर्क", "जिनेवा", "वाशिंगटन", "वियना"], 1],
+  ["'अंतर्राष्ट्रीय दूरसंचार संघ' (ITU) का मुख्यालय कहाँ है?", ["जिनेवा", "बर्न", "लंदन", "न्यूयॉर्क"], 0],
+  ["'अंतर्राष्ट्रीय मानकीकरण संगठन' (ISO) का मुख्यालय कहाँ स्थित है?", ["जिनेवा", "पेरिस", "न्यूयॉर्क", "टोक्यो"], 0],
+  ["'शंघाई सहयोग संगठन' (SCO) का सचिवालय कहाँ स्थित है?", ["शंघाई", "बीजिंग", "ताशकंद", "अस्ताना"], 1],
+  ["'न्यू डेवलपमेंट बैंक' (ब्रिक्स बैंक) का मुख्यालय कहाँ स्थित है?", ["बीजिंग", "शंघाई", "मुंबई", "जोहान्सबर्ग"], 1],
+  ["'एशियाई अवसंरचना निवेश बैंक' (AIIB) का मुख्यालय कहाँ स्थित है?", ["मनीला", "बीजिंग", "शंघाई", "सिंगापुर"], 1],
+  ["'बिम्सटेक' का सचिवालय कहाँ है?", ["काठमांडू", "ढाका", "कोलंबो", "बैंकॉक"], 1],
+  ["'अफ्रीकी संघ' (AU) का मुख्यालय कहाँ है?", ["नैरोबी", "अदीस अबाबा", "काहिरा", "जोहान्सबर्ग"], 1],
+  ["'अरब लीग' का मुख्यालय कहाँ स्थित है?", ["रियाद", "काहिरा", "अबू धाबी", "दोहा"], 1],
+  ["'राष्ट्रमंडल' और 'एमनेस्टी इंटरनेशनल' के मुख्यालय कहाँ हैं?", ["न्यूयॉर्क", "लंदन", "जिनेवा", "पेरिस"], 1],
+  ["'ट्रांसपेरेंसी इंटरनेशनल' का मुख्यालय कहाँ स्थित है?", ["बर्लिन", "जिनेवा", "लंदन", "वाशिंगटन"], 0],
+  ["'अंतर्राष्ट्रीय मुक्केबाजी संघ' और 'ITTF' के मुख्यालय कहाँ स्थित हैं?", ["लुसाने", "लंदन", "पेरिस", "ज्यूरिख"], 0],
+  ["'विश्व बैडमिंटन महासंघ' (BWF) का मुख्यालय कहाँ स्थित है?", ["लुसाने", "कुआलालंपुर", "जकार्ता", "टोक्यो"], 1],
+  ["'विश्व डोपिंग रोधी एजेंसी' (WADA) का मुख्यालय कहाँ स्थित है?", ["लुसाने", "मॉन्ट्रियल", "जिनेवा", "न्यूयॉर्क"], 1],
+  ["संयुक्त राष्ट्र सुरक्षा परिषद (UNSC) में कुल कितने सदस्य होते हैं?", ["10 सदस्य", "15 सदस्य", "20 सदस्य", "193 सदस्य"], 1]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / ${Q.length}</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+
+  if(remaining <= 120){
+    timerEl.classList.add("blink");
+  }
+
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+
+  modal.classList.remove("hidden");
+}
+
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+
+  document.getElementById("greeting").textContent =
+    student + ", आपका टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+
+  let message = correct >= 90 ? "🏆 अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "📘 औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+
+  document.getElementById("motivation").textContent = message;
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+
+    if(type !== "all" && type !== status) return "";
+
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
