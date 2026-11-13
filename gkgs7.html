@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - नृत्य एवं वाद्ययंत्र (100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1150px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display:flex;justify-content:center;align-items:center;
+  padding:15px;animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0);animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;padding:14px 18px;font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px;background:#f8fafc;display:flex;
+  justify-content:center;gap:12px;border-top:1px solid #e2e8f0;
+}
+
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>नृत्य एवं वाद्ययंत्र (Dance & Music Instruments) - मेगा मॉक टेस्ट</b></p>
+  <p>SSC | Railway | UPSSSC | All Competitive Exams</p>
+  <p>कुल प्रश्न: 100 | कुल अंक: 100 | समय: 20 मिनट</p>
+</header>
+
+<div class="container">
+
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>ऑनलाइन मॉक टेस्ट निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें।</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+
+    <ul style="padding-left:20px;color:#334155">
+      <li>कुल प्रश्न: <b>100</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">हल किए गए: <b id="answered">0</b>/100 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+
+  </section>
+
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>आपका परीक्षा परिणाम (Scorecard)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+
+</div>
+
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons">
+      <!-- Buttons dynamically injected -->
+    </div>
+  </div>
+</div>
+
+<script>
+const RAW_Q = [
+  ["भारत में कुल कितने शास्त्रीय नृत्य संगीत नाटक अकादमी द्वारा मान्यता प्राप्त हैं?", ["6", "8 (भरतनाट्यम, कथक, कथकली, कुचिपुड़ी, ओडिसी, मणिपुरी, मोहिनीअट्टम, सत्त्रिया)", "9", "10"], 1],
+  ["भारत का सबसे प्राचीन शास्त्रीय नृत्य कौन सा है, जिसका संबंध तमिलनाडु से है?", ["कथकली", "भरतनाट्यम (पुराना नाम: सादिर)", "कुचिपुड़ी", "ओडिसी"], 1],
+  ["'कथक' किस राज्य/क्षेत्र का प्रमुख शास्त्रीय नृत्य है?", ["केरल", "उत्तर भारत (विशेषकर उत्तर प्रदेश)", "आंध्र प्रदेश", "असम"], 1],
+  ["'कथकली' और 'मोहिनीअट्टम' किस राज्य के शास्त्रीय नृत्य हैं?", ["तमिलनाडु", "केरल", "कर्नाटक", "तेलंगाना"], 1],
+  ["'कुचिपुड़ी' किस राज्य का शास्त्रीय नृत्य है?", ["ओडिशा", "आंध्र प्रदेश", "मणिपुर", "कर्नाटक"], 1],
+  ["'सत्त्रिया' किस राज्य का शास्त्रीय नृत्य है, जिसे वर्ष 2000 में शास्त्रीय नृत्य का दर्जा मिला?", ["मणिपुर", "असम (प्रवर्तक: श्रीमंत शंकरदेव)", "मेघालय", "त्रिपुरा"], 1],
+  ["रुक्मिणी देवी अरुंडेल, यामिनी कृष्णमूर्ति और पद्मा सुब्रह्मण्यम किस शास्त्रीय नृत्य से जुड़ी हैं?", ["कथक", "भरतनाट्यम", "मणिपुरी", "ओडिसी"], 1],
+  ["पंडित बिरजू महाराज, लच्छू महाराज और सितारा देवी किस शास्त्रीय नृत्य के महान कलाकार थे?", ["कथकली", "कथक", "कुचिपुड़ी", "भरतनाट्यम"], 1],
+  ["केलुचरण महापात्र, संयुक्ता पाणिग्रही और सोनल मानसिंह किस नृत्य शैली से संबंधित हैं?", ["मणिपुरी", "ओडिसी (ओडिशा)", "मोहिनीअट्टम", "सत्त्रिया"], 1],
+  ["झावेरी बहनें (दर्शना, नयना, रंजना, सुवर्णा) किस शास्त्रीय नृत्य की प्रमुख नृत्यांगनाएँ हैं?", ["कथक", "मणिपुरी", "कुचिपुड़ी", "ओडिसी"], 1],
+  ["हेमा मालिनी, श्रीदेवी, सुनंदा नायर और कल्याणी अम्मा किस शास्त्रीय नृत्य से संबंधित हैं?", ["कथकली", "मोहिनीअट्टम (केरल)", "भरतनाट्यम", "कुचिपुड़ी"], 1],
+  ["गुरु वेम्पति चिन्ना सत्यम और राधा-राजा रेड्डी किस शास्त्रीय नृत्य के प्रसिद्ध कलाकार हैं?", ["भरतनाट्यम", "कुचिपुड़ी", "कथक", "ओडिसी"], 1],
+  ["'बिहू' और 'बगुरुम्बा' किस राज्य के प्रसिद्ध लोक नृत्य हैं?", ["मणिपुर", "असम", "अरुणाचल प्रदेश", "नागालैंड"], 1],
+  ["'गरबा' और 'डांडिया रास' किस राज्य के प्रमुख लोक नृत्य हैं?", ["राजस्थान", "गुजरात", "महाराष्ट्र", "मध्य प्रदेश"], 1],
+  ["'घूमर', 'कालबेलिया' और 'तेरहताली' किस राज्य के लोक नृत्य हैं?", ["गुजरात", "राजस्थान", "हरियाणा", "उत्तर प्रदेश"], 1],
+  ["'भांगड़ा' और 'गिद्दा' किस राज्य के प्रसिद्ध लोक नृत्य हैं?", ["हरियाणा", "पंजाब", "हिमाचल प्रदेश", "उत्तराखंड"], 1],
+  ["'लावणी' और 'तमाशा' किस राज्य की प्रसिद्ध लोक नृत्य/नाट्य शैलियाँ हैं?", ["गोवा", "महाराष्ट्र", "मध्य प्रदेश", "कर्नाटक"], 1],
+  ["'यक्षगान' किस राज्य का प्रसिद्ध पारंपरिक नृत्य-नाट्य है?", ["केरल", "कर्नाटक", "तमिलनाडु", "आंध्र प्रदेश"], 1],
+  ["'चरकुला', 'नौटंकी', 'रासलीला' और 'कजरी' किस राज्य के लोक नृत्य हैं?", ["बिहार", "उत्तर प्रदेश", "मध्य प्रदेश", "उत्तराखंड"], 1],
+  ["'विदेशिया', 'जट-जटिन' और 'झिझिया' किस राज्य के प्रमुख लोक नृत्य हैं?", ["झारखंड", "बिहार", "पश्चिम बंगाल", "ओडिशा"], 1],
+  ["'छऊ' मुख्य रूप से किन राज्यों का नृत्य है?", ["असम, मणिपुर, त्रिपुरा", "झारखंड, पश्चिम बंगाल और ओडिशा", "पंजाब, हरियाणा, राजस्थान", "केरल, तमिलनाडु, कर्नाटक"], 1],
+  ["'रौफ' और 'दमाली' किस केंद्र शासित प्रदेश/राज्य के प्रसिद्ध लोक नृत्य हैं?", ["लद्दाख", "जम्मू और कश्मीर", "हिमाचल प्रदेश", "उत्तराखंड"], 1],
+  ["'नाटी' और 'छपेली' किस राज्य के प्रसिद्ध लोक नृत्य हैं?", ["उत्तराखंड", "हिमाचल प्रदेश", "पंजाब", "सिक्किम"], 1],
+  ["'पांडवानी', 'राउत नाचा' और 'पंथी' किस राज्य के लोक नृत्य हैं?", ["मध्य प्रदेश", "छत्तीसगढ़", "झारखंड", "ओडिशा"], 1],
+  ["'मटकी', 'जवारा' और 'गौर मारिया' किस राज्य के लोक नृत्य हैं?", ["राजस्थान", "मध्य प्रदेश", "गुजरात", "महाराष्ट्र"], 1],
+  ["'फुगड़ी' और 'देखनी' किस राज्य के प्रसिद्ध लोक नृत्य हैं?", ["महाराष्ट्र", "गोवा", "केरल", "कर्नाटक"], 1],
+  ["'चेराव' (बाँस नृत्य) किस राज्य का प्रसिद्ध लोक नृत्य है?", ["नागालैंड", "मिजोरम", "मेघालय", "मणिपुर"], 1],
+  ["'होजागिरी' किस राज्य का प्रसिद्ध लोक नृत्य है?", ["असम", "त्रिपुरा", "सिक्किम", "अरुणाचल प्रदेश"], 1],
+  ["'लाहो' और 'नोंगक्रेम' किस राज्य के लोक नृत्य हैं?", ["मणिपुर", "मेघालय", "मिजोरम", "नागालैंड"], 1],
+  ["'थांग-टा' और 'पुंग चोलोम' किस राज्य से संबंधित हैं?", ["असम", "मणिपुर", "नागालैंड", "सिक्किम"], 1],
+  ["'घुमुरा', 'दलखाई' और 'गोटीपुआ' किस राज्य के लोक नृत्य हैं?", ["पश्चिम बंगाल", "ओडिशा", "आंध्र प्रदेश", "छत्तीसगढ़"], 1],
+  ["'करगम', 'कावड़ी' और 'कुम्मी' किस राज्य के लोक नृत्य हैं?", ["केरल", "तमिलनाडु", "कर्नाटक", "आंध्र प्रदेश"], 1],
+  ["'धिम्सा', 'लंबाडी' और 'कोलाट्टम' किस राज्य के लोक नृत्य हैं?", ["तमिलनाडु", "आंध्र प्रदेश", "ओडिशा", "महाराष्ट्र"], 1],
+  ["'बाउल' और 'गंभीरा' किस राज्य के पारंपरिक लोक नृत्य/संगीत हैं?", ["बिहार", "पश्चिम बंगाल", "असम", "ओडिशा"], 1],
+  ["'झूमर', 'पााइका' और 'सरहुल' किस राज्य के प्रमुख जनजातीय नृत्य हैं?", ["राजस्थान", "झारखंड", "मध्य प्रदेश", "गुजरात"], 1],
+  ["'छोलिया' और 'झोड़ा' किस राज्य के लोक नृत्य हैं?", ["हिमाचल प्रदेश", "उत्तराखंड", "उत्तर प्रदेश", "जम्मू-कश्मीर"], 1],
+  ["'फाग', 'धमाल' और 'सांग' किस राज्य के लोक नृत्य हैं?", ["पंजाब", "हरियाणा", "राजस्थान", "उत्तर प्रदेश"], 1],
+  ["'हॉर्नबिल उत्सव' और 'चांग लो' नृत्य किस राज्य से संबंधित हैं?", ["मणिपुर", "नागालैंड", "मिजोरम", "अरुणाचल प्रदेश"], 1],
+  ["'पोनुंग' और 'वांचो' किस राज्य के लोक नृत्य हैं?", ["सिक्किम", "अरुणाचल प्रदेश", "असम", "मेघालय"], 1],
+  ["'सिंधी छम' किस राज्य का प्रसिद्ध लोक नृत्य है?", ["लद्दाख", "सिक्किम", "हिमाचल प्रदेश", "उत्तराखंड"], 1],
+  ["'नाट्यशास्त्र' के रचयिता कौन हैं?", ["पाणिनि", "भरत मुनि", "कालिदास", "शारंगदेव"], 1],
+  ["'कलारिपयट्टू' किस राज्य की विश्व प्रसिद्ध प्राचीन मार्शल आर्ट है?", ["तमिलनाडु", "केरल", "पंजाब", "महाराष्ट्र"], 1],
+  ["'कठपुतली' किस राज्य की पारंपरिक लोक कला है?", ["गुजरात", "राजस्थान", "मध्य प्रदेश", "बिहार"], 1],
+  ["मृणालिनी साराभाई और मल्लिका साराभाई किस नृत्य शैली से जुड़ी प्रसिद्ध कलाकार हैं?", ["केवल कथक", "भरतनाट्यम और कथकली", "मणिपुरी", "ओडिसी"], 1],
+  ["'जतिन गोस्वामी' किस शास्त्रीय नृत्य के प्रमुख गुरु हैं?", ["कथकली", "सत्त्रिया (असम)", "मणिपुरी", "कुचिपुड़ी"], 1],
+  ["'कलामंडलम कल्याणिकुट्टी अम्मा' को किस शास्त्रीय नृत्य की 'माता' कहा जाता है?", ["कथकली", "मोहिनीअट्टम", "भरतनाट्यम", "कुचिपुड़ी"], 1],
+  ["'तेय्यम' और 'थिरुवथिराकली' किस राज्य के अनुष्ठानिक लोक नृत्य हैं?", ["तमिलनाडु", "केरल", "कर्नाटक", "गोवा"], 1],
+  ["'बथुकम्मा' और 'बोनालु' किस राज्य के प्रमुख सांस्कृतिक उत्सव हैं?", ["आंध्र प्रदेश", "तेलंगाना", "तमिलनाडु", "कर्नाटक"], 1],
+  ["'जलीकट्टू' किस त्योहार के दौरान तमिलनाडु में मनाया जाता है?", ["ओणम", "पोंगल", "उगादी", "विशु"], 1],
+  ["'लोसर' उत्सव मुख्य रूप से किस क्षेत्र में नववर्ष के रूप में मनाया जाता है?", ["केरल", "लद्दाख, सिक्किम और अरुणाचल प्रदेश", "गुजरात", "तमिलनाडु"], 1],
+  ["पंडित रविशंकर किस वाद्ययंत्र के विश्व प्रसिद्ध वादक थे?", ["सरोद", "सितार", "बांसुरी", "तबला"], 1],
+  ["उस्ताद जाकिर हुसैन और उनके पिता उस्ताद अल्ला रक्खा किस वाद्ययंत्र के महान वादक थे?", ["शहनाई", "तबला", "संतूर", "वायलिन"], 1],
+  ["उस्ताद बिस्मिल्लाह खान किस वाद्ययंत्र के सर्वश्रेष्ठ वादक थे?", ["बांसुरी", "शहनाई", "सारंगी", "सरोद"], 1],
+  ["पंडित हरिप्रसाद चौरसिया और पन्नालाल घोष किस वाद्ययंत्र से संबंधित हैं?", ["सितार", "बांसुरी", "संतूर", "वीणा"], 1],
+  ["पंडित शिवकुमार शर्मा और भजन सोपोरी किस वाद्ययंत्र के प्रसिद्ध वादक थे?", ["सरोद", "संतूर", "तबला", "गिटार"], 1],
+  ["उस्ताद अमजद अली खान, अमान अली खान और अली अकबर खान किस वाद्ययंत्र से जुड़े हैं?", ["सितार", "सरोद", "सारंगी", "वीणा"], 1],
+  ["भारत का सबसे प्राचीन वाद्ययंत्र कौन सा माना जाता है?", ["सितार", "वीणा", "तबला", "बांसुरी"], 1],
+  ["'सितार' और 'तबला' के आविष्कार का श्रेय किसे दिया जाता है?", ["तानसेन", "अमीर खुसरो", "बैजू बावरा", "स्वामी हरिदास"], 1],
+  ["विलायत खान, निखिल बनर्जी और अनुष्का शंकर किस वाद्ययंत्र के प्रसिद्ध वादक हैं?", ["सरोद", "सितार", "संतूर", "वायलिन"], 1],
+  ["किशन महाराज, गुदई महाराज और अनोखेलाल मिश्र किस घराने के प्रसिद्ध वादक हैं?", ["बांसुरी", "तबला", "शहनाई", "पखावज"], 1],
+  ["टी.एन. कृष्णन, एल. सुब्रमण्यम और एन. राजम किस वाद्ययंत्र के महान वादक हैं?", ["गिटार", "वायलिन", "वीणा", "सारंगी"], 1],
+  ["पंडित राम नारायण और उस्ताद सुल्तान खान किस वाद्ययंत्र के प्रसिद्ध वादक थे?", ["सरोद", "सारंगी", "सितार", "शहनाई"], 1],
+  ["टी.एच. विनायक्रम किस वाद्ययंत्र से संबंधित हैं?", ["मृदंगम", "घटम", "तबला", "पखावज"], 1],
+  ["पालघाट मणि अय्यर और उमायलपुरम के. शिवरामन किस वाद्ययंत्र के प्रसिद्ध वादक हैं?", ["घटम", "मृदंगम", "तबला", "ढोलक"], 1],
+  ["पंडित विश्व मोहन भट्ट ने किस वाद्ययंत्र का आविष्कार किया और उसे बजाते हैं?", ["मोहन वीणा", "संतूर", "सरोद", "जलतरंग"], 0],
+  ["अली अहमद हुसैन खान और दयाशंकर जगन्नाथ किस वाद्ययंत्र से संबंधित हैं?", ["बांसुरी", "शहनाई", "सारंगी", "तबला"], 1],
+  ["रोनू मजूमदार और राजेंद्र प्रसन्ना किस वाद्ययंत्र के प्रसिद्ध वादक हैं?", ["सितार", "बांसुरी", "संतूर", "सरोद"], 1],
+  ["राजीव तारानाथ और बुद्धदेव दासगुप्ता किस वाद्ययंत्र के प्रसिद्ध कलाकार थे?", ["सितार", "सरोद", "वीणा", "तबला"], 1],
+  ["केलकर, कंठे महाराज और सुखविंदर सिंह किस वाद्ययंत्र से जुड़े हैं?", ["तबला", "बांसुरी", "शहनाई", "वायलिन"], 0],
+  ["यू. श्रीनिवास किस वाद्ययंत्र के प्रसिद्ध वादक थे?", ["गिटार", "मैंडोलिन", "वायलिन", "वीणा"], 1],
+  ["कुनक्कुडी वैद्यनाथन और एम.एस. गोपालकृष्णन किस वाद्ययंत्र से संबंधित हैं?", ["वीणा", "वायलिन", "मृदंगम", "बांसुरी"], 1],
+  ["शेख चिन्ना मौलाना और राजरत्नम पिल्लई किस दक्षिण भारतीय वाद्ययंत्र के महान वादक थे?", ["मृदंगम", "नादस्वरम", "घटम", "वीणा"], 1],
+  ["तोताराम शर्मा और केलुचरण महापात्र किस ताल वाद्ययंत्र को बजाने में निपुण थे?", ["पखावज", "संतूर", "सितार", "शहनाई"], 0],
+  ["शकूर खान और बिंदु खान किस वाद्ययंत्र के प्रसिद्ध वादक थे?", ["सरोद", "सारंगी", "सितार", "तबला"], 1],
+  ["शाहिद परवेज खान और बुधादित्य मुखर्जी किस वाद्ययंत्र से जुड़े हैं?", ["सरोद", "सितार", "बांसुरी", "संतूर"], 1],
+  ["'इकतारा' और 'दोतारा' किस प्रकार के वाद्ययंत्र हैं?", ["सुषिर वाद्य", "तत वाद्य", "अवनद्ध वाद्य", "घन वाद्य"], 1],
+  ["'नगाड़ा', 'ढोलक' और 'तबला' वाद्ययंत्रों की किस श्रेणी में आते हैं?", ["तत वाद्य", "अवनद्ध वाद्य", "सुषिर वाद्य", "घन वाद्य"], 1],
+  ["'बांसुरी', 'शहनाई' और 'पुंगी' किस श्रेणी के वाद्ययंत्र हैं?", ["तत वाद्य", "सुषिर वाद्य", "घन वाद्य", "अवनद्ध वाद्य"], 1],
+  ["'मंजीरा', 'झांझ' और 'घटम' किस श्रेणी के वाद्ययंत्र हैं?", ["तत वाद्य", "घन वाद्य", "सुषिर वाद्य", "अवनद्ध वाद्य"], 1],
+  ["भारत रत्न से सम्मानित होने वाली पहली संगीतकार कौन थीं?", ["लता मंगेशकर", "एम.एस. सुब्बुलक्ष्मी", "पंडित भीमसेन जोशी", "भूपेन हजारिका"], 1],
+  ["'तानसेन' किस मुगल सम्राट के नवरत्नों में से एक थे और किस घराने से जुड़े थे?", ["शाहजहाँ - आगरा", "अकर - ग्वालियर घराना", "जहांगीर - लखनऊ", "औरंगजेब - जयपुर"], 1],
+  ["'बेगम अख्तर' किस विधा के लिए प्रसिद्ध थीं?", ["ठुमरी और दादरा", "गजल और ठुमरी", "ख्याल गायकी", "ध्रुपद"], 1],
+  ["पंडित जसराज किस घराने के प्रसिद्ध शास्त्रीय गायक थे?", ["ग्वालियर घराना", "मेवाती घराना", "पटियाला घराना", "किराना घराना"], 1],
+  ["राग 'मल्हार' किस ऋतु से संबंधित राग है?", ["वसंत ऋतु", "वर्षा ऋतु", "ग्रीष्म ऋतु", "शीत ऋतु"], 1],
+  ["'हरिप्रसाद चौरसिया' किस राज्य से संबंधित हैं?", ["मध्य प्रदेश", "उत्तर प्रदेश", "महाराष्ट्र", "बिहार"], 1],
+  ["'लता मंगेशकर' का जन्म किस शहर में हुआ था?", ["पुणे", "इंदौर", "मुंबई", "नागपुर"], 1],
+  ["'कमायचा' किस राज्य का प्रसिद्ध लोक वाद्ययंत्र है?", ["पंजाब", "राजस्थान", "गुजरात", "असम"], 1],
+  ["'पेपा' किस राज्य के बिहू नृत्य में बजाया जाता है?", ["मणिपुर", "असम", "मेघालय", "नागालैंड"], 1],
+  ["'अलाउद्दीन खान' किस वाद्ययंत्र के महान गुरु थे?", ["तबला", "सरोद", "बांसुरी", "शहनाई"], 1],
+  ["'जरीन दारूवाला' और 'ब्रिज भूषण काबरा' क्रमशः किन वाद्ययंत्रों के प्रसिद्ध वादक हैं?", ["सरोद और गिटार", "तबला और संतूर", "सितार और बांसुरी", "वायलिन और वीणा"], 0],
+  ["'अन्नपूर्णा देवी' किस दुर्लभ वाद्ययंत्र की महान वादक थीं?", ["सुरबहार", "संतूर", "घटम", "पखावज"], 0],
+  ["'सबीरी खान' और 'अरुणा काले' किस वाद्ययंत्र से जुड़े हैं?", ["सारंगी", "सितार", "बांसुरी", "शहनाई"], 0],
+  ["'वी.जी. जोग' किस वाद्ययंत्र के प्रसिद्ध वादक थे?", ["वायलिन", "सितार", "सरोद", "तबला"], 0],
+  ["'चिट्टी बाबू' और 'जयांती कुमरेश' किस वाद्ययंत्र की प्रसिद्ध वादक हैं?", ["सरस्वती वीणा", "सितार", "बांसुरी", "संतूर"], 0],
+  ["'राहुल शर्मा' किस वाद्ययंत्र के प्रसिद्ध वादक हैं?", ["संतूर", "तबला", "सरोद", "बांसुरी"], 0],
+  ["'नित्यानंद हल्दीपुर' और 'प्रवीण गोडखिंडी' किस वाद्ययंत्र से संबंधित हैं?", ["बांसुरी", "सितार", "तबला", "वायलिन"], 0],
+  ["'अल्बर्ट आइंस्टीन' कौन सा वाद्ययंत्र बजाने में निपुण थे?", ["वायलिन", "गिटार", "बांसुरी", "ड्रम"], 0],
+  ["'रवींद्र संगीत' की रचना किसने की थी?", ["रवींद्रनाथ टैगोर", "बंकिम चंद्र चटर्जी", "काजी नजरुल इस्लाम", "सत्यजीत रे"], 0],
+  ["कर्नाटक संगीत का 'पितामह' किसे कहा जाता है?", ["पुरंदर दास", "त्यागराज", "तानसेन", "अमीर खुसरो"], 0],
+  ["'घराना परंपरा' मुख्य रूप से भारतीय संगीत की किस पद्धति से जुड़ी है?", ["हिंदुस्तानी शास्त्रीय संगीत", "कर्नाटक संगीत", "पश्चिमी शास्त्रीय संगीत", "लोक संगीत"], 0]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / ${Q.length}</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+
+  if(remaining <= 120){
+    timerEl.classList.add("blink");
+  }
+
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+
+  modal.classList.remove("hidden");
+}
+
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+
+  document.getElementById("greeting").textContent =
+    student + ", आपका टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+
+  let message = correct >= 90 ? "🏆 अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "📘 औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+
+  document.getElementById("motivation").textContent = message;
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+
+    if(type !== "all" && type !== status) return "";
+
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
