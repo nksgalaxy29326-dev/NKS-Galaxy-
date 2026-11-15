@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - करंट अफेयर्स 2026 (Part 3 - 100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1150px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display:flex;justify-content:center;align-items:center;
+  padding:15px;animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0);animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;padding:14px 18px;font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px;background:#f8fafc;display:flex;
+  justify-content:center;gap:12px;border-top:1px solid #e2e8f0;
+}
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>करेंट अफेयर्स 2026 (Current Affairs) - पार्ट 3 (मेगा मॉक टेस्ट)</b></p>
+  <p>SSC | Railway | UPSC | UPSSSC | All Competitive Exams</p>
+  <p>कुल प्रश्न: 100 | कुल अंक: 100 | समय: 20 मिनट</p>
+</header>
+<div class="container">
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>टॉपिक: करेंट अफेयर्स 2026 (Part 3) - ऑनलाइन मॉक टेस्ट निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें। यह कुल 8 भागों में से **Part 3** है (प्रश्न 201 से 300)।</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+    <ul style="padding-left:20px;color:#334155">
+      <li>विषय: <b>करेंट अफेयर्स 2026 (Part 3)</b></li>
+      <li>कुल प्रश्न: <b>100 (प्रश्न 201 से 300)</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">विषय: <b>करेंट अफेयर्स 2026 (Part 3)</b> | हल किए: <b id="answered">0</b>/100 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+  </section>
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>परीक्षा परिणाम (Scorecard) - करेंट अफेयर्स 2026 (Part 3)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा - करेंट अफेयर्स 2026 (Part 3)</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+</div>
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY - करेंट अफेयर्स 2026 (Part 3)</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons">
+      <!-- Buttons dynamically injected -->
+    </div>
+  </div>
+</div>
+<script>
+const RAW_Q = [
+  ["अमेरिकी राज्य इलिनोइस ने किस दिन को 'राष्ट्रीय भारत केंद्र दिवस' घोषित किया है?", ["26 जनवरी", "15 अगस्त", "2 अक्टूबर", "14 नवंबर"], 1],
+  ["वर्क फ्रॉम एनीवेयर इंडेक्स 2026 में शामिल किया गया एकमात्र भारतीय शहर कौन है?", ["दिल्ली", "बेंगलुरु", "मुंबई", "हैदराबाद"], 2],
+  ["18वें BRICS अकादमिक फोरम का आयोजन किस शहर में किया गया?", ["लखनऊ", "नई दिल्ली", "मॉस्को", "बीजिंग"], 0],
+  ["वर्ल्ड ह्यूमनॉइड रोबोट गेम्स के दूसरे संस्करण का आयोजन कहाँ किया गया?", ["टोक्यो", "सेऊल", "बीजिंग", "शंघाई"], 2],
+  ["मिस यूनिवर्स इंडिया 2026 का खिताब किसने जीता है?", ["रिया सिंगा", "कैजिया लिज मेजो", "श्वेता शारदा", "हरनाज संधू"], 1],
+  ["भारत की पहली 100% स्वदेशी AK-203 असॉल्ट राइफल 'शेर' का निर्माण कहाँ किया गया?", ["कानपुर, उत्तर प्रदेश", "कोरवा, उत्तर प्रदेश", "जबलपुर, मध्य प्रदेश", "हैदराबाद, तेलंगाना"], 1],
+  ["भारत ने किस वर्ष तक अपना अंतरिक्ष स्टेशन स्थापित करने का लक्ष्य निर्धारित किया है?", ["2030", "2040", "2035", "2047"], 2],
+  ["डूरंड कप 2026 का खिताब किसने जीता है?", ["ईस्ट बंगाल एफसी", "मोहन बागान", "बेंगलुरु एफसी", "केरल ब्लास्टर्स"], 0],
+  ["भारतीय अंतरिक्ष स्टेशन का पहला मॉड्यूल BAS-01 किस वर्ष लॉन्च किए जाने की योजना है?", ["2026", "2028", "2030", "2032"], 1],
+  ["भारतीय सेना ने अत्याधुनिक ड्रोनों की पहली बाज बटालियन का गठन किस राज्य में किया है?", ["राजस्थान", "गुजरात", "पंजाब", "जम्मू-कश्मीर"], 2],
+  ["सुप्रीम कोर्ट ने देश भर में छात्र आन्दोलन के दौरान हुई हिंसा की जांच के लिए किसके नेतृत्व में समिति का गठन किया है?", ["आर. सुभाष रेड्डी", "डी. वाई. चंद्रचूड़", "संजीव खन्ना", "बी. आर. गवई"], 0],
+  ["'अन्नपूर्णा सुपर मिक्स योजना' किस राज्य सरकार द्वारा शुरू की गई है?", ["आंध्र प्रदेश", "तमिलनाडु", "कर्नाटक", "केरल"], 1],
+  ["पाकिस्तान ने मुंबई के किन दो पारसी डॉक्टरों को मरणोपरांत 'निशान-ए-इम्तियाज' से सम्मानित करने का प्रस्ताव किया है?", ["डॉ. फरादोस शराफ और डॉ. केकी मोदी", "डॉ. होमी भाभा और डॉ. सायरस पूनावाला", "डॉ. जल रतनजी पटेल और डॉ. जल धायभो कू", "डॉ. जहांगीर जे भाभा और डॉ. फिरोज शाह"], 2],
+  ["एनालॉग पनीर की बिक्री पर प्रतिबन्ध लगाने वाला पांचवां राज्य कौन बन गया है?", ["हिमाचल प्रदेश", "उत्तराखंड", "हरियाणा", "पंजाब"], 0],
+  ["सोफी एडेनोट अंतरिक्ष में चलने वाली किस देश की पहली महिला बन गयी हैं?", ["जर्मनी", "इटली", "फ्रांस", "स्पेन"], 2],
+  ["भारत का पहला मृदा बनावट मानचित्र किस शहर में विकसित किया गया है?", ["भोपाल", "नागपुर", "इंदौर", "पुणे"], 1],
+  ["राष्ट्रीय शिक्षक पुरस्कार 2026 के तहत 5 सितंबर, 2026 को कितने उत्कृष्ट विद्यालयी शिक्षकों को सम्मानित किया जाएगा?", ["50", "48", "45", "52"], 1],
+  ["मादक पदार्थों की तस्करी को रोकने के लिए ऑपरेशन तूफान किस राज्य में शुरू किया गया है?", ["तमिलनाडु", "तेलंगाना", "कर्नाटक", "महाराष्ट्र"], 2],
+  ["राष्ट्रीय खेल पुरस्कार 2025 में अर्जुन पुरस्कार लाइफटाइम के लिए किसे चुना गया है?", ["आई. अरुमेनायागम", "ध्यानचंद सिंह", "पी.टी. उषा", "प्रकाश पादुकोण"], 0],
+  ["अगस्त 2026 में कक्षा 6 से बच्चों को आर्टिफिशियल इंटेलिजेंस की शिक्षा देने की घोषणा किस राज्य सरकार ने की है?", ["तमिलनाडु", "केरल", "कर्नाटक", "महाराष्ट्र"], 2],
+  ["भारतीय सेना प्रमुख जनरल धीरज सेठ को किस देश की सेना के मानद जनरल की उपाधि प्रदान की गई है?", ["नेपाल", "भूटान", "बांग्लादेश", "श्रीलंका"], 0],
+  ["मुंबई में आयोजित एशियाई जूनियर रैपिड शतरंज चैंपियनशिप 2026 का खिताब किसने जीता है?", ["विवाह विशाल शाह", "आर. प्रज्ञानंदा", "डी. गुकेश", "अर्जुन एरिगैसी"], 0],
+  ["विश्व फोटोग्राफी दिवस 2026 की वैकल्पिक आधिकारिक थीम क्या है?", ["प्रकृति", "घर", "समाज", "संस्कृति"], 1],
+  ["बहुराष्ट्रीय समुद्री रक्षा गठबंधन (MMDC) की कमांड भूमिका किस देश को सौंपी गई है?", ["संयुक्त अरब अमीरात", "मिस्र", "सऊदी अरब", "कतर"], 2],
+  ["भारत की सांस्कृतिक विविधता को दर्शाने के लिए 'इंडिया डे फेस्टिवल' का आयोजन किस देश में किया गया है?", ["रूस", "फ्रांस", "जापान", "जर्मनी"], 0],
+  ["प्रधानमंत्री नरेंद्र मोदी ने 15 अगस्त, 2026 को किस आयु वर्ग के बच्चों के लिए देशव्यापी प्रतिभा खोज अभियान की घोषणा की?", ["6 से 14 वर्ष", "5 से 15 वर्ष", "10 से 18 वर्ष", "8 से 16 वर्ष"], 1],
+  ["वैज्ञानिकों द्वारा खोजे गए मिल्की-वे के सबसे तेज तारे का क्या नाम है?", ["S 301", "A 200", "S 102", "P 209"], 0],
+  ["'विश्वास दे पृथ्वी' नामक किताब के लिए किसे प्रतिष्ठित 'सरला पुरस्कार 2026' के लिए चुना गया है?", ["मनोज दास", "आशुतोष परिडा", "प्रतिभा राय", "सीताकांत महापात्र"], 1],
+  ["अगस्त 2026 में पूर्व प्रधानमंत्री अटल बिहारी वाजपेयी की 21 फीट ऊंची प्रतिमा का अनावरण कहाँ किया गया?", ["मध्य प्रदेश", "उत्तर प्रदेश", "राजस्थान", "गुजरात"], 2],
+  ["IISc ने 13 अगस्त, 2026 को किस नाम का ओपन-सोर्स बहुभाषी वाक्-पहचान मॉडल जारी किया है?", ["स्रावाणी", "वाणी", "भाषा", "ध्वनि"], 0],
+  ["पाकिस्तान के पहले चंद्र रोवर का नाम क्या रखा गया है?", ["जिन्ना-1", "इकबाल-1", "पाक-मून 1", "शाहीन-1"], 0],
+  ["दक्षिणी क्षेत्रीय परिषद् की 31वीं बैठक का आयोजन कहाँ किया गया?", ["केरल", "तमिलनाडु", "आंध्र प्रदेश", "कर्नाटक"], 1],
+  ["मृत्युदंड को औपचारिक रूप से समाप्त करने वाला पहला अरब देश कौन-सा बना है?", ["लेबनान", "जॉर्डन", "ओमान", "ट्यूनिशिया"], 0],
+  ["QS वर्ल्ड यूनिवर्सिटी रैंकिंग 2027 में भारत के कितने उच्च शिक्षण संस्थानों को स्थान मिला है?", ["45", "52", "50", "60"], 1],
+  ["राजीव गांधी भारत के कौन-से प्रधानमंत्री थे जिनकी 20 अगस्त, 2026 को 82वीं जयंती मनाई गयी है?", ["चौथे", "पांचवें", "छठे", "सातवें"], 2],
+  ["तीसरी संतान के जन्म पर किस राज्य सरकार ने एक साल का मातृत्व अवकाश देने की घोषणा की है?", ["केरल", "तमिलनाडु", "तेलंगाना", "आंध्र प्रदेश"], 1],
+  ["'संध्या किरण' योजना किस राज्य सरकार ने मंजूर की है?", ["कर्नाटक", "महाराष्ट्र", "गुजरात", "ओडिशा"], 0],
+  ["तामिरभरानी नदी किस राज्य से संबंधित है जिसे मद्रास हाई कोर्ट ने कानूनी व्यक्ति का दर्जा दिया है?", ["केरल", "तमिलनाडु", "कर्नाटक", "तेलंगाना"], 1],
+  ["मुंबई में आयोजित एशियाई जूनियर ब्लिट्ज शतरंज चैंपियनशिप 2026 का खिताब किसने जीता है?", ["विग्नेश वेमुला और सरन्या देवी", "निहाल सरीन और दिव्या देशमुख", "रौनक साधवानी और वंतिका अग्रवाल", "अराध्य गर्ग और तानिया सचदेव"], 0],
+  ["टेस्ट क्रिकेट में 100 छक्के लगाने वाले पहले भारतीय कौन बने हैं?", ["रोहित शर्मा", "ऋषभ पंत", "वीरेंद्र सहवाग", "एमएस धोनी"], 1],
+  ["हाल ही में कितने खिलाड़ियों को अर्जुन पुरस्कार 2025 से सम्मानित किया गया है?", ["15", "17", "20", "25"], 1],
+  ["2026 ब्रिटिश चेस चैंपियनशिप में ओपन खिताब जीतकर सबसे कम उम्र के ब्रिटिश ओपन चैंपियन कौन बने हैं?", ["श्रेयस रॉयल", "माइकल एडम्स", "डेविड हॉवेल", "ल्यूक मैकशेन"], 0],
+  ["12वीं ब्रिक्स पर्यावरण मंत्रियों की बैठक की मेजबानी किस देश ने की है?", ["चीन", "भारत", "ब्राजील", "दक्षिण अफ्रीका"], 1],
+  ["18 अगस्त, 2026 को सुभाष चंद्रबोस की कौन-सी पुण्यतिथि मनायी गयी है?", ["80वीं", "81वीं", "82वीं", "85वीं"], 1],
+  ["भारत का पहला वर्चुअल चिड़ियाघर कहाँ शुरू किया गया है?", ["इंदौर", "भोपाल", "जयपुर", "अहमदाबाद"], 0],
+  ["U-23 कॉमनवेल्थ फेंसिंग चैंपियनशिप 2026 में भारत ने व्यक्तिगत स्पर्धाओं के पहले दिन कुल कितने पदक जीते?", ["10", "17", "12", "15"], 1],
+  ["भारत और किस देश के बीच द्विपक्षीय मैत्री सैन्य अभ्यास का 15वां संस्करण शुरू किया गया है?", ["नेपाल", "थाईलैंड", "श्रीलंका", "म्यांमार"], 1],
+  ["हाल ही में ई-स्पोर्ट्स वर्ल्ड कप 2026 का खिताब किसने जीता है?", ["हिकारू नाकामुरा", "मैग्नस कार्लसन", "अलिरेजा फिरोजा", "डैनियल नारोडित्स्की"], 1],
+  ["15 अगस्त, 2026 को भारत की स्पेस एजेंसी 'इसरो' का कौन-सा स्थापना दिवस मनाया गया?", ["55वां", "57वां", "60वां", "50वां"], 1],
+  ["सितम्बर 2026 में प्रथम वर्ल्ड एथलेटिक्स अल्टीमेट चैंपियनशिप 2026 कहाँ आयोजित की जाएगी?", ["पेरिस", "बुडापेस्ट", "टोक्यो", "लंदन"], 1],
+  ["17 अगस्त, 2026 को किस देश का स्वतंत्रता दिवस मनाया गया?", ["मलेशिया", "इंडोनेशिया", "सिंगापुर", "वियतनाम"], 1],
+  ["वर्ल्ड एथलेटिक्स U-20 चैंपियनशिप 2026 में पुरुषों की हाई जंप स्पर्धा में पदक जीतने वाले पहले भारतीय एथलीट कौन बने हैं?", ["बसंत कुमार मेघवाल", "तेजस्विन शंकर", "सर्वेश कुशारे", "प्रवीण कुमार"], 0],
+  ["15 अगस्त, 2026 को भारत का कौन-सा स्वतंत्रता दिवस मनाया गया?", ["78वां", "80वां", "79वां", "81वां"], 1],
+  ["केंद्रीय गृह मंत्रालय ने अरुणाचल प्रदेश के कितने स्थानों एवं भौगोलिक विशेषताओं के नाम आधिकारिक मानचित्रों पर मानकीकृत किए हैं?", ["27", "30", "25", "15"], 0],
+  ["पारीछा बाँध कहाँ स्थित जिसे विश्व धरोहर सिंचाई टैग दिया गया है?", ["कानपुर", "झांसी", "आगरा", "प्रयागराज"], 1],
+  ["भारत ने किस वर्ष तक 100 GW न्यूक्लियर पावर क्षमता का लक्ष्य निर्धारित किया है?", ["2035", "2047", "2040", "2050"], 1],
+  ["वृक्षों के संरक्षण के लिए किन राज्यों में वृक्ष संरक्षण विधेयक 2026 को मंजूरी दी गयी है?", ["राजस्थान और पंजाब", "हरियाणा और पंजाब", "गुजरात और राजस्थान", "उत्तर प्रदेश और बिहार"], 0],
+  ["हाल ही में 'उदार शक्ति 2026' में सैन्य अभ्यास भारत और किस देश के बीच किया गया है?", ["सिंगापुर", "मलेशिया", "इंडोनेशिया", "थाईलैंड"], 1],
+  ["'मुख्यमंत्री खेत सुरक्षा योजना' किस राज्य से संबंधित है?", ["मध्य प्रदेश", "उत्तर प्रदेश", "राजस्थान", "बिहार"], 1],
+  ["कानूनी तौर पर मौत की सजा को खत्म करने वाला मध्य पूर्व और अरब का पहला देश कौन बन गया है?", ["लेबनान", "सीरिया", "इराक", "यूएई"], 0],
+  ["12 अगस्त, 2026 को भारत के अंतरिक्ष कार्यक्रम के जनक विक्रम साराभाई की कौन-सी जयंती मनायी गयी?", ["105वीं", "107वीं", "100वीं", "110वीं"], 1],
+  ["राष्ट्रव्यापी 'हर घर तिरंगा अभियान 2026' का शुभारंभ किसने किया?", ["अमित शाह", "गजेन्द्र सिंह शेखावत", "राजनाथ सिंह", "जे.पी. नड्डा"], 1],
+  ["चर्चा में रही मध्यम से लंबी दूरी की 'कद्र-एफ बैलिस्टिक मिसाइल' किस देश के द्वारा विकसित की गयी है?", ["उत्तर कोरिया", "ईरान", "पाकिस्तान", "तुर्की"], 1],
+  ["रोमानिया में आयोजित 'भाषा विज्ञान ओलंपियाड 2026' में भारत ने कितने पदक जीते हैं?", ["4", "6", "3", "5"], 0],
+  ["नीति आयोग स्कूल शिक्षा गुणवत्ता सूचकांक 2026 में सर्वश्रेष्ठ प्रदर्शन करने वाला राज्य कौन-सा बना है?", ["केरल", "पंजाब", "हिमाचल प्रदेश", "हरियाणा"], 1],
+  ["मिस वर्ल्ड 2026 प्रतियोगिता का आयोजन किस देश में किया गया है?", ["भारत", "वियतनाम", "थाईलैंड", "फिलीपींस"], 1],
+  ["हाल ही में भारत की पहली महिला फाइटर कॉम्बैट लीडर और महिला 'टॉप गन' कौन बनी हैं?", ["अवनी चतुर्वेदी", "भावना कंठ", "मोहाना सिंह", "शिवांगी सिंह"], 1],
+  ["मुख्य रूप से चीन को प्रभावित करने वाले 'डॉल्फिन चक्रवात' को यह नाम किस देश ने दिया है?", ["हांगकांग", "जापान", "फिलीपींस", "वियतनाम"], 0],
+  ["अमेरिका में आयोजित अंडर-20 एथलेटिक्स चैंपियनशिप में भारत ने कितने पदक जीते हैं?", ["5", "3", "2", "4"], 1],
+  ["जाम्बिया सुप्रीम कोर्ट की पहली भारतीय मूल की महिला न्यायाधीश कौन बनी हैं?", ["आभा नायर पटेल", "नीता लंबानी", "सौम्या स्वामीनाथन", "अनिता आनंद"], 0],
+  ["लाइफटाइम लिबर्टेरियन अवॉर्ड जीतने वाले पहले भारतीय लेखक कौन बने?", ["रामचंद्र गुहा", "गुरचरण दास", "शशि थरूर", "अरुंधती रॉय"], 1],
+  ["भारत का तरलीकृत पेट्रोलियम गैस (LPG) का सबसे बड़ा आपूर्तिकर्ता देश कौन बन गया है?", ["कतर", "अमेरिका", "सऊदी अरब", "रूस"], 1],
+  ["FISU वर्ल्ड यूनिवर्सिटी स्क्वैश खिताब जीतने वाले पहले भारतीय कौन बन गए हैं?", ["सौरव घोषाल", "सूरज कुमार चंद", "महेश मंगावकर", "अभय सिंह"], 1],
+  ["पर्यावरण संरक्षण के लिए किसे 'डॉ. एम. एस. स्वामीनाथन पर्यावरण संरक्षण पुरस्कार 2026' से सम्मानित किया गया?", ["गोविंदम्मल और पी. पेचियम्मल", "सुनिता नारायण और मेधा पाटकर", "जादव पायेंग और वंदना शिवा", "रमेश पटेल और सुनीता राव"], 0],
+  ["7 अगस्त 2026 को रविंद्रनाथ टैगोर की कौन-सी पुण्यतिथि मनायी गयी?", ["80वीं", "85वीं", "90वीं", "82वीं"], 1],
+  ["भारत का सर्वश्रेष्ठ नॉन-कंटेनर बंदरगाह 2026 पुरस्कार किस बंदरगाह को दिया गया है?", ["जवाहरलाल नेहरू पोर्ट", "दीनदयाल पोर्ट अथॉरिटी (कांडला)", "पारादीप पोर्ट", "मुंद्रा पोर्ट"], 1],
+  ["6 अगस्त, 2026 को हिरोशिमा पर परमाणु बमबारी की कौन-सी बरसी मनाई गयी?", ["80वीं", "81वीं", "82वीं", "85वीं"], 1],
+  ["T-20 क्रिकेट इतिहास में सबसे ज्यादा रन बनाने वाले खिलाड़ी कौन बने?", ["विराट कोहली", "जोस बटलर", "रोहित शर्मा", "बाबर आजम"], 1],
+  ["आर्मी चीफ के 'एड-डी-कैंप' (ADC) नियुक्त होने वाली पहली महिला अधिकारी कौन बन गयी हैं?", ["शिवानी सहरावत", "दिव्या अजीत कुमार", "प्रिया झिंगन", "मणिका भदौरिया"], 0],
+  ["13वीं ब्रिक्स शिक्षा मंत्रियों की बैठक 2026 का आयोजन कहाँ किया गया?", ["नई दिल्ली", "भुवनेश्वर", "मुंबई", "बेंगलुरु"], 1],
+  ["वर्ल्ड जूनियर स्क्वैश चैंपियनशिप जीतने वाली पहली भारतीय कौन बन गयी हैं?", ["जोशना चिनप्पा", "अनाहत सिंह", "दीपिका पल्लीकल", "तन्वी खन्ना"], 1],
+  ["ग्लॉ झील किस राज्य का पहला रामसर स्थल बन गया है?", ["असम", "अरुणाचल प्रदेश", "नागालैंड", "मणिपुर"], 1],
+  ["हाल ही में जारी कैंडेरे हुरुन इंडिया महिला नेतृत्व सूची 2026 में यंगेस्ट लीडर्स श्रेणी में प्रथम स्थान किसने प्राप्त किया है?", ["गजल अलघ", "शीतल देवी", "त्रिशा शेट्टी", "स्वाति पीरामल"], 1],
+  ["प्रतिष्ठित प्रतियोगिता 'टूर डी फ्रांस फेम्स' में शामिल होने वाली पहली भारतीय महिला कौन बन गई हैं?", ["हर्षिता जाखड़", "पी.वी. सिंधु", "मैरी कॉम", "दुती चंद"], 0],
+  ["हाल ही में किस भारतीय को श्रीलंका के सर्वोच्च राजकीय सम्मान से सम्मानित किया गया है?", ["ए.आर. रहमान", "एल. सुब्रमण्यम", "जाकिर हुसैन", "अमजद अली खान"], 1],
+  ["22वीं राष्ट्रमंडल टेबल टेनिस चैंपियनशिप 2026 में पुरुष एकल का स्वर्ण पदक किसने जीता है?", ["शरद कमल", "अंकुर भट्टाचार्जी", "जी. साथियान", "मानव ठक्कर"], 1],
+  ["कॉमनवेल्थ गेम्स में जूडो गोल्ड जीतने वाले पहले भारतीय कौन बने हैं?", ["सुशीला देवी", "अस्मिता डे", "विजय कुमार", "अवतार सिंह"], 1],
+  ["पर्यावरण प्रदर्शन सूचकांक 2026 में भारत कौन-से स्थान पर है?", ["165वां", "180वां", "176वां", "170वां"], 2],
+  ["किस राज्य से संबंधित पारंपरिक 'पिथौरा चित्रकला' को आधिकारिक तौर पर जीआई टैग दिया गया है?", ["मध्य प्रदेश", "गुजरात", "राजस्थान", "महाराष्ट्र"], 1],
+  ["कॉमनवेल्थ टेबल टेनिस चैंपियनशिप 2026 में पुरुष और महिला वर्ग का खिताब किसने जीता है?", ["भारत", "इंग्लैंड", "सिंगापुर", "ऑस्ट्रेलिया"], 0],
+  ["पांच विकेट मैडन ओवर फेंकने वाले दुनिया के पहले खिलाड़ी कौन बन गए हैं?", ["रशीद खान", "जस्टिन ग्रीव्स", "जसप्रीत बुमराह", "मिचेल स्टार्क"], 1],
+  ["राष्ट्रमंडल खेल 2026 में भारत ने पदक तालिका में कौन-सा स्थान प्राप्त किया है?", ["तीसरा स्थान", "चौथा स्थान", "दूसरा स्थान", "पाँचवां स्थान"], 1],
+  ["2030 राष्ट्रमंडल खेलों की मेजबानी की जिम्मेदारी किस देश ने आधिकारिक रूप से संभाली है?", ["ऑस्ट्रेलिया", "भारत", "कनाडा", "इंग्लैंड"], 1],
+  ["गृह मंत्रालय ने सशस्त्र सीमा बल (SSB) में पूर्व अग्निवीरों की भर्ती के लिए कितने पद आरक्षित किए हैं?", ["25%", "30%", "50%", "10%"], 2],
+  ["राष्ट्रमंडल खेल 2026 में पुरुष भाला फेंक स्पर्धा में स्वर्ण पदक किसने जीता है?", ["नीरज चोपड़ा", "रुमेश थरंगा पथिराजे", "अरशद नदीम", "जेकब वाडलेज"], 1],
+  ["राष्ट्रमंडल खेलों में पैरा एथलेटिक्स में स्वर्ण पदक जीतने वाली भारत की पहली खिलाड़ी कौन बन गई हैं?", ["दीपा मलिक", "भाविना पटेल", "अवनी लेखरा", "शर्मीला धनगर"], 3],
+  ["हाल ही में किस केंद्र शासित प्रदेश ने 23 विरासत स्थलों को संरक्षित स्मारक घोषित किया है?", ["जम्मू-कश्मीर", "लद्दाख", "दिल्ली", "पुडुचेरी"], 1],
+  ["भारतीय भूवैज्ञानिक सर्वेक्षण (GSI) की पहली महिला महानिदेशक कौन बनी हैं?", ["वर्षा अशोक अगलावे", "सुलेखा वर्मा", "अर्चना रामसुंदरम", "नीता वर्मा"], 0],
+  ["इंडियन फिल्म फेस्टिवल ऑफ मेलबर्न 2026 में 'लीडरशिप इन सिनेमा अवॉर्ड' से किसे सम्मानित किया गया है?", ["यश", "ऋषभ शेट्टी", "प्रभास", "राम चरण"], 1],
+  ["2026 राष्ट्रमंडल खेलों में पुरुष के 100 मीटर टी47 स्पर्धा में स्वर्ण पदक किसने जीता है?", ["दिलीप महादू गावित", "सुमित अंतिल", "निषाद कुमार", "योगेश कथुनिया"], 0]
+];
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / ${Q.length} (करेंट अफेयर्स 2026 - Part 3)</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+  if(remaining <= 120){
+    timerEl.classList.add("blink");
+  }
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+  modal.classList.remove("hidden");
+}
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+  document.getElementById("greeting").textContent =
+    student + ", आपका 'करेंट अफेयर्स 2026 - पार्ट 3' टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+  let message = correct >= 90 ? "🏆 अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "📘 औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+  document.getElementById("motivation").textContent = message;
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+    if(type !== "all" && type !== status) return "";
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
