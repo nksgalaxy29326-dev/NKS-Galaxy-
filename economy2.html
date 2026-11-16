@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - भारतीय अर्थव्यवस्था (Indian Economy) - भाग 2 (100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1150px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display:flex;justify-content:center;align-items:center;
+  padding:15px;animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0);animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;padding:14px 18px;font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px;background:#f8fafc;display:flex;
+  justify-content:center;gap:12px;border-top:1px solid #e2e8f0;
+}
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>भारतीय अर्थव्यवस्था (Indian Economy) - भाग 2 (SSC & RRB विशेष मॉक टेस्ट)</b></p>
+  <p>पंचवर्षीय योजनाएँ, योजना आयोग, नीति आयोग, गरीबी एवं बेरोजगारी</p>
+  <p>कुल प्रश्न: 100 | कुल अंक: 100 | समय: 20 मिनट</p>
+</header>
+<div class="container">
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>टॉपिक: भारतीय अर्थव्यवस्था - भाग 2 निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें। इस मॉक टेस्ट में पंचवर्षीय योजनाओं, योजना आयोग, नीति आयोग, गरीबी और बेरोजगारी से जुड़े <b>100 महत्वपूर्ण प्रश्न (प्रश्न 101 से 200 तक)</b> शामिल हैं।</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+    <ul style="padding-left:20px;color:#334155">
+      <li>विषय: <b>भारतीय अर्थव्यवस्था (भाग 2)</b></li>
+      <li>कुल प्रश्न: <b>100 (प्रश्न 101 से 200)</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">विषय: <b>भारतीय अर्थव्यवस्था (भाग 2)</b> | हल किए: <b id="answered">0</b>/100 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette (100)</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+  </section>
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>परीक्षा परिणाम (Scorecard) - भारतीय अर्थव्यवस्था (भाग 2)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा - भारतीय अर्थव्यवस्था (भाग 2)</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+</div>
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY - भारतीय अर्थव्यवस्था (भाग 2)</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons">
+      <!-- Buttons dynamically injected -->
+    </div>
+  </div>
+</div>
+<script>
+const RAW_Q = [
+  ["भारत में योजना आयोग (Planning Commission) का गठन कब किया गया था?", ["15 अगस्त 1947", "26 जनवरी 1950", "15 मार्च 1950", "1 अप्रैल 1951"], 2],
+  ["भारत में पंचवर्षीय योजनाओं (Five-Year Plans) की अवधारणा किस देश से ली गई थी?", ["अमेरिका", "पूर्व सोवियत संघ (USSR / रूस)", "ब्रिटेन", "जापान"], 1],
+  ["योजना आयोग के प्रथम अध्यक्ष कौन थे?", ["गुलजारीलाल नंदा", "जवाहरलाल नेहरू (प्रधानमंत्री योजना आयोग के पदेन अध्यक्ष होते थे)", "पी.सी. महालनोबिस", "के.सी. नियोगी"], 1],
+  ["योजना आयोग के प्रथम उपाध्यक्ष कौन थे?", ["गुलजारीलाल नंदा", "वी.टी. कृष्णामाचारी", "मनमोहन सिंह", "मोंटेक सिंह अहलूवालिया"], 0],
+  ["राष्ट्रीय विकास परिषद (NDC - National Development Council) का गठन कब हुआ था?", ["15 मार्च 1950", "6 अगस्त 1952", "1 अप्रैल 1951", "2 अक्टूबर 1952"], 1],
+  ["भारत में पंचवर्षीय योजनाओं को अंतिम स्वीकृति (अनुमोदन) कौन प्रदान करता था?", ["वित्त मंत्रालय", "राष्ट्रीय विकास परिषद (NDC)", "भारतीय रिज़र्व बैंक", "लोकसभा"], 1],
+  ["भारत में पहली पंचवर्षीय योजना (First Five-Year Plan) की अवधि क्या थी?", ["1950–1955", "1951–1956", "1952–1957", "1956–1961"], 1],
+  ["प्रथम पंचवर्षीय योजना किस आर्थिक मॉडल पर आधारित थी?", ["पी.सी. महालनोबिस मॉडल", "हैरोड-डोमर मॉडल (Harrod-Domar Model)", "गाडगिल मॉडल", "जॉन डब्ल्यू. मिलर मॉडल"], 1],
+  ["प्रथम पंचवर्षीय योजना में किस क्षेत्र को सर्वोच्च प्राथमिकता दी गई थी?", ["भारी उद्योग", "कृषि और सिंचाई", "परिवहन और संचार", "शिक्षा और स्वास्थ्य"], 1],
+  ["दूसरी पंचवर्षीय योजना (1956–1961) किस मॉडल पर आधारित थी?", ["हैरोड-डोमर मॉडल", "पी.सी. महालनोबिस मॉडल", "आगत-निर्गत मॉडल", "गांधीवादी मॉडल"], 1],
+  ["दूसरी पंचवर्षीय योजना का मुख्य उद्देश्य क्या था?", ["कृषि विकास", "तीव्र औद्योगिकीकरण (विशेषकर भारी और बुनियादी उद्योग)", "गरीबी उन्मूलन", "आत्मनिर्भरता"], 1],
+  ["भिलाई (छत्तीसगढ़), दुर्गापुर (पश्चिम बंगाल) और राउरकेला (ओडिशा) इस्पात संयंत्र किस पंचवर्षीय योजना के दौरान स्थापित किए गए थे?", ["पहली पंचवर्षीय योजना", "दूसरी पंचवर्षीय योजना (1956–61)", "तीसरी पंचवर्षीय योजना", "चौथी पंचवर्षीय योजना"], 1],
+  ["तीसरी पंचवर्षीय योजना (1961–1966) को किस नाम से भी जाना जाता है?", ["महालनोबिस योजना", "गाडगिल योजना (Gadgil Yojana)", "नेहरू योजना", "सर्वोदय योजना"], 1],
+  ["कौन सी पंचवर्षीय योजना 1962 के चीन युद्ध, 1965 के पाकिस्तान युद्ध और भीषण सूखे के कारण अपने लक्ष्य से पीछे रह गई (असफल रही)?", ["दूसरी पंचवर्षीय योजना", "तीसरी पंचवर्षीय योजना (1961–66)", "चौथी पंचवर्षीय योजना", "पांचवीं पंचवर्षीय योजना"], 1],
+  ["भारत में 'योजना अवकाश' (Plan Holiday) की अवधि क्या थी?", ["1962–1965", "1966–1969 (तीन वार्षिक योजनाएँ चलाई गईं)", "1978–1980", "1990–1992"], 1],
+  ["भारत में 'हरित क्रांति' (Green Revolution) की शुरुआत किस अवधि के दौरान हुई थी?", ["दूसरी पंचवर्षीय योजना", "योजना अवकाश (1966–69) के दौरान", "पांचवीं पंचवर्षीय योजना", "छठी पंचवर्षीय योजना"], 1],
+  ["भारत में हरित क्रांति का जनक किसे माना जाता है?", ["डॉ. वर्गीज कुरियन", "डॉ. एम.एस. स्वामीनाथन (विश्व स्तर पर नॉर्मन बोरलॉग)", "पी.सी. महालनोबिस", "सी. सुब्रमण्यम"], 1],
+  ["चौथी पंचवर्षीय योजना (1969–1974) का मुख्य उद्देश्य क्या था?", ["स्थिरता के साथ आर्थिक विकास और आत्मनिर्भरता की प्राप्ति", "गरीबी हटाओ", "भारी उद्योगों का विकास", "डिजिटल भारत"], 0],
+  ["14 प्रमुख वाणिज्यिक बैंकों का राष्ट्रीयकरण (1969) और 'श्वेत क्रांति' (ऑपरेशन फ्लड, 1970) किस पंचवर्षीय योजना में शुरू हुए?", ["तीसरी पंचवर्षीय योजना", "चौथी पंचवर्षीय योजना (1969–74)", "पांचवीं पंचवर्षीय योजना", "छठी पंचवर्षीय योजना"], 1],
+  ["'गरीबी हटाओ' (Garibi Hatao) का नारा किस पंचवर्षीय योजना में दिया गया था?", ["चौथी पंचवर्षीय योजना", "पांचवीं पंचवर्षीय योजना (1974–78)", "छठी पंचवर्षीय योजना", "सातवीं पंचवर्षीय योजना"], 1],
+  ["कौन सी पंचवर्षीय योजना केवल 4 वर्ष (1974–1978) ही चल सकी और जनता पार्टी सरकार द्वारा समय से एक वर्ष पहले समाप्त कर दी गई?", ["चौथी पंचवर्षीय योजना", "पांचवीं पंचवर्षीय योजना", "छठी पंचवर्षीय योजना", "सातवीं पंचवर्षीय योजना"], 1],
+  ["भारत में 'अनवरत योजना' (Rolling Plan) किस अवधि के दौरान लागू की गई थी?", ["1966–1969", "1978–1980 (मोरारजी देसाई सरकार द्वारा; गुन्नार मिर्डल की अवधारणा पर आधारित)", "1990–1992", "1997–2002"], 1],
+  ["नाबार्ड (NABARD) की स्थापना (1982) किस पंचवर्षीय योजना के दौरान हुई थी?", ["पांचवीं पंचवर्षीय योजना", "छठी पंचवर्षीय योजना (1980–85)", "सातवीं पंचवर्षीय योजना", "आठवीं पंचवर्षीय योजना"], 1],
+  ["'रोटी, काम और उत्पादकता' (Food, Work and Productivity) का नारा किस पंचवर्षीय योजना में दिया गया था?", ["पांचवीं पंचवर्षीय योजना", "छठी पंचवर्षीय योजना", "सातवीं पंचवर्षीय योजना (1985–90)", "आठवीं पंचवर्षीय योजना"], 2],
+  ["जवाहर रोजगार योजना (1989) किस पंचवर्षीय योजना में शुरू की गई थी?", ["छठी पंचवर्षीय योजना", "सातवीं पंचवर्षीय योजना (1985–90)", "आठवीं पंचवर्षीय योजना", "नौवीं पंचवर्षीय योजना"], 1],
+  ["भारत में नई आर्थिक नीति (LPG - उदारीकरण, निजीकरण और वैश्वीकरण) 1991 किस योजना के अंतराल के दौरान लागू की गई थी?", ["सातवीं पंचवर्षीय योजना", "दो वार्षिक योजनाओं (1990–1992) के दौरान", "आठवीं पंचवर्षीय योजना", "नौवीं पंचवर्षीय योजना"], 1],
+  ["आठवीं पंचवर्षीय योजना (1992–1997) का सर्वोच्च प्राथमिकता वाला क्षेत्र क्या था?", ["भारी उद्योग", "मानव संसाधन विकास (शिक्षा, स्वास्थ्य और रोजगार सृजन)", "कृषि मशीनीकरण", "परमाणु ऊर्जा"], 1],
+  ["आठवीं पंचवर्षीय योजना किस मॉडल पर आधारित थी?", ["हैरोड-डोमर मॉडल", "महालनोबिस मॉडल", "जॉन डब्ल्यू. मिलर मॉडल (राव-मनमोहन मॉडल)", "गाडगिल मॉडल"], 2],
+  ["नौवीं पंचवर्षीय योजना (1997–2002) का मुख्य विषय (Theme) क्या था?", ["सामाजिक न्याय और समानता के साथ आर्थिक विकास (Growth with Social Justice and Equity)", "तीव्र और अधिक समावेशी विकास", "गरीबी उन्मूलन", "आत्मनिर्भर भारत"], 0],
+  ["किस पंचवर्षीय योजना में अगले 10 वर्षों में प्रति व्यक्ति आय दोगुनी करने का लक्ष्य रखा गया था?", ["आठवीं पंचवर्षीय योजना", "नौवीं पंचवर्षीय योजना", "दसवीं पंचवर्षीय योजना (2002–2007)", "ग्यारहवीं पंचवर्षीय योजना"], 2],
+  ["ग्यारहवीं पंचवर्षीय योजना (2007–2012) की थीम क्या थी?", ["तीव्र और अधिक समावेशी विकास की ओर (Towards Faster and More Inclusive Growth)", "तीव्र, अधिक समावेशी और सतत विकास", "सामाजिक न्याय के साथ विकास", "मानव विकास"], 0],
+  ["भारत की अंतिम पंचवर्षीय योजना कौन सी थी?", ["ग्यारहवीं पंचवर्षीय योजना", "बारहवीं पंचवर्षीय योजना (2012–2017)", "तेरहवीं पंचवर्षीय योजना", "दसवीं पंचवर्षीय योजना"], 1],
+  ["बारहवीं पंचवर्षीय योजना (2012–2017) का मुख्य लक्ष्य (Theme) क्या था?", ["तीव्र और समावेशी विकास", "तीव्र, अधिक समावेशी और धारणीय/सतत विकास (Faster, More Inclusive and Sustainable Growth)", "गरीबी हटाओ", "हरित क्रांति"], 1],
+  ["योजना आयोग (Planning Commission) को समाप्त कर उसके स्थान पर 'नीति आयोग' (NITI Aayog) का गठन कब किया गया?", ["15 अगस्त 2014", "1 जनवरी 2015", "1 अप्रैल 2015", "1 अप्रैल 2017"], 1],
+  ["नीति आयोग किस सिद्धांत पर कार्य करता है?", ["केंद्रीकृत योजना (Top-Down Approach)", "सहकारी संघवाद (Cooperative Federalism - Bottom-Up Approach)", "एकात्मक शासन", "केवल निजीकरण"], 1],
+  ["नीति आयोग की शासी परिषद (Governing Council) में कौन शामिल होते हैं?", ["केवल केंद्रीय कैबिनेट मंत्री", "प्रधानमंत्री, सभी राज्यों के मुख्यमंत्री और केंद्र शासित प्रदेशों के मुख्यमंत्री/उपराज्यपाल", "केवल आरबीआई गवर्नर और वित्त सचिव", "सभी सांसद"], 1],
+  ["'गांधीवादी योजना' (Gandhian Plan - 1944) किसने तैयार की थी?", ["एम.एन. रॉय", "श्रीमन नारायण अग्रवाल", "जयप्रकाश नारायण", "जवाहरलाल नेहरू"], 1],
+  ["'बॉम्बे प्लान' (Bombay Plan - 1944) कितने प्रमुख उद्योगपतियों द्वारा तैयार किया गया था?", ["5 उद्योगपति", "8 उद्योगपति (जे.आर.डी. टाटा, जी.डी. बिड़ला आदि)", "10 उद्योगपति", "12 उद्योगपति"], 1],
+  ["'जन योजना' (People's Plan - 1945) किसने प्रस्तुत की थी?", ["एम.एन. रॉय (मानवेंद्र नाथ रॉय)", "जयप्रकाश नारायण", "सुभाष चंद्र बोस", "सरदार पटेल"], 0],
+  ["'सर्वोदय योजना' (Sarvodaya Plan - 1950) किसके द्वारा प्रस्तुत की गई थी?", ["विनोबा भावे", "जयप्रकाश नारायण", "महात्मा गांधी", "मोरारजी देसाई"], 1],
+  ["1938 में भारतीय राष्ट्रीय कांग्रेस द्वारा गठित 'राष्ट्रीय योजना समिति' (National Planning Committee) के अध्यक्ष कौन थे?", ["सुभाष चंद्र बोस", "जवाहरलाल नेहरू", "सरदार पटेल", "राजेंद्र प्रसाद"], 1],
+  ["'प्लांड इकोनॉमी फॉर इंडिया' (Planned Economy for India - 1934) नामक प्रसिद्ध पुस्तक किसने लिखी थी?", ["दादाभाई नौरोजी", "सर एम. विश्वेश्वरैया", "पी.सी. महालनोबिस", "आर.सी. दत्त"], 1],
+  ["बीस सूत्री कार्यक्रम (Twenty Point Programme) की शुरुआत किस वर्ष की गई थी?", ["1971", "1975 (पांचवीं पंचवर्षीय योजना के दौरान)", "1980", "1985"], 1],
+  ["'न्यूनतम आवश्यकता कार्यक्रम' (Minimum Needs Programme - MNP) किस पंचवर्षीय योजना में शुरू किया गया था?", ["चौथी पंचवर्षीय योजना", "पांचवीं पंचवर्षीय योजना (1974–78)", "छठी पंचवर्षीय योजना", "सातवीं पंचवर्षीय योजना"], 1],
+  ["किस पंचवर्षीय योजना में 'ट्राइसेम' (TRYSEM - ग्रामीण युवाओं को स्वरोजगार हेतु प्रशिक्षण) कार्यक्रम (1979) शुरू किया गया?", ["पांचवीं योजना", "अनवरत योजना (Rolling Plan - 1978–80) के दौरान", "छठी योजना", "सातवीं योजना"], 1],
+  ["'अटल इनोवेशन मिशन' (Atal Innovation Mission - AIM) किस संस्था की एक प्रमुख पहल है?", ["शिक्षा मंत्रालय", "नीति आयोग (NITI Aayog)", "विज्ञान एवं प्रौद्योगिकी मंत्रालय", "वित्त मंत्रालय"], 1],
+  ["'आकांक्षी जिला कार्यक्रम' (Aspirational Districts Programme - 2018) किस संस्था द्वारा संचालित किया जाता है?", ["गृह मंत्रालय", "नीति आयोग", "ग्रामीण विकास मंत्रालय", "वित्त आयोग"], 1],
+  ["किस पंचवर्षीय योजना में पहली बार 'निजी क्षेत्र' को सार्वजनिक क्षेत्र की तुलना में अधिक प्राथमिकता दी गई थी?", ["छठी पंचवर्षीय योजना", "सातवीं पंचवर्षीय योजना (1985–90)", "आठवीं पंचवर्षीय योजना", "नौवीं पंचवर्षीय योजना"], 1],
+  ["भारत में कुल कितनी पंचवर्षीय योजनाएँ पूरी की गईं?", ["10", "11", "12 (1951 से 2017 तक)", "13"], 2],
+  ["नीति आयोग के प्रथम मुख्य कार्यकारी अधिकारी (CEO) कौन थे?", ["अमिताभ कांत", "सिंधुश्री खुल्लर", "परमेश्वरन अय्यर", "बी.वी.आर. सुब्रह्मण्यम"], 1],
+  ["भारत में गरीबी रेखा (Poverty Line) का आकलन करने के लिए वर्तमान में आधिकारिक आंकड़े कौन एकत्र करता है?", ["भारतीय रिज़र्व बैंक", "राष्ट्रीय नमूना सर्वेक्षण कार्यालय (NSSO / NSO) के उपभोग व्यय सर्वेक्षण के आधार पर नीति आयोग", "वित्त मंत्रालय", "श्रम मंत्रालय"], 1],
+  ["भारत में गरीबी का आकलन मुख्य रूप से किस आधार पर किया जाता है?", ["परिवार की कुल संपत्ति", "प्रति व्यक्ति उपभोग व्यय (Per Capita Consumption Expenditure)", "बैंक बैलेंस", "कृषि भूमि का आकार"], 1],
+  ["'वाई.के. अलघ समिति' (Y.K. Alagh Committee - 1979) ने ग्रामीण और शहरी क्षेत्रों के लिए क्रमशः कितनी न्यूनतम कैलोरी ऊर्जा की सिफारिश की थी?", ["ग्रामीण: 2400 कैलोरी, शहरी: 2100 कैलोरी प्रतिदिन", "ग्रामीण: 2100 कैलोरी, शहरी: 2400 कैलोरी प्रतिदिन", "ग्रामीण: 2500 कैलोरी, शहरी: 2200 कैलोरी प्रतिदिन", "दोनों के लिए 2200 कैलोरी"], 0],
+  ["भारत में गरीबी रेखा के निर्धारण से संबंधित प्रमुख समितियाँ कौन सी हैं?", ["लकड़वाला समिति (1993), सुरेश तेंदुलकर समिति (2009) और सी. रंगराजन समिति (2014)", "नरसिम्हम समिति और चेलैया समिति", "सरकारिया समिति और पुंछी समिति", "स्वर्ण सिंह समिति और वर्मा समिति"], 0],
+  ["'सुरेश तेंदुलकर समिति' (2009) के अनुसार 2011-12 में भारत की कितनी प्रतिशत जनसंख्या गरीबी रेखा से नीचे (BPL) थी?", ["15.5%", "21.9% (ग्रामीण क्षेत्रों में 816 रुपये और शहरी में 1000 रुपये प्रति व्यक्ति मासिक व्यय के आधार पर)", "29.5%", "37.2%"], 1],
+  ["'सी. रंगराजन समिति' (2014) ने गरीबी रेखा के लिए ग्रामीण और शहरी क्षेत्रों में प्रति व्यक्ति प्रतिदिन कितना उपभोग व्यय निर्धारित किया था?", ["ग्रामीण: ₹32, शहरी: ₹47 प्रतिदिन", "ग्रामीण: ₹27, शहरी: ₹33 प्रतिदिन", "ग्रामीण: ₹40, शहरी: ₹60 प्रतिदिन", "ग्रामीण: ₹50, शहरी: ₹75 प्रतिदिन"], 0],
+  ["भारत में 'राष्ट्रीय बहुआयामी गरीबी सूचकांक' (National Multidimensional Poverty Index - MPI) कौन जारी करता है?", ["वित्त मंत्रालय", "नीति आयोग (UNDP और OPHI की पद्धति के आधार पर)", "विश्व बैंक", "श्रम ब्यूरो"], 1],
+  ["बहुआयामी गरीबी सूचकांक (MPI) के तीन मुख्य आयाम कौन से हैं?", ["स्वास्थ्य, शिक्षा और जीवन स्तर (कुल 12 संकेतक)", "आय, बचत और निवेश", "रोजगार, कृषि और उद्योग", "आवास, परिवहन और ऊर्जा"], 0],
+  ["'सापेक्ष गरीबी' (Relative Poverty) का क्या अर्थ है?", ["बुनियादी आवश्यकताओं (रोटी, कपड़ा, मकान) का अभाव", "समाज के विभिन्न आय वर्गों या अन्य लोगों की तुलना में किसी व्यक्ति या वर्ग की आय में असमानता", "केवल ग्रामीण गरीबी", "भुखमरी की स्थिति"], 1],
+  ["'निरपेक्ष गरीबी' (Absolute Poverty) से क्या तात्पर्य है?", ["जब कोई व्यक्ति या परिवार जीवन की न्यूनतम बुनियादी आवश्यकताओं (भोजन, वस्त्र, आवास, शिक्षा, स्वास्थ्य) को भी पूरा करने में असमर्थ हो", "अमीर और गरीब के बीच का अंतर", "केवल शहरी क्षेत्रों की गरीबी", "बेरोजगार भत्ता न मिलना"], 0],
+  ["'गरीबी का दुष्चक्र' (Vicious Circle of Poverty) सिद्धांत किस अर्थशास्त्री ने दिया था?", ["एडम स्मिथ", "रैगनर नर्क्से (Ragnar Nurkse)", "अमर्त्य सेन", "कार्ल मार्क्स"], 1],
+  ["'प्रच्छन्न बेरोजगारी' या 'छिपी हुई बेरोजगारी' (Disguised Unemployment) मुख्य रूप से किस क्षेत्र में पाई जाती है?", ["आईटी (IT) क्षेत्र", "कृषि क्षेत्र (जहाँ आवश्यकता से अधिक लोग काम में लगे होते हैं और उनकी सीमांत उत्पादकता शून्य होती है)", "बैंकिंग क्षेत्र", "विनिर्माण क्षेत्र"], 1],
+  ["'प्रच्छन्न बेरोजगारी' में श्रमिकों की सीमांत उत्पादकता (Marginal Productivity) कितनी होती है?", ["धनात्मक (Positive)", "शून्य (Zero)", "अनंत (Infinite)", "100%"], 1],
+  ["'मौसमी बेरोजगारी' (Seasonal Unemployment) क्या होती है?", ["पूरे वर्ष काम न मिलना", "वर्ष के कुछ विशेष महीनों या मौसमों में काम मिलना और बाकी समय बेरोजगार रहना (जैसे कृषि या पर्यटन में)", "नई तकनीक आने से नौकरी जाना", "एक नौकरी छोड़कर दूसरी खोजने के बीच का समय"], 1],
+  ["'संरचनात्मक बेरोजगारी' (Structural Unemployment) किस कारण उत्पन्न होती है?", ["अर्थव्यवस्था की संरचना में बदलाव, पुरानी तकनीक के स्थान पर नई तकनीक आने या कौशल की कमी (Skill Mismatch) के कारण", "केवल मंदी के कारण", "मौसम बदलने के कारण", "मज़دورों की हड़ताल के कारण"], 0],
+  ["'घर्षणात्मक बेरोजगारी' (Frictional Unemployment) किसे कहते हैं?", ["जब कोई व्यक्ति एक नौकरी छोड़कर दूसरी बेहतर नौकरी की तलाश में कुछ समय के लिए बेरोजगार रहता है", "आर्थिक मंदी के कारण होने वाली बेरोजगारी", "कृषि क्षेत्र की बेरोजगारी", "अशिक्षा के कारण बेरोजगारी"], 0],
+  ["'चक्रीय बेरोजगारी' (Cyclical Unemployment) किस कारण होती है?", ["अर्थव्यवस्था में व्यापार चक्र (Trade Cycle) यानी मंदी (Recession) और मांग में कमी के कारण", "जनसंख्या वृद्धि के कारण", "मौसम परिवर्तन के कारण", "सिंचाई की कमी के कारण"], 0],
+  ["'भगवती समिति' (Bhagwati Committee - 1973) का संबंध किस विषय से था?", ["कर सुधार", "बेरोजगार (Unemployment) का अनुमान और समाधान", "बैंकिंग सुधार", "विदेश व्यापार"], 1],
+  ["मनरेगा (MGNREGA) अधिनियम किस वर्ष पारित किया गया था?", ["2004", "2005 (2 फरवरी 2006 को लागू हुआ; 2 अक्टूबर 2009 को नाम बदलकर महात्मा गांधी राष्ट्रीय ग्रामीण रोजगार गारंटी अधिनियम किया गया)", "2008", "2010"], 1],
+  ["मनरेगा (MGNREGA) के तहत ग्रामीण परिवार के वयस्क सदस्यों को एक वित्तीय वर्ष में कम से कम कितने दिनों के अकुशल शारीरिक श्रम की कानूनी गारंटी दी जाती है?", ["50 दिन", "100 दिन", "150 दिन", "200 दिन"], 1],
+  ["मनरेगा (MGNREGA) के तहत आवेदन करने के कितने दिनों के भीतर रोजगार उपलब्ध न कराने पर बेरोजगारी भत्ता देने का प्रावधान है?", ["7 दिन", "15 दिन", "30 दिन", "45 दिन"], 1],
+  ["'अंत्योदय अन्न योजना' (Antyodaya Anna Yojana - AAY) किस वर्ष शुरू की गई थी?", ["1995", "दिसंबर 2000 (गरीबों में भी सबसे गरीब परिवारों को रियायती दर पर अनाज उपलब्ध कराने हेतु)", "2005", "2013"], 1],
+  ["'राष्ट्रीय खाद्य सुरक्षा अधिनियम' (National Food Security Act - NFSA) किस वर्ष पारित हुआ था?", ["2010", "2013", "2015", "2017"], 1],
+  ["'प्रधानमंत्री जन धन योजना' (PMJDY - वित्तीय समावेशन हेतु) की शुरुआत कब की गई थी?", ["15 अगस्त 2014 (घोषणा) और 28 अगस्त 2014 (शुभारंभ)", "2 अक्टूबर 2014", "1 जनवरी 2015", "8 अप्रैल 2015"], 0],
+  ["'प्रधानमंत्री कौशल विकास योजना' (PMKVY) किस वर्ष शुरू की गई थी?", ["2014", "2015", "2016", "2018"], 1],
+  ["'स्वर्णजयंती ग्राम स्वरोजगार योजना' (SGSY - 1999) का पुनर्गठन कर 2011 में कौन सा मिशन शुरू किया गया?", ["राष्ट्रीय ग्रामीण आजीविका मिशन (NRLM / आजीविका)", "मनरेगा", "प्रधानमंत्री आवास योजना", "मेक इन इंडिया"], 0],
+  ["'संसद आदर्श ग्राम योजना' (SAGY) की शुरुआत 11 अक्टूबर 2014 को किसकी जयंती पर की गई थी?", ["महात्मा गांधी", "लोकनायक जयप्रकाश नारायण", "दीनदयाल उपाध्याय", "सरदार वल्लभभाई पटेल"], 1],
+  ["'अटल पेंशन योजना' (APY) किस वर्ष शुरू की गई थी?", ["2014", "मई 2015 (असंगठित क्षेत्र के श्रमिकों को वृद्धावस्था में पेंशन सुरक्षा देने हेतु)", "2016", "2019"], 1],
+  ["'प्रधानमंत्री गरीब कल्याण अन्न योजना' (PMGKAY) की शुरुआत किस वर्ष हुई थी?", ["2018", "2020 (कोविड-19 महामारी के दौरान मुफ्त राशन प्रदान करने हेतु)", "2021", "2022"], 1],
+  ["भारत में 'आवधिक श्रम बल सर्वेक्षण' (Periodic Labour Force Survey - PLFS) किस संस्था द्वारा जारी किया जाता है?", ["नीति आयोग", "राष्ट्रीय सांख्यिकी कार्यालय (NSO)", "भारतीय रिज़र्व बैंक", "वित्त आयोग"], 1],
+  ["'श्रम बल भागीदारी दर' (LFPR - Labour Force Participation Rate) का क्या अर्थ है?", ["कुल जनसंख्या में कार्यशील आयु वर्ग (15 वर्ष और उससे अधिक) के उन लोगों का प्रतिशत जो या तो काम कर रहे हैं या सक्रिय रूप से काम की तलाश कर रहे हैं", "केवल सरकारी कर्मचारियों का प्रतिशत", "केवल ग्रामीण मजदूरों का प्रतिशत", "बेरोजगारों का प्रतिशत"], 0],
+  ["'यूनिवर्सल बेसिक इनकम' (Universal Basic Income - UBI) की अवधारणा क्या है?", ["केवल सरकारी कर्मचारियों को बोनस देना", "देश के प्रत्येक नागरिक को बिना किसी शर्त के सरकार द्वारा एक निश्चित न्यूनतम धनराशि नियमित रूप से प्रदान करना", "केवल किसानों को ऋण माफी देना", "न्यूनतम मजदूरी कानून"], 1],
+  ["'काम के बदले अनाज कार्यक्रम' (Food for Work Programme) सर्वप्रथम किस वर्ष शुरू किया गया था?", ["1975", "1977", "1985", "1995"], 1],
+  ["'इंदिरा आवास योजना' (1985) को पुनर्गठित कर 2016 में कौन सी योजना शुरू की गई?", ["प्रधानमंत्री आवास योजना - ग्रामीण (PMAY-G)", "सौभाग्य योजना", "उज्ज्वला योजना", "स्वामित्व योजना"], 0],
+  ["'प्रधानमंत्री उज्ज्वला योजना' (PMUY - गरीब परिवारों को मुफ्त एलपीजी कनेक्शन) 1 मई 2016 को कहाँ से शुरू की गई थी?", ["वाराणसी (उत्तर प्रदेश)", "बलिया (उत्तर प्रदेश)", "पानीपत (हरियाणा)", "गांधीनगर (गुजरात)"], 1],
+  ["'बेटी बचाओ, बेटी पढ़ाओ' योजना की शुरुआत 22 जनवरी 2015 को कहाँ से की गई थी?", ["बलिया (उत्तर प्रदेश)", "पानीपत (हरियाणा)", "जयपुर (राजस्थान)", "पटना (बिहार)"], 1],
+  ["'आयुष्मान भारत - प्रधानमंत्री जन आरोग्य योजना' (AB-PMJAY - प्रति परिवार 5 लाख रुपये तक का स्वास्थ्य बीमा) कब शुरू की गई थी?", ["15 अगस्त 2018", "23 सितंबर 2018 (रांची, झारखंड से)", "2 अक्टूबर 2018", "1 जनवरी 2019"], 1],
+  ["'प्रधानमंत्री किसान सम्मान निधि' (PM-KISAN) के तहत पात्र किसान परिवारों को प्रति वर्ष कितनी वित्तीय सहायता दी जाती है?", ["₹4,000", "₹6,000 (तीन बराबर किस्तों में ₹2,000 प्रत्येक)", "₹8,000", "₹12,000"], 1],
+  ["'प्रधानमंत्री स्वनिधि' (PM SVANidhi) योजना किस वर्ग को कार्यशील पूंजी ऋण प्रदान करने के लिए शुरू की गई है?", ["बड़े उद्योगपति", "रेहड़ी-पटरी वाले (Street Vendors)", "आईटी इंजीनियर", "सरकारी शिक्षक"], 1],
+  ["'प्रधानमंत्री विश्वकर्मा योजना' (2023) किस वर्ग के लोगों को सहायता प्रदान करने के लिए शुरू की गई है?", ["पारंपरिक कारीगरों और शिल्पकारों (जैसे बढ़ई, लोहार, सुनार, कुम्हार, मोची आदि) के लिए", "केवल सॉफ्टवेयर डेवलपर्स के लिए", "केवल बड़े किसानों के लिए", "आयात-निर्यात व्यापारियों के लिए"], 0],
+  ["किस राज्य ने सबसे पहले 'रोजगार गारंटी योजना' (Employment Guarantee Scheme - 1972-73) शुरू की थी, जो बाद में मनरेगा की प्रेरणा बनी?", ["केरल", "महाराष्ट्र", "राजस्थान", "पश्चिम बंगाल"], 1],
+  ["'गरीबी और अकाल' (Poverty and Famines) नामक प्रसिद्ध पुस्तक के लेखक कौन हैं?", ["अमर्त्य सेन", "अभिजीत बनर्जी", "रघुराम राजन", "जगदीश भगवती"], 0],
+  ["'पुअर इकोनॉमिक्स' (Poor Economics) पुस्तक के लेखक कौन हैं, जिन्हें 2019 में अर्थशास्त्र का नोबेल पुरस्कार मिला?", ["अमर्त्य सेन", "अभिजीत बनर्जी और एस्थर डुफ्लो", "कौशिक बसु", "अरविंद सुब्रमण्यम"], 1],
+  ["'गिग इकोनॉमी' (Gig Economy) में काम करने वाले श्रमिक (Gig Workers) कौन होते हैं?", ["स्थायी सरकारी कर्मचारी", "अस्थायी, स्वतंत्र या डिजिटल प्लेटफॉर्म (जैसे स्विगी, ज़ोमैटो, ओला, उबर आदि) के माध्यम से काम करने वाले श्रमिक", "केवल कृषि मजदूर", "कारखाने के स्थायी प्रबंधक"], 1],
+  ["'बेरोजगारी की प्राकृतिक दर' (Natural Rate of Unemployment) किन दो प्रकार की बेरोजगारियों का योग होती है?", ["घर्षणात्मक बेरोजगारी (Frictional) + संरचनात्मक बेरोजगारी (Structural)", "चक्रीय बेरोजगारी + मौसमी बेरोजगारी", "प्रच्छन्न बेरोजगारी + चक्रीय बेरोजगारी", "शिक्षित बेरोजगारी + ग्रामीण बेरोजगारी"], 0],
+  ["'ट्रिकल डाउन थ्योरी' (Trickle-Down Theory / रिसन सिद्धांत) का क्या अर्थ है?", ["आर्थिक विकास और अमीरों/उद्योगों को दिए गए कर लाभ का असर धीरे-धीरे रिसकर समाज के निचले और गरीब वर्ग तक भी पहुँचता है", "केवल गरीबों को सीधे नकद हस्तांतरण करना", "कृषि सब्सिडी समाप्त करना", "विदेशी मुद्रा भंडार बढ़ाना"], 0],
+  ["'अल्पाधिकार बेरोजगारी' या 'अल्प-रोजगार' (Underemployment) क्या है?", ["जब किसी व्यक्ति को उसकी योग्यता और क्षमता से कम स्तर का काम या पूरे समय के बजाय आंशिक समय का काम मिलता है", "जब व्यक्ति काम करना ही नहीं चाहता", "जब व्यक्ति सेवानिवृत्त हो जाता है", "जब व्यक्ति विदेश चला जाता है"], 0],
+  ["भारत में 'सार्वजनिक वितरण प्रणाली' (Public Distribution System - PDS) का मुख्य उद्देश्य क्या है?", ["निर्यात बढ़ाना", "गरीब और पात्र परिवारों को उचित मूल्य की दुकानों (राशन की दुकानों) के माध्यम से सस्ते दामों पर आवश्यक खाद्यान्न उपलब्ध कराना", "शेयर बाजार को नियंत्रित करना", "विदेशी निवेश आकर्षित करना"], 1],
+  ["'एक राष्ट्र, एक राशन कार्ड' (One Nation One Ration Card - ONORC) योजना का मुख्य लाभ किसे मिलता है?", ["केवल सरकारी कर्मचारियों को", "प्रवासी मजदूरों (Migrant Workers) को, जो देश के किसी भी राज्य में अपने राशन कार्ड से अनाज प्राप्त कर सकते हैं", "केवल आयकर दाताओं को", "विदेशी पर्यटकों को"], 1],
+  ["'जनसांख्यिकीय लाभांश' (Demographic Dividend) की स्थिति कब उत्पन्न होती है?", ["जब देश में वृद्ध जनसंख्या का अनुपात बहुत अधिक हो", "जब देश की कुल जनसंख्या में कार्यशील आयु वर्ग (15 से 64 वर्ष) की जनसंख्या का अनुपात आश्रित जनसंख्या (बच्चों और बुजुर्गों) की तुलना में अधिक हो", "जब जन्म दर और मृत्यु दर दोनों बहुत उच्च हों", "जब जनसंख्या में गिरावट आ रही हो"], 1]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / ${Q.length} (भारतीय अर्थव्यवस्था - भाग 2)</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+  if(remaining <= 150){
+    timerEl.classList.add("blink");
+  }
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+  modal.classList.remove("hidden");
+}
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+  document.getElementById("greeting").textContent =
+    student + ", आपका 'भारतीय अर्थव्यवस्था (भाग 2)' टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+  let message = correct >= 90 ? "🏆 अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "📘 औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+  document.getElementById("motivation").textContent = message;
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+    if(type !== "all" && type !== status) return "";
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
