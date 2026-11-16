@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - भारतीय अर्थव्यवस्था (Indian Economy) - भाग 4 (100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1150px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display:flex;justify-content:center;align-items:center;
+  padding:15px;animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0);animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;padding:14px 18px;font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px;background:#f8fafc;display:flex;
+  justify-content:center;gap:12px;border-top:1px solid #e2e8f0;
+}
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>भारतीय अर्थव्यवस्था (Indian Economy) - भाग 4 (SSC & RRB विशेष मॉक टेस्ट)</b></p>
+  <p>भारतीय कृषि, क्रांतियाँ, न्यूनतम समर्थन मूल्य, औद्योगिक नीति, महारत्न/नवरत्न कंपनियाँ एवं वित्तीय बाजार (SEBI, BSE, NSE)</p>
+  <p>कुल प्रश्न: 100 | कुल अंक: 100 | समय: 20 मिनट</p>
+</header>
+<div class="container">
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>टॉपिक: भारतीय अर्थव्यवस्था - भाग 4 निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें। इस मॉक टेस्ट में कृषि, क्रांतियाँ, औद्योगिक नीति, महारत्न कंपनियाँ और वित्तीय बाजार से जुड़े <b>100 महत्वपूर्ण प्रश्न (प्रश्न 301 से 400 तक)</b> शामिल हैं।</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+    <ul style="padding-left:20px;color:#334155">
+      <li>विषय: <b>भारतीय अर्थव्यवस्था (भाग 4)</b></li>
+      <li>कुल प्रश्न: <b>100 (प्रश्न 301 से 400)</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">विषय: <b>भारतीय अर्थव्यवस्था (भाग 4)</b> | हल किए: <b id="answered">0</b>/100 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette (100)</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+  </section>
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>परीक्षा परिणाम (Scorecard) - भारतीय अर्थव्यवस्था (भाग 4)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा - भारतीय अर्थव्यवस्था (भाग 4)</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+</div>
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY - भारतीय अर्थव्यवस्था (भाग 4)</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons">
+      <!-- Buttons dynamically injected -->
+    </div>
+  </div>
+</div>
+<script>
+const RAW_Q = [
+  ["भारत में 'न्यूनतम समर्थन मूल्य' (MSP - Minimum Support Price) की सिफारिश कौन सी संस्था करती है?", ["नीति आयोग", "कृषि लागत और मूल्य आयोग (CACP - Commission for Agricultural Costs and Prices)", "भारतीय खाद्य निगम (FCI)", "नाबार्ड (NABARD)"], 1],
+  ["भारत सरकार द्वारा वर्तमान में कितनी फसलों के लिए न्यूनतम समर्थन मूल्य (MSP) की घोषणा की जाती है?", ["14 फसलें", "18 फसलें", "22 अनिवार्य फसलें (तथा गन्ने के लिए उचित एवं लाभकारी मूल्य - FRP)", "28 फसलें"], 2],
+  ["'भारतीय खाद्य निगम' (Food Corporation of India - FCI) की स्थापना कब की गई थी?", ["1955", "14 जनवरी 1965 (बफर स्टॉक और सार्वजनिक वितरण प्रणाली के प्रबंधन हेतु)", "1972", "1982"], 1],
+  ["भारत में 'हरित क्रांति' (Green Revolution) का सर्वाधिक सकारात्मक प्रभाव किन फसलों पर पड़ा?", ["दालें और तिलहन", "गेहूँ और चावल (विशेषकर गेहूँ पर, और राज्यों में पंजाब, हरियाणा व पश्चिमी उत्तर प्रदेश में)", "कपास और जूट", "चाय और कॉफी"], 1],
+  ["'श्वेत क्रांति' (White Revolution / ऑपरेशन फ्लड) किसके उत्पादन से संबंधित है?", ["अंड उत्पादन", "दुग्ध उत्पादन (Milk Production - जनक: डॉ. वर्गीज कुरियन)", "कपास उत्पादन", "चीनी उत्पादन"], 1],
+  ["'नीली क्रांति' (Blue Revolution) का संबंध किस क्षेत्र से है?", ["नील की खेती", "मत्स्य उत्पादन (Fish Production - जनक: डॉ. अरुण कृष्णन और हीरालाल चौधरी)", "जल संरक्षण", "समुद्री परिवहन"], 1],
+  ["'पीली क्रांति' (Yellow Revolution) किस फसल के उत्पादन में वृद्धि से संबंधित है?", ["हल्दी", "तिलहन (Oilseeds - जैसे सरसों, सूरजमुखी; जनक: सैम पित्रोदा)", "केला", "मक्का"], 1],
+  ["'गोल क्रांति' (Round Revolution) किसके उत्पादन से जुड़ी है?", ["टमाटर", "आलू (Potato)", "प्याज", "अंडा"], 1],
+  ["'रजत क्रांति' (Silver Revolution) किसके उत्पादन से संबंधित है?", ["चांदी खनन", "अंडा और मुर्गी पालन (Egg & Poultry Production - जनक: इंदिरा गांधी)", "कपास (इसे 'सिल्वर फाइबर क्रांति' कहा जाता है)", "दूध"], 1],
+  ["'सुनहरी क्रांति' (Golden Revolution) किस क्षेत्र के विकास से संबंधित है?", ["सोना खनन", "बागवानी (Horticulture) और शहद उत्पादन (जनक: निरपख तुतेज)", "जूट उत्पादन (इसे 'गोल्डन फाइबर क्रांति' कहते हैं)", "तिलहन"], 1],
+  ["'भूरी क्रांति' (Grey / Brown Revolution) मुख्य रूप से किससे संबंधित है?", ["उर्वरक (Fertilizers) और चमड़ा/कोको उत्पादन", "गेहूँ उत्पादन", "चाय उत्पादन", "ऊन उत्पादन"], 0],
+  ["'गुलाबी क्रांति' (Pink Revolution) किससे संबंधित है?", ["गुलाब की खेती", "प्याज, झींगा मछली (Prawn) और फार्मास्यूटिकल्स उत्पादन (जनक: दुर्गेश पटेल)", "टमाटर", "सेब"], 1],
+  ["'लाल क्रांति' (Red Revolution) किसके उत्पादन से संबंधित है?", ["सेब", "टमाटर और मांस (Tomato & Meat Production - जनक: विशाल तिवारी)", "लाल मिर्च", "मसूर की दाल"], 1],
+  ["'काली क्रांति' (Black Revolution) का संबंध किससे है?", ["कोयला उत्पादन", "पेट्रोलियम और कच्चा तेल (बायोडीजल/इथेनॉल उत्पादन)", "काली मिर्च", "लोहा"], 1],
+  ["'इंद्रधनुषी क्रांति' (Rainbow Revolution) का क्या उद्देश्य है?", ["केवल फूलों की खेती", "कृषि के सभी क्षेत्रों (हरित, श्वेत, नीली, पीली आदि क्रांतियों) का समग्र और एक साथ विकास करना", "मौसम पूर्वानुमान", "सौर ऊर्जा"], 1],
+  ["'सदाबहार क्रांति' (Evergreen Revolution) का विचार किसने दिया था?", ["डॉ. वर्गीज कुरियन", "डॉ. एम.एस. स्वामीनाथन (पारिस्थितिकी को नुकसान पहुंचाए बिना कृषि उत्पादकता बढ़ाने हेतु)", "नॉर्मन बोरलॉग", "अमर्त्य सेन"], 1],
+  ["'किसान क्रेडिट कार्ड' (Kisan Credit Card - KCC) योजना किस वर्ष शुरू की गई थी?", ["1991", "1998 (आर.वी. गुप्ता समिति की सिफारिश पर नाबार्ड और आरबीआई द्वारा)", "2005", "2014"], 1],
+  ["'प्रधानमंत्री फसल बीमा योजना' (PMFBY) किस वर्ष शुरू की गई थी?", ["2014", "18 फरवरी 2016", "2018", "2019"], 1],
+  ["'मृदा स्वास्थ्य कार्ड योजना' (Soil Health Card Scheme) की शुरुआत फरवरी 2015 में कहाँ से की गई थी?", ["सूरतगढ़ (राजस्थान)", "पानीपत (हरियाणा)", "बलिया (उत्तर प्रदेश)", "आनंद (गुजरात)"], 0],
+  ["'ई-नाम' (e-NAM - National Agriculture Market) क्या है?", ["किसानों के लिए पेंशन योजना", "एक अखिल भारतीय इलेक्ट्रॉनिक ट्रेडिंग पोर्टल जो मौजूदा कृषि उपज विपणन समितियों (APMC मंडियों) को आपस में जोड़ता है (अप्रैल 2016 में शुरू)", "सिंचाई परियोजना", "उर्वरक ब्रांड"], 1],
+  ["भारत में 'खरीफ की फसल' (Kharif Crop) कब बोई और काटी जाती है?", ["अक्टूबर-नवंबर में बोई जाती है, मार्च-अप्रैल में काटी जाती है", "जून-जुलाई (मानसून के आगमन) में बोई जाती है, सितंबर-अक्टूबर में काटी जाती है (जैसे- धान, मक्का, कपास, सोयाबीन)", "मार्च-अप्रैल में बोई जाती है, जून में काटी जाती है", "केवल सर्दियों में बोई जाती है"], 1],
+  ["निम्नलिखित में से कौन सी एक 'रबी की फसल' (Rabi Crop) है?", ["धान (चावल)", "गेहूँ, जौ, चना, मटर और सरसों", "कपास", "बाजरा"], 1],
+  ["'जायद की फसलें' (Zaid Crops) किन महीनों के बीच उगाई जाती हैं?", ["मार्च से जून के बीच (रबी और खरीफ के बीच के ग्रीष्मकाल में, जैसे- तरबूज, खरबूजा, खीरा, ककड़ी)", "जुलाई से अक्टूबर के बीच", "नवंबर से फरवरी के बीच", "पूरे वर्ष"], 0],
+  ["भारत में कृषि क्षेत्र को संस्थागत ऋण (Institutional Credit) प्रदान करने वाली शीर्ष संस्था कौन सी है?", ["भारतीय स्टेट बैंक", "नाबार्ड (NABARD - राष्ट्रीय कृषि और ग्रामीण विकास बैंक)", "सेबी (SEBI)", "सिडबी (SIDBI)"], 1],
+  ["'ट्राइफेड' (TRIFED - भारतीय जनजातीय सहकारी विपणन विकास परिसंघ) की स्थापना किस वर्ष हुई थी?", ["1982", "1987 (आदिवासी उत्पादों के विपणन विकास हेतु)", "1995", "2002"], 1],
+  ["'नेफेड' (NAFED - भारतीय राष्ट्रीय कृषि सहकारी विपणन संघ) किससे संबंधित है?", ["कृषि उपज के सहकारी विपणन (Agricultural Marketing) और मूल्य स्थिरीकरण से (स्थापना: 2 अक्टूबर 1958)", "परमाणु ऊर्जा से", "रेलवे टिकट बुकिंग से", "इस्पात निर्माण से"], 0],
+  ["भारत में 'राष्ट्रीय किसान दिवस' (National Farmers' Day) प्रतिवर्ष कब मनाया जाता है?", ["2 अक्टूबर", "23 दिसंबर (पूर्व प्रधानमंत्री चौधरी चरण सिंह की जयंती पर)", "14 नवंबर", "5 जून"], 1],
+  ["'प्रधानमंत्री कृषि सिंचाई योजना' (PMKSY) का प्रमुख आदर्श वाक्य (Motto) क्या है?", ["हर खेत को पानी और 'पर ड्रॉप मोर क्रॉप' (Per Drop More Crop)", "जय जवान जय किसान", "स्वस्थ धरा खेत हरा", "सबका साथ सबका विकास"], 0],
+  ["'राष्ट्रीय कृषि विकास योजना' (RKVY) किस वर्ष शुरू की गई थी?", ["2000", "2007", "2014", "2018"], 1],
+  ["भारत में किस राज्य को 'मसालों का बगीचा' (Spice Garden of India) कहा जाता है?", ["कर्नाटक", "केरल", "तमिलनाडु", "आंध्र प्रदेश"], 1],
+  ["विश्व में दूध, दालों और मसालों का सबसे बड़ा उत्पादक देश कौन सा है?", ["चीन", "भारत", "ब्राजील", "अमेरिका"], 1],
+  ["भारत में चाय (Tea) का सबसे बड़ा उत्पादक राज्य कौन सा है?", ["पश्चिम बंगाल", "असम", "केरल", "तमिलनाडु"], 1],
+  ["भारत में कॉफी (Coffee) का सर्वाधिक उत्पादन किस राज्य में होता है?", ["केरल", "कर्नाटक", "तमिलनाडु", "असम"], 1],
+  ["भारत में प्राकृतिक रबड़ (Natural Rubber) का सबसे बड़ा उत्पादक राज्य कौन सा है?", ["तमिलनाडु", "केरल", "कर्नाटक", "त्रिपुरा"], 1],
+  ["'झूम खेती' (Jhum Cultivation / स्थानांतरित कृषि) भारत के किस भाग में मुख्य रूप से प्रचलित है?", ["उत्तर-पूर्वी राज्यों (असम, मेघालय, नागालैंड, मिजोरम आदि) में", "पंजाब और हरियाणा में", "राजस्थान में", "गुजरात में"], 0],
+  ["'बफर स्टॉक' (Buffer Stock) का क्या उद्देश्य होता है?", ["निर्यात बढ़ाना", "खराब मौसम या आपात स्थिति में खाद्यान्न की कमी को पूरा करने और कीमतों में अत्यधिक उतार-चढ़ाव को रोकने के लिए सरकार द्वारा अनाज का भंडारण करना", "केवल बीज तैयार करना", "विदेशी कंपनियों को बेचना"], 1],
+  ["'निर्गम मूल्य' (Issue Price) क्या होता है?", ["किसान को मिलने वाला मूल्य", "वह रियायती मूल्य जिस पर सरकार (FCI के माध्यम से) गरीब वर्गों को राशन की दुकानों के जरिए अनाज उपलब्ध कराती है (जो बाजार मूल्य से कम होता है)", "आयात मूल्य", "थोक बाजार मूल्य"], 1],
+  ["भारत में 'राष्ट्रीय बीज निगम' (National Seeds Corporation - NSC) की स्थापना किस वर्ष हुई थी?", ["1955", "1963", "1975", "1982"], 1],
+  ["'अमूल' (AMUL - आनंद मिल्क यूनियन लिमिटेड) सहकारी आंदोलन की शुरुआत गुजरात के आनंद में किसने की थी?", ["त्रिभुवनदास पटेल और डॉ. वर्गीज कुरियन", "एम.एस. स्वामीनाथन", "सरदार पटेल", "मोरारजी देसाई"], 0],
+  ["भारत में 'राष्ट्रीय मत्स्य विकास बोर्ड' (NFDB) का मुख्यालय कहाँ स्थित है?", ["कोच्चि", "हैदराबाद", "मुंबई", "चेन्नई"], 1],
+  ["'मीठी क्रांति' (Sweet Revolution) किसके उत्पादन को बढ़ावा देने से संबंधित है?", ["गन्ना", "शहद और मधुमक्खी पालन (Honey & Beekeeping)", "चुकंदर", "खजूर"], 1],
+  ["'परमपरागत कृषि विकास योजना' (PKVY) किस प्रकार की खेती को बढ़ावा देती है?", ["रासायनिक खेती", "जैविक खेती (Organic Farming)", "हाइड्रोपोनिक खेती", "झूम खेती"], 1],
+  ["भारत का पहला पूर्ण रूप से जैविक राज्य (100% Organic State) कौन सा बना?", ["सिक्किम (2016 में)", "उत्तराखंड", "हिमाचल प्रदेश", "केरल"], 0],
+  ["'स्वामित्व योजना' (SVAMITVA Scheme - 2020) का उद्देश्य क्या है?", ["ग्रामीण क्षेत्रों में ड्रोन तकनीक से सर्वेक्षण कर संपत्ति मालिकों को 'संपत्ति कार्ड' (Property Cards) प्रदान करना", "मुफ्त बिजली देना", "सिंचाई नहर बनाना", "ट्रेक्टर सब्सिडी देना"], 0],
+  ["'कृषि जनगणना' (Agriculture Census) भारत में कितने वर्षों के अंतराल पर आयोजित की जाती है?", ["2 वर्ष", "5 वर्ष", "10 वर्ष", "12 वर्ष"], 1],
+  ["स्वतंत्र भारत की पहली 'औद्योगिक नीति' (Industrial Policy Resolution) कब घोषित की गई थी?", ["15 अगस्त 1947", "6 अप्रैल 1948 (तत्कालीन उद्योग मंत्री डॉ. श्यामा प्रसाद मुखर्जी द्वारा)", "30 अप्रैल 1956", "24 जुलाई 1991"], 1],
+  ["किस औद्योगिक नीति प्रस्ताव को 'भारत का आर्थिक संविधान' (Economic Constitution of India) कहा जाता है?", ["औद्योगिक नीति, 1948", "औद्योगिक नीति प्रस्ताव, 1956 (जिसने उद्योगों को तीन अनुसूचियों में बांटा)", "औद्योगिक नीति, 1977", "नई औद्योगिक नीति, 1991"], 1],
+  ["भारत में 'नई आर्थिक नीति' (New Economic Policy - उदारीकरण, निजीकरण और वैश्वीकरण / LPG) की घोषणा कब की गई थी?", ["24 जुलाई 1991 (प्रधानमंत्री पी.वी. नरसिम्हा राव और वित्त मंत्री डॉ. मनमोहन सिंह के कार्यकाल में)", "15 अगस्त 1990", "1 अप्रैल 1992", "1 जनवरी 1995"], 0],
+  ["'उदारीकरण' (Liberalisation) का क्या अर्थ है?", ["सरकारी कंपनियों को बेचना", "अर्थव्यवस्था और उद्योगों पर लगे अनावश्यक सरकारी प्रतिबंधों, लाइसेंस राज और कोटा प्रणाली को समाप्त या कम करना", "आयात पर पूर्ण प्रतिबंध लगाना", "कर की दरें बढ़ाना"], 1],
+  ["'निजीकरण' (Privatisation) से क्या तात्पर्य है?", ["सार्वजनिक क्षेत्र (सरकारी) के उपक्रमों के स्वामित्व या प्रबंधन में निजी क्षेत्र की भागीदारी बढ़ाना", "निजी कंपनियों का राष्ट्रीयकरण करना", "केवल सरकारी बैंक खोलना", "विदेश व्यापार बंद करना"], 0],
+  ["'वैश्वीकरण' (Globalisation) का क्या अर्थ है?", ["घरेलू अर्थव्यवस्था का विश्व की अन्य अर्थव्यवस्थाओं के साथ एकीकरण (वस्तुओं, सेवाओं, पूंजी और तकनीक का मुक्त प्रवाह)", "केवल अपने देश में व्यापार करना", "विदेशी निवेश रोकना", "एक ही मुद्रा अपनाना"], 0],
+  ["'लािसेंस राज' (License Raj) की समाप्ति मुख्य रूप से किस वर्ष की औद्योगिक नीति में की गई थी?", ["1956", "1977", "1991", "2000"], 2],
+  ["वर्तमान में भारत में कितने उद्योगों के लिए औद्योगिक लाइसेंस (Industrial Licensing) लेना अनिवार्य है?", ["केवल 4-5 सामरिक और सुरक्षा संबंधी उद्योग (जैसे परमाणु ऊर्जा, रक्षा उपकरण, विस्फोटक, खतरनाक रसायन, तंबाकू उत्पाद)", "18 उद्योग", "50 उद्योग", "सभी उद्योग"], 0],
+  ["किस क्षेत्र को पूर्णतः सार्वजनिक क्षेत्र (सरकार) के लिए आरक्षित रखा गया है?", ["दूरसंचार", "परमाणु ऊर्जा (Atomic Energy) और रेलवे परिचालन के मुख्य क्षेत्र", "बैंकिंग", "विमानन"], 1],
+  ["'महारत्न' (Maharatna) कंपनियों की श्रेणी की शुरुआत भारत सरकार द्वारा किस वर्ष की गई थी?", ["1997 (नवरत्न की शुरुआत 1997 में हुई थी)", "2010 (महारत्न श्रेणी की शुरुआत 2010 में हुई)", "2014", "2019"], 1],
+  ["किसी केंद्रीय सार्वजनिक क्षेत्र के उपक्रम (CPSE) को 'महारत्न' का दर्जा प्राप्त करने के लिए क्या प्रमुख शर्त है?", ["उसके पास पहले से 'नवरत्न' का दर्जा होना चाहिए और पिछले 3 वर्षों में उसका औसत वार्षिक शुद्ध लाभ (Net Profit) ₹5,000 करोड़ से अधिक होना चाहिए", "वह एक निजी कंपनी होनी चाहिए", "उसका लाभ ₹100 करोड़ होना चाहिए", "वह केवल कृषि क्षेत्र की कंपनी हो"], 0],
+  ["निम्नलिखित में से कौन सी एक 'महारत्न' (Maharatna) कंपनी है?", ["ONGC, NTPC, SAIL, BHEL, IOCL, GAIL, CIL, BPCL, HPCL, PGCIL, PFC, REC, OIL, HAL (हिंदुस्तान एयरोनॉटिक्स लिमिटेड)", "इंफोसिस (Infosys)", "टाटा मोटर्स (Tata Motors)", "रिलायंस इंडस्ट्रीज (RIL)"], 0],
+  ["'आबिद हुसैन समिति' (Abid Hussain Committee - 1997) किस क्षेत्र के सुधारों से संबंधित थी?", ["लघु उद्योग (Small Scale Industries / MSME)", "बैंकिंग सुधार", "कर सुधार", "बीमा सुधार"], 0],
+  ["वर्तमान परिभाषा (2020 में संशोधित) के अनुसार, 'सूक्ष्म उद्यम' (Micro Enterprise) किसे कहते हैं?", ["जिसका संयंत्र एवं मशीनरी में निवेश ₹1 करोड़ से अधिक न हो और वार्षिक टर्नओवर ₹5 करोड़ से अधिक न हो", "निवेश ₹10 करोड़ तक और टर्नओवर ₹50 करोड़ तक (यह 'लघु/Small' उद्यम है)", "निवेश ₹50 करोड़ तक और टर्नओवर ₹250 करोड़ तक (यह 'मध्यम/Medium' उद्यम है)", "टर्नओवर ₹1000 करोड़ से अधिक"], 0],
+  ["'मेक इन इंडिया' (Make in India) कार्यक्रम भारत सरकार द्वारा कब शुरू किया गया था?", ["15 अगस्त 2014", "25 सितंबर 2014 (भारत को वैश्विक विनिर्माण केंद्र बनाने हेतु)", "16 जनवरी 2016", "1 जुलाई 2017"], 1],
+  ["'स्टार्टअप इंडिया' (Startup India) अभियान की शुरुआत कब की गई थी?", ["25 सितंबर 2014", "16 जनवरी 2016 (इसीलिए 16 जनवरी को 'राष्ट्रीय स्टार्टअप दिवस' मनाया जाता है)", "2 अक्टूबर 2015", "8 अप्रैल 2015"], 1],
+  ["भारत में सूती वस्त्र उद्योग (Cotton Textile Industry) की पहली आधुनिक मिल कहाँ स्थापित की गई थी?", ["1818 में फोर्ट ग्लोस्टर (कोलकाता) में (परंतु पहली सफल आधुनिक मिल 1854 में मुंबई में कावसजी डाबर द्वारा स्थापित की गई)", "अहमदाबाद में", "कानपुर में", "सूरत में"], 0],
+  ["किस शहर को 'भारत का मैनचेस्टर' (Manchester of India) कहा जाता है?", ["मुंबई", "अहमदाबाद (जबकि कानपुर को 'उत्तर भारत का मैनचेस्टर' और कोयंबटूर को 'दक्षिण भारत का मैनचेस्टर' कहा जाता है)", "सूरत", "इंदौर"], 1],
+  ["भारत में आधुनिक लौह-इस्पात उद्योग की शुरुआत 1907 में जमशेदजी टाटा द्वारा 'टिस्को' (TISCO) की स्थापना के साथ कहाँ हुई थी?", ["राउरकेला (ओडिशा)", "साकची / जमशेदपुर (झारखंड)", "भिलाई (छत्तीसगढ़)", "दुर्गापुर (पश्चिम बंगाल)"], 1],
+  ["भिलाई (छत्तीसगढ़) और बोकारो (झारखंड) इस्पात संयंत्र किस देश के सहयोग से स्थापित किए गए थे?", ["ब्रिटेन", "जर्मनी", "पूर्व सोवियत संघ (USSR / रूस)", "जापान"], 2],
+  ["'विशेष आर्थिक क्षेत्र' (Special Economic Zone - SEZ) अधिनियम संसद द्वारा किस वर्ष पारित किया गया था?", ["2000", "2005 (2006 में लागू हुआ; एशिया का पहला निर्यात प्रसंस्करण क्षेत्र - EPZ 1965 में कांडला, गुजरात में स्थापित हुआ था)", "2010", "2014"], 1],
+  ["'उत्पादन से जुड़ी प्रोत्साहन योजना' (Production Linked Incentive - PLI Scheme) का मुख्य उद्देश्य क्या है?", ["घरेलू विनिर्माण (Domestic Manufacturing) को बढ़ावा देना, आयात कम करना और निर्यात बढ़ाना", "केवल कृषि ऋण देना", "सरकारी नौकरियाँ कम करना", "विदेश यात्रा सस्ती करना"], 0],
+  ["'राष्ट्रीय निवेश और अवसंरचना कोष' (NIIF) की स्थापना किस वर्ष की गई थी?", ["2012", "2015 (बुनियादी ढाँचा परियोजनाओं में दीर्घकालिक पूंजी निवेश हेतु)", "2018", "2020"], 1],
+  ["'दत्ता समिति' (Dutt Committee - 1969) किससे संबंधित थी?", ["औद्योगिक लाइसेंसिंग प्रणाली (Industrial Licensing Policy) की जांच से", "कृषि मूल्य निर्धारण से", "रेलवे सुरक्षा से", "बीमा सुधार से"], 0],
+  ["'सनराइज इंडस्ट्रीज' (Sunrise Industries) किन्हें कहा जाता है?", ["वे उभरते हुए उद्योग जिनमें भविष्य में तीव्र विकास की अपार संभावनाएँ होती हैं (जैसे- हरित ऊर्जा, आईटी, जैव प्रौद्योगिकी, सेमीकंडक्टर, ई-कॉमर्स)", "बंद होने वाले पुराने उद्योग", "केवल सौर ऊर्जा कंपनियाँ", "कोयला खनन"], 0],
+  ["'डिजिटल इंडिया' (Digital India) कार्यक्रम किस वर्ष शुरू किया गया था?", ["2014", "1 जुलाई 2015", "2016", "2017"], 1],
+  ["'राष्ट्रीय विनिर्माण नीति' (National Manufacturing Policy) किस वर्ष घोषित की गई थी?", ["2005", "2011 (GDP में विनिर्माण क्षेत्र की हिस्सेदारी बढ़ाकर 25% करने के लक्ष्य के साथ)", "2015", "2020"], 1],
+  ["भारत में सर्वाधिक रोजगार देने वाला दूसरा सबसे बड़ा क्षेत्र (कृषि के बाद) कौन सा है?", ["कपड़ा एवं वस्त्र उद्योग (Textile Industry) और निर्माण क्षेत्र", "परमाणु ऊर्जा", "विमानन क्षेत्र", "खनन"], 0],
+  ["'मल्होत्रा समिति' (Malhotra Committee - 1993) किस क्षेत्र में सुधारों के लिए गठित की गई थी?", ["बैंकिंग क्षेत्र", "बीमा क्षेत्र (Insurance Sector - जिसके बाद IRDAI का गठन हुआ)", "शेयर बाजार", "लघु उद्योग"], 1],
+  ["'भारतीय बीमा विनियामक और विकास प्राधिकरण' (IRDAI) का मुख्यालय कहाँ स्थित है?", ["मुंबई", "नई दिल्ली", "हैदराबाद (स्थापना: 1999)", "बेंगलुरु"], 2],
+  ["भारत में पूंजी बाजार (Capital Market) और शेयर बाजार को नियंत्रित करने वाली शीर्ष संस्था कौन सी है?", ["भारतीय रिज़र्व बैंक (RBI)", "भारतीय प्रतिभूति और विनिमय बोर्ड (SEBI)", "वित्त मंत्रालय", "नीति आयोग"], 1],
+  ["सेबी (SEBI) की स्थापना कब हुई थी और इसे वैधानिक दर्जा (Statutory Status) कब दिया गया?", ["स्थापना 1988 में हुई, और सेबी अधिनियम, 1992 द्वारा वैधानिक दर्जा दिया गया (मुख्यालय: मुंबई)", "स्थापना 1935 में हुई", "स्थापना 1955 में हुई", "स्थापना 2000 में हुई"], 0],
+  ["एशिया का सबसे पुराना स्टॉक एक्सचेंज कौन सा है?", ["टोक्यो स्टॉक एक्सचेंज", "बॉम्बे स्टॉक एक्सचेंज (BSE - स्थापना: 1875)", "नेशनल स्टॉक एक्सचेंज (NSE)", "शंघाई स्टॉक एक्सचेंज"], 1],
+  ["'सेंसेक्स' (SENSEX) किस स्टॉक एक्सचेंज का संवेदी सूचकांक है और इसमें कितनी प्रमुख कंपनियाँ शामिल हैं?", ["BSE का सूचकांक, इसमें 30 प्रमुख कंपनियाँ शामिल हैं", "NSE का सूचकांक, इसमें 50 कंपनियाँ शामिल हैं", "BSE का सूचकांक, इसमें 100 कंपनियाँ शामिल हैं", "न्यूयॉर्क स्टॉक एक्सचेंज का सूचकांक"], 0],
+  ["'निफ्टी-50' (NIFTY 50) किस स्टॉक एक्सचेंज का प्रमुख सूचकांक है?", ["बॉम्बे स्टॉक एक्सचेंज (BSE)", "नेशनल स्टॉक एक्सचेंज (NSE - स्थापना: 1992, फेरवानी समिति की सिफारिश पर)", "कलकत्ता स्टॉक एक्सचेंज", "लंदन स्टॉक एक्सचेंज"], 1],
+  ["शेयर बाजार की शब्दावली में 'बुल' (Bull / तेजड़िया) और 'बियर' (Bear / मंदड़िया) का क्या अर्थ है?", ["बुल वह निवेशक है जिसे बाजार में कीमतें बढ़ने (तेजी) की उम्मीद होती है; बियर वह है जिसे कीमतें गिरने (मंदी) की उम्मीद होती है", "बुल का अर्थ मंदी और बियर का अर्थ तेजी है", "दोनों विदेशी निवेशक हैं", "ये बैंक के प्रकार हैं"], 0],
+  ["'ब्लू चिप कंपनियाँ' (Blue-Chip Companies) किन्हें कहा जाता है?", ["नई स्टार्टअप कंपनियाँ", "वे बड़ी, आर्थिक रूप से सुदृढ़, प्रतिष्ठित और विश्वसनीय कंपनियाँ जिनका लाभ कमाने और लाभांश देने का लंबा इतिहास होता है", "घाटे में चल रही कंपनियाँ", "केवल कंप्यूटर चिप बनाने वाली कंपनियाँ"], 1],
+  ["'आईपीओ' (IPO) का पूर्ण रूप क्या है?", ["Indian Public Office", "Initial Public Offering (जब कोई निजी कंपनी पहली बार अपने शेयर आम जनता को बेचने के लिए जारी करती है)", "International Portfolio Organisation", "Internal Price Option"], 1],
+  ["'मुद्रा बाजार' (Money Market) और 'पूंजी बाजार' (Capital Market) में मुख्य अंतर क्या है?", ["मुद्रा बाजार में अल्पकालिक (1 वर्ष से कम अवधि के) वित्तीय उपकरणों का लेनदेन होता है (नियामक: RBI); जबकि पूंजी बाजार में दीर्घकालिक (1 वर्ष से अधिक अवधि के) शेयर और बॉन्ड का लेनदेन होता है (नियामक: SEBI)", "मुद्रा बाजार में केवल सोने का व्यापार होता है", "पूंजी बाजार को RBI नियंत्रित करता है", "दोनों एक ही हैं"], 0],
+  ["'ट्रेजरी बिल' (Treasury Bills / T-Bills) क्या होते हैं?", ["भारत सरकार द्वारा जारी किए जाने वाले अल्पकालिक ऋण उपकरण (91 दिन, 182 दिन और 364 दिन की अवधि के), जिन पर कोई ब्याज नहीं मिलता बल्कि ये अंकित मूल्य से कम (Discount) पर जारी होते हैं", "निजी कंपनियों के शेयर", "बिजली के बिल", "आयकर रसीद"], 0],
+  ["'गिल्ट-एज्ड मार्केट' (Gilt-Edged Market) किससे संबंधित है?", ["सोने और चांदी के बाजार से", "सरकारी प्रतिभूतियों (Government Securities / G-Secs) के क्रय-विक्रय से (जिसमें जोखिम शून्य माना जाता है)", "पुराने कपड़ों के बाजार से", "कच्चे तेल के बाजार से"], 1],
+  ["'कॉल मनी' (Call Money) क्या होती है?", ["वह अति-अल्पकालिक ऋण जो बैंक अपनी नकद आरक्षित आवश्यकताओं को पूरा करने के लिए एक-दूसरे से केवल 1 दिन (Overnight) के लिए लेते हैं", "फोन पर लिया गया लोन", "होम लोन", "कृषि ऋण"], 0],
+  ["'इनसाइडर ट्रेडिंग' (Insider Trading) क्या है?", ["किसी कंपनी के कर्मचारियों या अधिकारियों द्वारा कंपनी की गोपनीय (अप्रकाशित) संवेदनशील जानकारी के आधार पर शेयरों की खरीद-बिक्री करना (यह गैर-कानूनी है)", "घर बैठकर ऑनलाइन ट्रेडिंग करना", "विदेशी शेयर खरीदना", "म्यूचुअल फंड में निवेश"], 0],
+  ["'यूनिकॉर्न' (Unicorn) किस प्रकार के स्टार्टअप को कहा जाता है?", ["वह निजी स्टार्टअप कंपनी जिसका मूल्यांकन (Valuation) 1 अरब अमेरिकी डॉलर ($1 Billion) या उससे अधिक हो गया हो", "वह कंपनी जो केवल कृषि क्षेत्र में काम करती हो", "सरकारी बैंक", "100 साल पुरानी कंपनी"], 0],
+  ["'एंजेल इन्वेस्टर' (Angel Investor) कौन होता है?", ["वह धनी व्यक्ति जो किसी नए स्टार्टअप को उसके शुरुआती चरण में अपनी निजी पूंजी निवेश के रूप में प्रदान करता है", "सरकारी बैंक अधिकारी", "कर संग्रहकर्ता", "शेयर दलाल"], 0],
+  ["'वेंचर कैपिटल' (Venture Capital) क्या है?", ["उच्च विकास क्षमता वाले नए और जोखिम भरे स्टार्टअप्स में निवेश की जाने वाली पूंजी", "सरकारी पेंशन फंड", "किसानों को दी जाने वाली सब्सिडी", "बचत खाते का ब्याज"], 0],
+  ["'म्यूचुअल फंड' (Mutual Fund) को भारत में कौन नियंत्रित करता है?", ["भारतीय रिज़र्व बैंक (RBI)", "सेबी (SEBI)", "इरडा (IRDAI)", "नीति आयोग"], 1],
+  ["'डीमैट खाता' (Demat Account) किस उद्देश्य के लिए आवश्यक होता है?", ["शेयरों और प्रतिभूतियों को इलेक्ट्रॉनिक (डिजिटल) रूप में रखने और खरीदने-बेचने के लिए", "विदेश यात्रा के लिए", "राशन लेने के लिए", "आयकर रिटर्न भरने के लिए"], 0],
+  ["'सॉवरेन गोल्ड बॉन्ड' (Sovereign Gold Bond - SGB) योजना किसके द्वारा जारी की जाती है?", ["निजी जौहरियों द्वारा", "भारत सरकार की ओर से भारतीय रिज़र्व बैंक (RBI) द्वारा", "सेबी द्वारा", "नाबार्ड द्वारा"], 1],
+  ["'ग्रीन बॉन्ड' (Green Bonds) क्या होते हैं?", ["ऐसे ऋण पत्र (Bonds) जिनसे जुटाई गई धनराशि का उपयोग केवल पर्यावरण-अनुकूल परियोजनाओं (जैसे सौर ऊर्जा, पवन ऊर्जा, स्वच्छ परिवहन) के वित्तपोषण के लिए किया जाता है", "कृषि भूमि के कागजात", "हरे रंग के करेंसी नोट", "वन विभाग के शेयर"], 0],
+  ["'वाणिज्यिक पत्र' (Commercial Paper - CP) क्या है?", ["बड़ी और उच्च क्रेडिट रेटिंग वाली कंपनियों द्वारा अल्पकालिक पूंजी जुटाने के लिए जारी किया जाने वाला असुरक्षित वचन पत्र (Unsecured Promissory Note)", "दैनिक समाचार पत्र", "सरकारी गजट", "आयात लाइसेंस"], 0],
+  ["'जमा प्रमाण पत्र' (Certificate of Deposit - CD) कौन जारी कर सकता है?", ["अनुसूचित वाणिज्यिक बैंक (Scheduled Commercial Banks) और अखिल भारतीय वित्तीय संस्थान", "कोई भी आम व्यक्ति", "ग्राम पंचायत", "केवल निजी दुकानदार"], 0],
+  ["'निक्केई' (NIKKEI), 'डॉव जोन्स' (Dow Jones) और 'नैस्डैक' (NASDAQ) क्या हैं?", ["प्रमुख अंतर्राष्ट्रीय शेयर बाजार सूचकांक (निक्केई - जापान; डॉव जोन्स और नैस्डैक - अमेरिका)", "क्रिप्टोकरेंसी के नाम", "विदेशी मुद्राओं के नाम", "अंतर्राष्ट्रीय बैंक"], 0],
+  ["भारत में 'पेंशन निधि विनियामक और विकास प्राधिकरण' (PFRDA) किस योजना का संचालन करता है?", ["राष्ट्रीय पेंशन प्रणाली (National Pension System - NPS) और अटल पेंशन योजना (APY)", "प्रधानमंत्री आवास योजना", "मनरेगा", "आयुष्मान भारत"], 0],
+  ["'वित्तीय स्थिरता और विकास परिषद' (FSDC - Financial Stability and Development Council) की अध्यक्षता कौन करता है?", ["आरबीआई गवर्नर", "केंद्रीय वित्त मंत्री (Union Finance Minister)", "प्रधानमंत्री", "सेबी अध्यक्ष"], 1]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / ${Q.length} (भारतीय अर्थव्यवस्था - भाग 4)</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+  if(remaining <= 150){
+    timerEl.classList.add("blink");
+  }
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+  modal.classList.remove("hidden");
+}
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+  document.getElementById("greeting").textContent =
+    student + ", आपका 'भारतीय अर्थव्यवस्था (भाग 4)' टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+  let message = correct >= 90 ? "🏆 अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "📘 औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+  document.getElementById("motivation").textContent = message;
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+    if(type !== "all" && type !== status) return "";
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
