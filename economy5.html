@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - भारतीय अर्थव्यवस्था (Indian Economy) - भाग 5 (100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1150px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display:flex;justify-content:center;align-items:center;
+  padding:15px;animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0);animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;padding:14px 18px;font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px;background:#f8fafc;display:flex;
+  justify-content:center;gap:12px;border-top:1px solid #e2e8f0;
+}
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>भारतीय अर्थव्यवस्था (Indian Economy) - भाग 5 (SSC & RRB विशेष मॉक टेस्ट)</b></p>
+  <p>विदेशी व्यापार, भुगतान संतुलन (BoP), FDI/FPI, अंतर्राष्ट्रीय आर्थिक संगठन, जनगणना एवं विविध आर्थिक शब्दावली</p>
+  <p>कुल प्रश्न: 100 | कुल अंक: 100 | समय: 20 मिनट</p>
+</header>
+<div class="container">
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>टॉपिक: भारतीय अर्थव्यवस्था - भाग 5 निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें। इस मॉक टेस्ट में विदेशी व्यापार, भुगतान संतुलन, अंतर्राष्ट्रीय आर्थिक संगठनों, जनगणना और विविध आर्थिक शब्दावली से जुड़े <b>100 महत्वपूर्ण प्रश्न (प्रश्न 401 से 500 तक)</b> शामिल हैं।</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+    <ul style="padding-left:20px;color:#334155">
+      <li>विषय: <b>भारतीय अर्थव्यवस्था (भाग 5)</b></li>
+      <li>कुल प्रश्न: <b>100 (प्रश्न 401 से 500)</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">विषय: <b>भारतीय अर्थव्यवस्था (भाग 5)</b> | हल किए: <b id="answered">0</b>/100 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette (100)</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+  </section>
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>परीक्षा परिणाम (Scorecard) - भारतीय अर्थव्यवस्था (भाग 5)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा - भारतीय अर्थव्यवस्था (भाग 5)</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+</div>
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY - भारतीय अर्थव्यवस्था (भाग 5)</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons">
+      <!-- Buttons dynamically injected -->
+    </div>
+  </div>
+</div>
+<script>
+const RAW_Q = [
+  ["किसी देश के 'भुगतान संतुलन' (Balance of Payments - BoP) का क्या अर्थ है?", ["केवल वस्तुओं के आयात और निर्यात का अंतर", "एक निश्चित अवधि (सामान्यतः एक वर्ष) में किसी देश के निवासियों और शेष विश्व के बीच होने वाले सभी आर्थिक लेन-देन (दृश्य, अदृश्य और पूंजीगत) का व्यवस्थित लेखा-जोखा", "सरकार का वार्षिक बजट", "विदेशी मुद्रा भंडार का कुल मूल्य"], 1],
+  ["'व्यापार संतुलन' (Balance of Trade - BoT) में केवल किन मदों को शामिल किया जाता है?", ["केवल सेवाओं के व्यापार को", "केवल दृश्य मदों (Visible Items / भौतिक वस्तुओं - Goods) के निर्यात और आयात के अंतर को", "विदेशी निवेश (FDI) को", "विदेशों से प्राप्त उपहारों को"], 1],
+  ["भुगतान संतुलन (BoP) के 'चालू खाते' (Current Account) में क्या शामिल होता है?", ["वस्तुओं का व्यापार (दृश्य), सेवाओं का व्यापार (अदृश्य जैसे आईटी, पर्यटन), आय (लाभांश/ब्याज) और एकपक्षीय हस्तांतरण (विदेशों से भेजे गए पैसे/Remittances)", "केवल विदेशी प्रत्यक्ष निवेश (FDI)", "विदेशी ऋण और उधार", "सोने का भंडार"], 0],
+  ["भुगतान संतुलन के 'पूंजी खाते' (Capital Account) में कौन से लेन-देन दर्ज किए जाते हैं?", ["वस्तुओं का निर्यात", "विदेशी प्रत्यक्ष निवेश (FDI), विदेशी पोर्टफोलियो निवेश (FPI), विदेशी ऋण (ECB) और बैंकिंग पूंजी", "पर्यटन से आय", "सॉफ्टवेयर निर्यात"], 1],
+  ["'प्रत्यक्ष विदेशी निवेश' (FDI - Foreign Direct Investment) और 'विदेशी पोर्टफोलियो निवेश' (FPI) में मुख्य अंतर क्या है?", ["FDI में विदेशी कंपनी किसी देश में भौतिक संपत्तियों (कारखाने, बुनियादी ढाँचे) में दीर्घकालिक निवेश करती है और प्रबंधन में नियंत्रण रखती है; जबकि FPI केवल शेयर बाजार और बॉन्ड में अल्पकालिक वित्तीय निवेश होता है", "FDI अल्पकालिक होता है और FPI दीर्घकालिक", "FPI में प्रबंधन नियंत्रण मिलता है", "दोनों बिल्कुल समान हैं"], 0],
+  ["भारत के 'विदेशी मुद्रा भंडार' (Foreign Exchange Reserves - Forex) का संरक्षक और प्रबंधक कौन है?", ["वित्त मंत्रालय", "भारतीय रिज़र्व बैंक (RBI)", "भारतीय स्टेट बैंक", "नीति आयोग"], 1],
+  ["भारत के विदेशी मुद्रा भंडार (Forex Reserves) के चार मुख्य घटक कौन से हैं?", ["विदेशी मुद्रा परिसंपत्तियाँ (FCA), स्वर्ण भंडार (Gold), विशेष आहरण अधिकार (SDR) और IMF के पास आरक्षित स्थिति (Reserve Tranche Position)", "केवल अमेरिकी डॉलर और सोना", "रुपया, डॉलर, यूरो और येन", "सरकारी बॉन्ड और ट्रेजरी बिल"], 0],
+  ["'विशेष आहरण अधिकार' (SDR - Special Drawing Rights) किस अंतर्राष्ट्रीय संस्था की कृत्रिम आरक्षित मुद्रा (जिसे 'पेपर गोल्ड' भी कहा जाता है) है?", ["विश्व बैंक (World Bank)", "अंतर्राष्ट्रीय मुद्रा कोष (IMF - 1969 में सृजित)", "विश्व व्यापार संगठन (WTO)", "एशियाई विकास बैंक (ADB)"], 1],
+  ["IMF की SDR बास्केट (मुद्रा समूह) में कौन सी पाँच प्रमुख अंतर्राष्ट्रीय मुद्राएँ शामिल हैं?", ["अमेरिकी डॉलर, यूरो, चीनी युआन (रेनमिनबी), जापानी येन और ब्रिटिश पाउंड स्टर्लिंग", "डॉलर, यूरो, भारतीय रुपया, रूबल और येन", "डॉलर, स्विस फ्रैंक, कैनेडियन डॉलर, यूरो और पाउंड", "केवल डॉलर, यूरो और पाउंड"], 0],
+  ["भारत में विदेशी मुद्रा के नियमन के लिए FERA (1973) के स्थान पर कौन सा नया अधिनियम 1999 में पारित किया गया?", ["FEMA (Foreign Exchange Management Act, 1999 - 1 जून 2000 को लागू हुआ)", "PMLA (2002)", "SEBI Act (1992)", "FRBM Act (2003)"], 0],
+  ["'डंपिंग' (Dumping / राशिपातन) का अंतर्राष्ट्रीय व्यापार में क्या अर्थ है?", ["कचरा समुद्र में फेंकना", "किसी देश द्वारा अपने घरेलू बाजार की कीमत या उत्पादन लागत से भी कम कीमत पर किसी दूसरे देश के बाजार में भारी मात्रा में वस्तुएँ बेचना (ताकि वहाँ के घरेलू उद्योग नष्ट हो जाएँ)", "आयात पर प्रतिबंध लगाना", "वस्तुओं का भंडारण करना"], 1],
+  ["'प्रशुल्क' (Tariff) और 'कोटा' (Quota) क्या हैं?", ["निर्यात बढ़ाने के पुरस्कार", "आयात को प्रतिबंधित करने या घरेलू उद्योगों को विदेशी प्रतिस्पर्धा से बचाने के लिए सरकार द्वारा लगाए जाने वाले व्यापार अवरोध (Tariff आयात पर लगने वाला कर है, जबकि Quota आयात की अधिकतम मात्रा की सीमा है)", "विदेशी मुद्रा के नाम", "बैंकिंग दरें"], 1],
+  ["'चालू खाता परिवर्तनीयता' (Current Account Convertibility) भारत में किस वर्ष पूर्ण रूप से लागू की गई थी?", ["1991", "1994 (अगस्त 1994 में)", "2000", "2005"], 1],
+  ["भारत में 'पूंजी खाता परिवर्तनीयता' (Capital Account Convertibility) पर सुझाव देने के लिए RBI द्वारा कौन सी समिति गठित की गई थी?", ["तारापोर समिति (Tarapore Committee - 1997 और 2006)", "नरसिम्हम समिति", "उर्जित पटेल समिति", "चेलैया समिति"], 0],
+  ["'प्रवासी भारतीयों द्वारा स्वदेश भेजे जाने वाले धन' (Remittances) के मामले में विश्व का शीर्ष प्राप्तकर्ता देश कौन सा है?", ["चीन", "भारत", "मेक्सिको", "फिलीपींस"], 1],
+  ["'जे-वक्र प्रभाव' (J-Curve Effect) अर्थशास्त्र में किससे संबंधित है?", ["किसी देश द्वारा अपनी मुद्रा का अवमूल्यन (Devaluation) करने के तुरंत बाद व्यापार संतुलन का पहले और अधिक घाटे में जाना तथा कुछ समय बाद निर्यात बढ़ने से तेजी से सुधार होना", "कर की दर और राजस्व", "महंगाई और बेरोजगारी", "जनसंख्या वृद्धि"], 0],
+  ["'फेवरेबल बैलेंस ऑफ ट्रेड' (अनुकूल व्यापार संतुलन / Trade Surplus) की स्थिति कब होती है?", ["जब किसी देश का कुल निर्यात (Exports), उसके कुल आयात (Imports) से अधिक हो", "जब आयात, निर्यात से अधिक हो", "जब आयात और निर्यात दोनों शून्य हों", "जब विदेशी ऋण अधिक हो"], 0],
+  ["'मुक्त व्यापार क्षेत्र' (Free Trade Area - FTA) का क्या अर्थ है?", ["जहाँ सदस्य देशों के बीच वस्तुओं और सेवाओं के व्यापार पर सीमा शुल्क (Tariffs) और कोटा समाप्त या बहुत कम कर दिए जाते हैं", "जहाँ सभी वस्तुएँ मुफ्त मिलती हैं", "जहाँ केवल एक ही देश व्यापार करता है", "जहाँ मुद्रा एक समान होती है"], 0],
+  ["भारत में विदेश व्यापार नीति (Foreign Trade Policy) किस मंत्रालय द्वारा तैयार और घोषित की जाती है?", ["वित्त मंत्रालय", "वाणिज्य एवं उद्योग मंत्रालय (Ministry of Commerce and Industry)", "विदेश मंत्रालय", "गृह मंत्रालय"], 1],
+  ["'ईसीजीसी' (ECGC - Export Credit Guarantee Corporation of India) का मुख्य कार्य क्या है?", ["भारतीय निर्यातकों को अंतर्राष्ट्रीय व्यापार में भुगतान न मिलने के जोखिम (Credit Risk) के विरुद्ध बीमा सुरक्षा प्रदान करना", "आयात पर कर लगाना", "पासपोर्ट जारी करना", "विदेशी मुद्रा छापना"], 0],
+  ["अंतर्राष्ट्रीय मुद्रा कोष (IMF) और विश्व बैंक (World Bank) की स्थापना किस सम्मेलन के परिणामस्वरूप हुई थी?", ["जेनेवा सम्मेलन (1947)", "ब्रेटन वुड्स सम्मेलन (Bretton Woods Conference - जुलाई 1944, अमेरिका)", "पेरिस सम्मेलन (1919)", "रियो पृथ्वी सम्मेलन (1992)"], 1],
+  ["अंतर्राष्ट्रीय मुद्रा कोष (IMF) और विश्व बैंक (World Bank) दोनों के मुख्यालय कहाँ स्थित हैं?", ["न्यूयॉर्क", "वाशिंगटन डी.सी. (अमेरिका)", "जेनेवा (स्विट्जरलैंड)", "पेरिस (फ्रांस)"], 1],
+  ["अंतर्राष्ट्रीय मुद्रा कोष (IMF) का मुख्य कार्य क्या है?", ["सदस्य देशों को अल्पकालिक भुगतान संतुलन (BoP) संकट से उबारने के लिए वित्तीय सहायता देना और वैश्विक मौद्रिक स्थिरता बनाए रखना", "केवल बांध और सड़क बनाना", "व्यापार विवाद सुलझाना", "स्वास्थ्य सेवाएँ देना"], 0],
+  ["'विश्व आर्थिक आउटलुक' (World Economic Outlook) और 'वैश्विक वित्तीय स्थिरता रिपोर्ट' किस संस्था द्वारा जारी की जाती है?", ["विश्व बैंक (World Bank)", "अंतर्राष्ट्रीय मुद्रा कोष (IMF)", "विश्व व्यापार संगठन (WTO)", "विश्व आर्थिक मंच (WEF)"], 1],
+  ["विश्व बैंक समूह (World Bank Group) में कुल कितनी संस्थाएँ शामिल हैं?", ["3", "4", "5 (IBRD, IDA, IFC, MIGA और ICSID)", "6"], 2],
+  ["विश्व बैंक समूह की किस संस्था को 'उदार ऋण खिड़की' (Soft Loan Window) कहा जाता है, क्योंकि यह सबसे गरीब देशों को शून्य या बहुत कम ब्याज पर दीर्घकालिक ऋण देती है?", ["IBRD (अंतर्राष्ट्रीय पुनर्निर्माण एवं विकास बैंक)", "IDA (अंतर्राष्ट्रीय विकास संघ - International Development Association)", "IFC (अंतर्राष्ट्रीय वित्त निगम)", "MIGA (बहुपक्षीय निवेश गारंटी एजेंसी)"], 1],
+  ["'विश्व विकास रिपोर्ट' (World Development Report) और 'ईज ऑफ डूइंग बिजनेस' (अब B-READY) रिपोर्ट किस संस्था द्वारा प्रकाशित की जाती है?", ["विश्व बैंक (World Bank)", "IMF", "UNDP", "WTO"], 0],
+  ["विश्व व्यापार संगठन (WTO - World Trade Organization) की स्थापना कब हुई थी?", ["1 जनवरी 1948", "1 जनवरी 1995 (मराकेश समझौते, 1994 के तहत GATT के स्थान पर)", "24 अक्टूबर 1945", "1 जुलाई 1991"], 1],
+  ["विश्व व्यापार संगठन (WTO) का मुख्यालय कहाँ स्थित है?", ["वाशिंगटन डी.सी.", "जेनेवा (स्विट्जरलैंड)", "न्यूयॉर्क", "वियना (ऑस्ट्रिया)"], 1],
+  ["WTO की स्थापना से पहले अंतर्राष्ट्रीय व्यापार को विनियमित करने वाला समझौता कौन सा था?", ["GATT (General Agreement on Tariffs and Trade - 1948)", "NATO", "OPEC", "ASEAN"], 0],
+  ["WTO में कृषि सब्सिडी से संबंधित 'ग्रीन बॉक्स' (Green Box), 'ब्लू बॉक्स' (Blue Box) और 'एम्बर बॉक्स' (Amber Box) किससे जुड़े हैं?", ["पर्यावरण संरक्षण से", "विभिन्न प्रकार की कृषि सब्सिडी के वर्गीकरण से (एम्बर बॉक्स सब्सिडी व्यापार को विकृत करती है, जिस पर सीमा लगाई जाती है; ग्रीन बॉक्स पर कोई सीमा नहीं है)", "निर्यात पैकेजिंग से", "समुद्री परिवहन से"], 1],
+  ["'ट्रिप्स' (TRIPS) और 'ट्रिम्स' (TRIMS) समझौते किस अंतर्राष्ट्रीय संगठन से संबंधित हैं?", ["IMF", "विश्व व्यापार संगठन (WTO - TRIPS बौद्धिक संपदा अधिकारों से और TRIMS निवेश उपायों से संबंधित है)", "विश्व बैंक", "ILO"], 1],
+  ["'एशियाई विकास बैंक' (ADB - Asian Development Bank) का मुख्यालय कहाँ स्थित है?", ["टोक्यो (जापान)", "मनीला (फिलीपींस - स्थापना: 1966)", "शंघाई (चीन)", "सिंगापुर"], 1],
+  ["'न्यू डेवलपमेंट बैंक' (NDB - जिसे ब्रिक्स बैंक भी कहा जाता है) का मुख्यालय कहाँ स्थित है?", ["नई दिल्ली (भारत)", "शंघाई (चीन - स्थापना: 2014 में फोर्टालेजा घोषणा के तहत; प्रथम अध्यक्ष: के.वी. कामथ)", "मॉस्को (रूस)", "जोहान्सबर्ग (दक्षिण अफ्रीका)"], 1],
+  ["'एशियाई अवसंरचना निवेश बैंक' (AIIB) का मुख्यालय कहाँ स्थित है?", ["शंघाई", "बीजिंग (चीन - परिचालन प्रारंभ: 2016)", "मनीला", "सियोल"], 1],
+  ["'विश्व आर्थिक मंच' (World Economic Forum - WEF) का मुख्यालय कहाँ स्थित है और इसकी वार्षिक बैठक कहाँ होती है?", ["मुख्यालय कोलोनी/जेनेवा (स्विट्जरलैंड) में है, और वार्षिक बैठक दावोस (स्विट्जरलैंड) में होती है", "पेरिस में", "लंदन में", "न्यूयॉर्क में"], 0],
+  ["'वैश्विक लैंगिक अंतराल रिपोर्ट' (Global Gender Gap Report) और 'वैश्विक प्रतिस्पर्धात्मकता रिपोर्ट' कौन जारी करता है?", ["विश्व बैंक", "विश्व आर्थिक मंच (WEF)", "संयुक्त राष्ट्र (UN)", "IMF"], 1],
+  ["'अंतर्राष्ट्रीय श्रम संगठन' (ILO - International Labour Organization) का मुख्यालय कहाँ स्थित है?", ["न्यूयॉर्क", "जेनेवा (स्विट्जरलैंड - स्थापना: 1919)", "रोम", "पेरिस"], 1],
+  ["'खाद्य और कृषि संगठन' (FAO - Food and Agriculture Organization) का मुख्यालय कहाँ स्थित है?", ["जेनेवा", "रोम (इटली - स्थापना: 16 अक्टूबर 1945, इसीलिए 16 अक्टूबर को 'विश्व खाद्य दिवस' मनाया जाता है)", "पेरिस", "नैरोबी"], 1],
+  ["'ओपेक' (OPEC - पेट्रोलियम निर्यातक देशों का संगठन) का मुख्यालय कहाँ स्थित है?", ["रियाद (सऊदी अरब)", "वियना (ऑस्ट्रिया - स्थापना: 1960 बगदाद सम्मेलन में)", "दुबई (UAE)", "दोहा (कतर)"], 1],
+  ["'अंकटाड' (UNCTAD - संयुक्त राष्ट्र व्यापार और विकास सम्मेलन) का मुख्यालय कहाँ है?", ["न्यूयॉर्क", "जेनेवा (स्विट्जरलैंड - स्थापना: 1964)", "वियना", "नैरोबी"], 1],
+  ["'आसियान' (ASEAN - दक्षिण-पूर्व एशियाई देशों का संगठन) का मुख्यालय कहाँ स्थित है?", ["बैंकॉक (थाईलैंड)", "जकार्ता (इंडोनेशिया - स्थापना: 1967, सदस्य देश: 10)", "कुआलालंपुर (मलेशिया)", "सिंगापुर"], 1],
+  ["'सार्क' (SAARC - दक्षिण एशियाई क्षेत्रीय सहयोग संगठन) का मुख्यालय कहाँ स्थित है?", ["नई दिल्ली (भारत)", "काठमांडू (नेपाल - स्थापना: 1985 ढाका में, सदस्य देश: 8)", "ढाका (बांग्लादेश)", "कोलंबो (श्रीलंका)"], 1],
+  ["'जी-20' (G20) समूह में 2023 के नई दिल्ली शिखर सम्मेलन में किस नए स्थायी सदस्य को शामिल किया गया?", ["अफ्रीकी संघ (African Union - अब यह G21 हो गया है, जिसमें 19 देश + यूरोपीय संघ + अफ्रीकी संघ शामिल हैं)", "आसियान", "सार्क", "नाटो"], 0],
+  ["'ब्रिक्स' (BRICS) समूह में मूल रूप से कौन से पाँच देश शामिल थे?", ["ब्राजील, रूस, भारत, चीन और दक्षिण अफ्रीका (2024 में इसमें मिस्र, इथियोपिया, ईरान और यूएई आदि नए सदस्य भी शामिल हुए)", "ब्रिटेन, रूस, भारत, कनाडा और स्पेन", "ब्राजील, रोमानिया, इंडोनेशिया, चिली और सिंगापुर", "बेल्जियम, रूस, इटली, चीन और स्वीडन"], 0],
+  ["'आर्थिक सहयोग और विकास संगठन' (OECD) का मुख्यालय कहाँ स्थित है?", ["लंदन", "पेरिस (फ्रांस)", "ब्रुसेल्स", "जेनेवा"], 1],
+  ["'एफएटीएफ' (FATF - वित्तीय कार्रवाई कार्य बल, जो मनी लॉन्ड्रिंग और टेरर फंडिंग को रोकता है) का मुख्यालय कहाँ है?", ["न्यूयॉर्क", "पेरिस (फ्रांस - स्थापना: 1989)", "वाशिंगटन डी.सी.", "लंदन"], 1],
+  ["'विश्व बौद्धिक संपदा संगठन' (WIPO) का मुख्यालय कहाँ स्थित है?", ["जेनेवा (स्विट्जरलैंड)", "पेरिस", "न्यूयॉर्क", "वियना"], 0],
+  ["'अंतर्राष्ट्रीय सौर गठबंधन' (International Solar Alliance - ISA) का मुख्यालय भारत के किस शहर में स्थित है?", ["नई दिल्ली", "गुरुग्राम (हरियाणा - भारत और फ्रांस द्वारा 2015 में शुरू किया गया)", "जयपुर", "अहमदाबाद"], 1],
+  ["'विश्व निवेश रिपोर्ट' (World Investment Report) किस संस्था द्वारा जारी की जाती है?", ["विश्व बैंक", "अंकटाड (UNCTAD)", "IMF", "WTO"], 1],
+  ["भारत में पहली नियमित (दशकीय) जनगणना किस वर्ष और किसके कार्यकाल में शुरू हुई थी?", ["1872 में लॉर्ड मेयो के कार्यकाल में (पहली जनगणना), और 1881 में लॉर्ड रिपन के कार्यकाल में पहली नियमित दशकीय जनगणना", "1901 में लॉर्ड कर्जन के कार्यकाल में", "1951 में स्वतंत्र भारत में", "1857 में लॉर्ड कैनिंग के कार्यकाल में"], 0],
+  ["भारत के जनसांख्यिकीय इतिहास में किस वर्ष को 'महान विभाजक वर्ष' (Year of Great Divide) कहा जाता है?", ["1911", "1921 (1911-1921 के दशक में अकाल और महामारियों के कारण भारत की जनसंख्या में नकारात्मक वृद्धि हुई थी, उसके बाद जनसंख्या निरंतर बढ़ी)", "1951", "1971"], 1],
+  ["भारतीय संविधान के किस अनुच्छेद के तहत जनगणना (Census) संघ सूची का विषय है?", ["अनुच्छेद 246 (सातवीं अनुसूची की संघ सूची की प्रविष्टि 69; जनगणना अधिनियम 1948 के तहत गृह मंत्रालय के अधीन भारत के महारजिस्ट्रार एवं जनगणना आयुक्त द्वारा कराई जाती है)", "अनुच्छेद 280", "अनुच्छेद 324", "अनुच्छेद 356"], 0],
+  ["2011 की जनगणना के अनुसार भारत की कुल जनसंख्या विश्व की कुल जनसंख्या का लगभग कितना प्रतिशत थी?", ["12.5%", "17.5% (कुल जनसंख्या लगभग 121.08 करोड़)", "21.0%", "24.5%"], 1],
+  ["2011 की जनगणना के अनुसार भारत का जनसंख्या घनत्व (Population Density) कितना था?", ["325 व्यक्ति प्रति वर्ग किमी", "382 व्यक्ति प्रति वर्ग किमी (सर्वाधिक बिहार: 1106, सबसे कम अरुणाचल प्रदेश: 17)", "412 व्यक्ति प्रति वर्ग किमी", "450 व्यक्ति प्रति वर्ग किमी"], 1],
+  ["2011 की जनगणना के अनुसार भारत का लिंगानुपात (Sex Ratio - प्रति 1000 पुरुषों पर महिलाओं की संख्या) कितना था?", ["933", "943 (सर्वाधिक केरल: 1084, सबसे कम हरियाणा: 879)", "950", "960"], 1],
+  ["2011 की जनगणना के अनुसार भारत की कुल साक्षरता दर (Literacy Rate) कितनी थी?", ["64.8%", "74.04% (पुरुष: 82.14%, महिला: 65.46%; सर्वाधिक साक्षरता केरल: 94%, सबसे कम बिहार: 61.8%)", "78.5%", "81.2%"], 1],
+  ["'माल्थस का जनसंख्या सिद्धांत' (Malthusian Theory of Population) क्या कहता है?", ["जनसंख्या ज्यामितीय अनुपात (Geometric Progression: 1, 2, 4, 8, 16) से बढ़ती है, जबकि खाद्य आपूर्ति अंकगणितीय अनुपात (Arithmetic Progression: 1, 2, 3, 4, 5) से बढ़ती है", "जनसंख्या हमेशा घटती है", "खाद्य उत्पादन जनसंख्या से तेज बढ़ता है", "जनसंख्या और संसाधन हमेशा बराबर रहते हैं"], 0],
+  ["'अर्थव्यवस्था में तरलता जाल' (Liquidity Trap) की स्थिति क्या होती है?", ["जब ब्याज दरें इतनी कम (लगभग शून्य) हो जाती हैं कि लोग बॉन्ड या निवेश करने के बजाय नकदी (Cash) अपने पास रखना पसंद करते हैं, जिससे मौद्रिक नीति अप्रभावी हो जाती है", "जब बैंकों के पास बिल्कुल नकदी न हो", "जब महंगाई 100% हो जाए", "जब सभी बैंक बंद हो जाएँ"], 0],
+  ["'से का बाजार नियम' (Say's Law of Markets) क्या है?", ["\"पूर्ति अपनी मांग स्वयं उत्पन्न करती है\" (Supply creates its own demand)", "\"मांग अपनी पूर्ति स्वयं बनाती है\"", "\"कीमत बढ़ने पर मांग बढ़ती है\"", "\"बुरी मुद्रा अच्छी मुद्रा को बाहर करती है\""], 0],
+  ["'पूंजीगत उत्पादन अनुपात' (ICOR - Incremental Capital Output Ratio) क्या दर्शाता है?", ["उत्पादन (GDP) में एक अतिरिक्त इकाई की वृद्धि करने के लिए आवश्यक अतिरिक्त पूंजी (निवेश) की मात्रा (कम ICOR अधिक दक्षता दर्शाता है)", "कुल कर्ज और आय का अनुपात", "आयात और निर्यात का अनुपात", "कर और जीडीपी का अनुपात"], 0],
+  ["'नवरत्न' और 'मिनीरत्न' (Category I & II) योजनाएँ भारत सरकार द्वारा किस वर्ष शुरू की गई थीं?", ["1991", "1997 (सरकारी कंपनियों को अधिक वित्तीय और परिचालन स्वायत्तता देने हेतु)", "2005", "2010"], 1],
+  ["'राष्ट्रीय अवसंरचना पाइपलाइन' (National Infrastructure Pipeline - NIP) का मुख्य उद्देश्य क्या है?", ["केवल तेल पाइपलाइन बिछाना", "देश में विश्व स्तरीय बुनियादी ढाँचे (सड़क, रेलवे, ऊर्जा, शहरी विकास आदि) के निर्माण के लिए दीर्घकालिक निवेश की योजना बनाना", "इंटरनेट केबल बिछाना", "जल आपूर्ति रोकना"], 1],
+  ["'पीएम गति शक्ति' (PM Gati Shakti - राष्ट्रीय मास्टर प्लान, 2021) किससे संबंधित है?", ["बुनियादी ढाँचा परियोजनाओं की एकीकृत योजना और समन्वित कार्यान्वयन (मल्टी-मॉडल कनेक्टिविटी) के लिए विभिन्न मंत्रालयों को एक डिजिटल प्लेटफॉर्म पर लाना", "केवल बुलेट ट्रेन चलाना", "खेलकूद को बढ़ावा देना", "अंतरिक्ष अनुसंधान"], 0],
+  ["'यूपीआई' (UPI - Unified Payments Interface) किस संस्था द्वारा विकसित किया गया है?", ["भारतीय स्टेट बैंक", "भारतीय राष्ट्रीय भुगतान निगम (NPCI - स्थापना: 2008, UPI लॉन्च: 2016)", "नीति आयोग", "सेबी (SEBI)"], 1],
+  ["'ई-रूपी' (e-RUPI / CBDC - सेंट्रल बैंक डिजिटल करेंसी) भारत में किसके द्वारा जारी किया जाता है?", ["निजी बैंक", "भारतीय रिज़र्व बैंक (RBI)", "वित्त मंत्रालय", "एनपीसीआई"], 1],
+  ["'अल्पकालिक पूंजीगत लाभ' (Short-Term Capital Gains) और 'दीर्घकालिक पूंजीगत लाभ' (Long-Term Capital Gains) किस पर लागू होते हैं?", ["वेतन पर", "शेयर, म्यूचुअल फंड, सोना और अचल संपत्ति (Real Estate) की बिक्री से होने वाले लाभ पर (इनकी होल्डिंग अवधि के आधार पर)", "कृषि उपज पर", "बिजली बिल पर"], 1],
+  ["'बाह्यताएँ' (Externalities) अर्थशास्त्र में क्या होती हैं?", ["किसी आर्थिक गतिविधि (उत्पादन या उपभोग) का किसी तीसरे पक्ष (समाज या पर्यावरण) पर पड़ने वाला अनपेक्षित लाभ (सकारात्मक बाह्यता - जैसे टीकाकरण) या हानि (नकारात्मक बाह्यता - जैसे कारखाने का धुआँ/प्रदूषण)", "केवल विदेश व्यापार", "आयात शुल्क", "विदेशी कर्ज"], 0],
+  ["'मेरीट गुड्स' (Merit Goods) क्या होती हैं?", ["वे वस्तुएँ और सेवाएँ जिनका समाज के लिए बहुत सकारात्मक लाभ होता है और सरकार जिन्हें रियायती दर या मुफ्त उपलब्ध कराती है (जैसे- शिक्षा, स्वास्थ्य सेवाएँ, टीकाकरण)", "विलासिता की वस्तुएँ (जैसे हीरे और लग्जरी कारें)", "हानिकारक वस्तुएँ (Sin Goods - जैसे शराब, तंबाकू)", "केवल निर्यात की वस्तुएँ"], 0],
+  ["'सिन गुड्स' (Sin Goods) किन्हें कहा जाता है?", ["वे वस्तुएँ जिन्हें समाज और स्वास्थ्य के लिए हानिकारक माना जाता है और जिन पर सरकार बहुत ऊँची दर से कर (Sin Tax) लगाती है (जैसे- तंबाकू, सिगरेट, शराब, जुआ)", "पूजा सामग्री", "आवश्यक दवाइयाँ", "कृषि उपकरण"], 0],
+  ["'गिफेन विरोधाभास' (Giffen Paradox) किस अर्थशास्त्री के नाम पर रखा गया है?", ["सर रॉबर्ट गिफेन (स्कॉटिश अर्थशास्त्री)", "एडम स्मिथ", "अल्फ्रेड मार्शल", "डेविड रिकार्डो"], 0],
+  ["'वेब्लेन वस्तुएँ' (Veblen Goods) कौन सी होती हैं?", ["वे प्रतिष्ठित और विलासिता की वस्तुएँ (जैसे महंगे हीरे, लक्जरी घड़ियाँ, स्पोर्ट्स कार) जिनकी कीमत बढ़ने पर अमीर वर्ग में उनकी मांग प्रतिष्ठा (Status Symbol) के कारण बढ़ जाती है", "सस्ता अनाज", "सरकारी राशन", "पुराने कपड़े"], 0],
+  ["'सीमांत उपयोगिता ह्रास नियम' (Law of Diminishing Marginal Utility) क्या बताता है?", ["जैसे-जैसे किसी व्यक्ति के पास किसी वस्तु की मात्रा बढ़ती जाती है, उस वस्तु की प्रत्येक अगली (अतिरिक्त) इकाई से मिलने वाली संतुष्टि या उपयोगिता घटती जाती है", "उपयोगिता हमेशा बढ़ती है", "कीमत हमेशा स्थिर रहती है", "आय बढ़ने पर बचत घटती है"], 0],
+  ["'कीमत लोच' (Price Elasticity of Demand) यदि शून्य (Zero / पूर्णतः बेलोचदार) हो, तो इसका क्या अर्थ है?", ["वस्तु की कीमत में कितना भी परिवर्तन हो जाए, उसकी मांगी गई मात्रा में कोई बदलाव नहीं होता (जैसे- जीवन रक्षक दवाइयाँ या नमक)", "कीमत थोड़ी बढ़ने पर मांग शून्य हो जाती है", "कीमत और मांग बराबर बढ़ती हैं", "वस्तु मुफ्त है"], 0],
+  ["'कुजनेत्स वक्र' (Kuznets Curve) किसके बीच संबंध दर्शाता है?", ["प्रति व्यक्ति आय (आर्थिक विकास) और आय असमानता के बीच (यह उल्टे 'U' आकार का होता है)", "कर दर और राजस्व के बीच", "मुद्रास्फीति और बेरोजगारी के बीच", "ब्याज दर और बचत के बीच"], 0],
+  ["'पर्यावरणीय कुजनेत्स वक्र' (Environmental Kuznets Curve - EKC) क्या दर्शाता है?", ["आर्थिक विकास के शुरुआती चरणों में पर्यावरणीय प्रदूषण बढ़ता है, लेकिन प्रति व्यक्ति आय के एक निश्चित उच्च स्तर के बाद तकनीक और जागरूकता के कारण प्रदूषण कम होने लगता है (उल्टा U आकार)", "प्रदूषण हमेशा बढ़ता है", "विकास और पर्यावरण में कोई संबंध नहीं है", "जंगल हमेशा बढ़ते हैं"], 0],
+  ["'सर्कुलर इकोनॉमी' (Circular Economy / चक्रीय अर्थव्यवस्था) का मुख्य सिद्धांत क्या है?", ["'उपयोग करो और फेंको' (Linear Economy)", "संसाधनों का अधिकतम पुनः उपयोग (Reuse), मरम्मत (Repair), नवीनीकरण और पुनर्चक्रण (Recycle) करके अपशिष्ट (Waste) को न्यूनतम करना", "केवल नए खनिज खोदना", "प्लास्टिक उत्पादन बढ़ाना"], 1],
+  ["'ब्लू इकोनॉमी' (Blue Economy / नीली अर्थव्यवस्था) किससे संबंधित है?", ["आर्थिक विकास, बेहतर आजीविका और रोजगार के लिए महासागरीय और समुद्री संसाधनों का सतत उपयोग करना", "केवल अंतरिक्ष अनुसंधान", "कोयला खनन", "कपड़ा रंगाई उद्योग"], 0],
+  ["'हवाला' (Hawala) क्या है?", ["बैंकिंग चैनलों के बाहर बिना किसी कानूनी दस्तावेज के धन के अवैध हस्तांतरण (विदेशी मुद्रा के अनौपचारिक लेन-देन) की प्रणाली", "शेयर बाजार का सूचकांक", "सरकारी बॉन्ड", "कृषि बीमा योजना"], 0],
+  ["'मनी लॉन्ड्रिंग' (Money Laundering / धन शोधन) का क्या अर्थ है?", ["पुराने नोटों को धोकर साफ करना", "अवैध तरीके से कमाए गए काले धन (Black Money) को विभिन्न वित्तीय लेन-देन के माध्यम से वैध आय (White Money) के रूप में परिवर्तित करना", "विदेशी मुद्रा खरीदना", "बैंक में बचत खाता खोलना"], 1],
+  ["'शेल कंपनी' (Shell Company) किसे कहते हैं?", ["सीप और मोती बनाने वाली कंपनी", "एक ऐसी कागजी कंपनी जिसका कोई वास्तविक व्यावसायिक संचालन या महत्वपूर्ण संपत्ति नहीं होती, और जिसका उपयोग अक्सर कर चोरी या मनी लॉन्ड्रिंग के लिए किया जाता है", "पेट्रोलियम कंपनी", "सॉफ्टवेयर कंपनी"], 1],
+  ["'टैक्स हेवन' (Tax Haven) देश कौन से होते हैं?", ["वे देश या क्षेत्र जो विदेशी व्यक्तियों और कंपनियों को बहुत कम या शून्य कर (Tax) देयता और वित्तीय गोपनीयता प्रदान करते हैं (जैसे- केमैन द्वीप समूह, मॉरीशस, बरमूडा आदि)", "जहाँ कर की दर 90% होती है", "जहाँ कोई बैंक नहीं होता", "केवल यूरोपीय देश"], 0],
+  ["'सॉवरेन वेल्थ फंड' (Sovereign Wealth Fund - SWF) क्या होता है?", ["किसी देश की सरकार के स्वामित्व वाला निवेश कोष, जो देश के अतिरिक्त विदेशी मुद्रा भंडार या बजट अधिशेष से प्राप्त धन को वैश्विक संपत्तियों में निवेश करता है", "निजी म्यूचुअल फंड", "धर्मार्थ ट्रस्ट", "ग्राम पंचायत कोष"], 0],
+  ["'क्रेडिट रेटिंग एजेंसियाँ' (जैसे S&P, Moody's, Fitch, CRISIL, ICRA, CARE) क्या कार्य करती हैं?", ["किसी देश, सरकार या कंपनी की ऋण चुकाने की क्षमता (Creditworthiness) और जोखिम का मूल्यांकन कर उसे रेटिंग प्रदान करती हैं", "लोगों को लोन देती हैं", "नोट छापती हैं", "आयकर वसूलती हैं"], 0],
+  ["'प्रमुख आर्थिक संकेतक' (Lead Economic Indicators) का उदाहरण कौन सा है?", ["शेयर बाजार सूचकांक, नए विनिर्माण ऑर्डर और भवन निर्माण परमिट (जो अर्थव्यवस्था की भावी दिशा का पहले से संकेत देते हैं)", "पिछली तिमाही की बेरोजगारी दर", "पिछले वर्ष की जनगणना", "ऐतिहासिक स्मारक"], 0],
+  ["'मंदी' (Recession) की तकनीकी परिभाषा सामान्यतः क्या मानी जाती है?", ["जब किसी देश की वास्तविक जीडीपी (Real GDP) में लगातार दो तिमाहियों (Two Consecutive Quarters) तक नकारात्मक वृद्धि (गिरावट) दर्ज की जाए", "जब महंगाई 5% हो जाए", "जब बजट घाटे में हो", "जब शेयर बाजार एक दिन गिर जाए"], 0],
+  ["'महामंदी' (The Great Depression) जो 1929 में अमेरिका के वॉल स्ट्रीट क्रैश से शुरू होकर पूरी दुनिया में फैली थी, किस दशक में आई थी?", ["1910 के दशक में", "1930 के दशक में (1929–1939)", "1950 के दशक में", "1970 के दशक में"], 1],
+  ["'वाशिंगटन सहमति' (Washington Consensus) का संबंध किससे है?", ["विकासशील देशों में आर्थिक सुधारों के लिए IMF, विश्व बैंक और अमेरिकी ट्रेजरी द्वारा अनुशंसित मुक्त बाजार नीतियों (उदारीकरण, निजीकरण, राजकोषीय अनुशासन) के समूह से", "जलवायु परिवर्तन समझौते से", "परमाणु निरस्त्रीकरण से", "अंतरिक्ष संधि से"], 0],
+  ["'गोल्डन हैंडशेक स्कीम' (Golden Handshake Scheme) किससे संबंधित है?", ["विदेशी निवेशकों के स्वागत से", "कर्मचारियों को स्वैच्छिक सेवानिवृत्ति (Voluntary Retirement Scheme - VRS) लेने के लिए दिया जाने वाला आकर्षक एकमुश्त वित्तीय पैकेज", "सोना खरीदने की योजना से", "दो बैंकों के विलय से"], 1],
+  ["'मूनलाइटिंग' (Moonlighting) शब्द जो हाल के वर्षों में चर्चा में रहा, उसका अर्थ क्या है?", ["रात में सौर ऊर्जा बनाना", "किसी कर्मचारी द्वारा अपनी मुख्य पूर्णकालिक नौकरी (Primary Job) के साथ-साथ नियोक्ता को बताए बिना दूसरी नौकरी या फ्रीलांस काम करना", "रात्रि पाली में कारखाना चलाना", "शेयर बाजार में रात को ट्रेडिंग करना"], 1],
+  ["'राष्ट्रीय लॉजिस्टिक्स नीति' (National Logistics Policy - NLP) किस वर्ष शुरू की गई थी?", ["2018", "2020", "सितंबर 2022 (देश में माल ढुलाई और लॉजिस्टिक्स लागत को कम कर वैश्विक स्तर पर प्रतिस्पर्धी बनाने हेतु)", "2024"], 2],
+  ["'ओएनडीसी' (ONDC - Open Network for Digital Commerce) की पहल किस मंत्रालय द्वारा शुरू की गई है?", ["वित्त मंत्रालय", "वाणिज्य एवं उद्योग मंत्रालय (ई-कॉमर्स के लोकतंत्रीकरण और छोटे व्यापारियों को डिजिटल प्लेटफॉर्म से जोड़ने हेतु)", "गृह मंत्रालय", "कृषि मंत्रालय"], 1],
+  ["'जेम पोर्टल' (GeM - Government e-Marketplace) किस उद्देश्य से बनाया गया है?", ["सरकारी विभागों, मंत्रालयों और सार्वजनिक उपक्रमों द्वारा वस्तुओं और सेवाओं की पारदर्शी ऑनलाइन खरीद (Public Procurement) के लिए (2016 में शुरू)", "हीरे और आभूषण बेचने के लिए", "रेलवे टिकट बुक करने के लिए", "आयकर भरने के लिए"], 0],
+  ["'स्वावलंबन' और 'अटल भूजल योजना' में से 'अटल भूजल योजना' किसकी सहायता से चलाई जा रही है?", ["विश्व बैंक (World Bank) की सहायता से (भूजल प्रबंधन में सुधार हेतु)", "IMF की सहायता से", "WTO की सहायता से", "UNESCO की सहायता से"], 0],
+  ["'उदय योजना' (UDAY - Ujwal DISCOM Assurance Yojana) किस क्षेत्र के वित्तीय सुधार से संबंधित है?", ["विमानन कंपनियों से", "बिजली वितरण कंपनियों (Power Distribution Companies - DISCOMs) के वित्तीय पुनरुद्धार और कर्ज के बोझ को कम करने से (2015 में शुरू)", "दूरसंचार कंपनियों से", "रेलवे जोन से"], 1],
+  ["'कुसुम योजना' (PM-KUSUM) किसानों को किस क्षेत्र में आत्मनिर्भर बनाने से संबंधित है?", ["जैविक खाद बनाने में", "सौर ऊर्जा (Solar Pumps और ग्रिड से जुड़े सौर ऊर्जा संयंत्र लगाने) के माध्यम से ऊर्जा सुरक्षा और अतिरिक्त आय प्रदान करने में", "मधुमक्खी पालन में", "मत्स्य पालन में"], 1],
+  ["'अमृत योजना' (AMRUT - Atal Mission for Rejuvenation and Urban Transformation) का मुख्य उद्देश्य क्या है?", ["शहरों में बुनियादी नागरिक सुविधाओं (जलापूर्ति, सीवरेज, शहरी परिवहन और हरित क्षेत्र) का विकास करना (2015 में शुरू)", "ग्रामीण सड़कें बनाना", "मुफ्त दवाइयाँ देना", "नदी जोड़ो परियोजना"], 0],
+  ["'भारत में आर्थिक सुधारों का जनक' (Father of Economic Reforms in India) किसे कहा जाता है?", ["जवाहरलाल नेहरू", "डॉ. मनमोहन सिंह और पी.वी. नरसिम्हा राव (1991 के आर्थिक सुधारों के लिए)", "मोरारजी देसाई", "अटल बिहारी वाजपेयी"], 1],
+  ["'कल्याणकारी अर्थशास्त्र' (Welfare Economics) और 'क्षमता दृष्टिकोण' (Capability Approach) के सिद्धांत किस भारतीय अर्थशास्त्री ने दिए हैं?", ["अमर्त्य सेन", "जगदीश भगवती", "रघुराम राजन", "कौशिक बसु"], 0],
+  ["किसी देश की अर्थव्यवस्था में 'सतत विकास' (Sustainable Development) की सबसे सटीक परिभाषा क्या है?", ["ऐसा आर्थिक विकास जो भविष्य की पीढ़ियों की अपनी आवश्यकताओं को पूरा करने की क्षमता से समझौता किए बिना वर्तमान पीढ़ी की आवश्यकताओं को पूरा करता है (ब्रंटलैंड रिपोर्ट, 1987)", "केवल जीडीपी को 10% की दर से बढ़ाना", "सभी प्राकृतिक संसाधनों का तेजी से दोहन करना", "केवल औद्योगिकीकरण पर ध्यान देना"], 0]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / ${Q.length} (भारतीय अर्थव्यवस्था - भाग 5)</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+  if(remaining <= 150){
+    timerEl.classList.add("blink");
+  }
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+  modal.classList.remove("hidden");
+}
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+  document.getElementById("greeting").textContent =
+    student + ", आपका 'भारतीय अर्थव्यवस्था (भाग 5)' टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+  let message = correct >= 90 ? "🏆 अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "📘 औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+  document.getElementById("motivation").textContent = message;
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+    if(type !== "all" && type !== status) return "";
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
