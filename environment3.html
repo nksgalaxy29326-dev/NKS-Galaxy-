@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - पर्यावरण एवं पारिस्थितिकी (Environment & Ecology) - भाग 3 (100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1150px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display:flex;justify-content:center;align-items:center;
+  padding:15px;animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0);animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;padding:14px 18px;font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px;background:#f8fafc;display:flex;
+  justify-content:center;gap:12px;border-top:1px solid #e2e8f0;
+}
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>पर्यावरण एवं पारिस्थितिकी (Environment & Ecology) - भाग 3 (SSC & RRB विशेष मॉक टेस्ट)</b></p>
+  <p>राष्ट्रीय उद्यान, बायोस्फीयर रिजर्व, रामसर स्थल, पर्यावरण कानून एवं पारिस्थितिकी के विशिष्ट प्रश्न</p>
+  <p>कुल प्रश्न: 100 (प्रश्न 201 से 300) | कुल अंक: 100 | समय: 20 मिनट</p>
+</header>
+<div class="container">
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>टॉपिक: पर्यावरण एवं पारिस्थितिकी - भाग 3 निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें। इस मॉक टेस्ट में राष्ट्रीय उद्यान, बायोस्फीयर रिजर्व, रामसर स्थल, पर्यावरण कानून और पारिस्थितिकी से जुड़े <b>100 महत्वपूर्ण प्रश्न (प्रश्न 201 से 300 तक)</b> शामिल हैं।</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+    <ul style="padding-left:20px;color:#334155">
+      <li>विषय: <b>पर्यावरण एवं पारिस्थितिकी (भाग 3)</b></li>
+      <li>कुल प्रश्न: <b>100 (प्रश्न 201 से 300)</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">विषय: <b>पर्यावरण एवं पारिस्थितिकी (भाग 3)</b> | हल किए: <b id="answered">0</b>/100 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette (201-300)</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+  </section>
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>परीक्षा परिणाम (Scorecard) - पर्यावरण एवं पारिस्थितिकी (भाग 3)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा - पर्यावरण एवं पारिस्थितिकी (भाग 3)</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+</div>
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY - पर्यावरण एवं पारिस्थितिकी (भाग 3)</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons">
+      <!-- Buttons dynamically injected -->
+    </div>
+  </div>
+</div>
+<script>
+const RAW_Q = [
+  ["'राष्ट्रीय हरित हाइड्रोजन मिशन' (National Green Hydrogen Mission) को भारत सरकार द्वारा किस वर्ष मंजूरी दी गई थी?", ["2021", "2022", "2023", "2024"], 2],
+  ["'LiFE' (Lifestyle for Environment) अभियान की शुरुआत प्रधानमंत्री नरेंद्र मोदी द्वारा कहाँ की गई थी?", ["नई दिल्ली", "केवड़िया (गुजरात)", "वाराणसी", "ग्लासगो"], 1],
+  ["भारत का पहला 'डार्क स्काई रिजर्व' (Dark Sky Reserve) कहाँ स्थापित किया गया है?", ["नैनीताल (उत्तराखंड)", "हानले (लद्दाख)", "माउंट आबू (राजस्थान)", "कोडाइकनाल (तमिलनाडु)"], 1],
+  ["'कुणो राष्ट्रीय उद्यान' (Kuno National Park), जहाँ नामीबिया और दक्षिण अफ्रीका से चीते लाए गए, किस राज्य में स्थित है?", ["राजस्थान", "मध्य प्रदेश", "गुजरात", "महाराष्ट्र"], 1],
+  ["भारत में चीतों को किस वर्ष विलुप्त घोषित किया गया था?", ["1947", "1952", "1965", "1972"], 1],
+  ["'पेंच राष्ट्रीय उद्यान' किन दो राज्यों की सीमा पर फैला हुआ है?", ["मध्य प्रदेश और छत्तीसगढ़", "मध्य प्रदेश और महाराष्ट्र", "महाराष्ट्र और कर्नाटक", "उत्तर प्रदेश और मध्य प्रदेश"], 1],
+  ["'बेतला राष्ट्रीय उद्यान' (Betla National Park) किस राज्य में स्थित है?", ["बिहार", "झारखंड", "ओडिशा", "पश्चिम बंगाल"], 1],
+  ["'वाल्मीकि राष्ट्रीय उद्यान' किस राज्य का एकमात्र राष्ट्रीय उद्यान है?", ["उत्तर प्रदेश", "बिहार", "झारखंड", "सिक्किम"], 1],
+  ["'मुदुमलाई राष्ट्रीय उद्यान' किस राज्य में स्थित है?", ["केरल", "कर्नाटक", "तमिलनाडु", "आंध्र प्रदेश"], 2],
+  ["'इंद्रावती राष्ट्रीय उद्यान' किस राज्य में स्थित है?", ["छत्तीसगढ़", "महाराष्ट्र", "तेलंगाना", "ओडिशा"], 0],
+  ["'क्लाउडेड लेपर्ड राष्ट्रीय उद्यान' (Clouded Leopard National Park) किस राज्य में है?", ["मेघालय", "त्रिपुरा", "मिजोरम", "मणिपुर"], 1],
+  ["'नौकरेक बायोस्फीयर रिजर्व' (Nokrek Biosphere Reserve) किस राज्य में स्थित है?", ["असम", "मेघालय", "अरुणाचल प्रदेश", "नागालैंड"], 1],
+  ["'पचमढ़ी बायोस्फीयर रिजर्व' किस राज्य में स्थित है?", ["छत्तीसगढ़", "मध्य प्रदेश", "महाराष्ट्र", "गुजरात"], 1],
+  ["'अचानकमार-अमरकंटक बायोस्फीयर रिजर्व' किन राज्यों में फैला है?", ["मध्य प्रदेश और छत्तीसगढ़", "मध्य प्रदेश और उत्तर प्रदेश", "छत्तीसगढ़ और ओडिशा", "झारखंड और बिहार"], 0],
+  ["'शेषाचलम पहाड़ियाँ' (Seshachalam Hills) बायोस्फीयर रिजर्व किस राज्य में है?", ["तमिलनाडु", "आंध्र प्रदेश", "कर्नाटक", "केरल"], 1],
+  ["'अगस्त्यमलाई बायोस्फीयर रिजर्व' किन दो राज्यों में विस्तृत है?", ["कर्नाटक और केरल", "केरल और तमिलनाडु", "तमिलनाडु और आंध्र प्रदेश", "गोवा और कर्नाटक"], 1],
+  ["भारत का सबसे बड़ा बायोस्फीयर रिजर्व (क्षेत्रफल की दृष्टि से) कौन-सा है?", ["नीलगिरि", "कच्छ का रण (गुजरात)", "मन्नार की खाड़ी", "सुंदरवन"], 1],
+  ["भारत का सबसे छोटा बायोस्फीयर रिजर्व कौन-सा है?", ["डिब्रू-सैखोवा (असम)", "पन्ना", "नंदा देवी", "सिमलीपाल"], 0],
+  ["'लोकटक झील' (Loktak Lake), जो एक रामसर स्थल भी है, किस राज्य में स्थित है?", ["असम", "मणिपुर", "मिजोरम", "त्रिपुरा"], 1],
+  ["'वेम्बनाड झील' (Vembanad Wetland) किस राज्य में स्थित है?", ["तमिलनाडु", "केरल", "कर्नाटक", "ओडिशा"], 1],
+  ["'कोल्लेरू झील' (Kolleru Lake) किन दो नदियों के डेल्टा के बीच स्थित है?", ["गंगा और ब्रह्मपुत्र", "गोदावरी और कृष्णा", "महानदी और गोदावरी", "कृष्णा और कावेरी"], 1],
+  ["'रुद्रसागर झील' (रामसर स्थल) किस राज्य में स्थित है?", ["असम", "त्रिपुरा", "हिमाचल प्रदेश", "उत्तराखंड"], 1],
+  ["'सुरिंसर-मानसर झीलें' किस केंद्र शासित प्रदेश/राज्य में स्थित हैं?", ["लद्दाख", "जम्मू-कश्मीर", "हिमाचल प्रदेश", "उत्तराखंड"], 1],
+  ["'भोज आर्द्रभूमि' (Bhoj Wetland) किस शहर में स्थित है?", ["इंदौर", "भोपाल", "जबलपुर", "ग्वालियर"], 1],
+  ["पारिस्थितिकी तंत्र में 'कीस्टोन प्रजाति' (Keystone Species) का क्या अर्थ है?", ["जो संख्या में सबसे अधिक हो", "जिसका पारिस्थितिकी तंत्र की संरचना और कार्यप्रणाली पर अत्यधिक प्रभाव हो (भले ही संख्या कम हो)", "जो केवल मांसाहारी हो", "जो विलुप्त हो चुकी हो"], 1],
+  ["'फ्लैगशिप प्रजाति' (Flagship Species) किसे कहा जाता है?", ["किसी संरक्षण अभियान के प्रतीक के रूप में चुनी गई करिश्माई प्रजाति (जैसे बाघ, पांडा)", "सबसे छोटी प्रजाति", "केवल समुद्री प्रजाति", "विदेशी आक्रामक प्रजाति"], 0],
+  ["'एंडेमिक प्रजाति' (Endemic Species / स्थानिक प्रजाति) क्या होती है?", ["जो पूरी दुनिया में पाई जाती है", "जो केवल किसी विशेष भौगोलिक क्षेत्र में ही पाई जाती है", "जो प्रवास करती है", "जो केवल चिड़ियाघर में रहती है"], 1],
+  ["निम्नलिखित में से कौन-सा 'स्व-स्थाने संरक्षण' (In-situ) का उदाहरण नहीं है?", ["राष्ट्रीय उद्यान", "वन्यजीव अभयारण्य", "पवित्र उपवन (Sacred Groves)", "क्रायोप्रिजर्वेशन (Cryopreservation)"], 3],
+  ["क्रायोप्रिजर्वेशन (निम्नताप संरक्षण) में आनुवंशिक पदार्थों को किस पर सुरक्षित रखा जाता है?", ["ठंडे पानी में", "तरल नाइट्रोजन (-196°C) में", "सूखी बर्फ में", "सामान्य फ्रिज में"], 1],
+  ["'अल्फा, बीटा और गामा विविधता' (Alpha, Beta, Gamma Diversity) का वर्गीकरण किसने किया था?", ["आर.एच. व्हिटेकर (R.H. Whittaker)", "ए.जी. टांसले", "अर्न्स्ट हेकेल", "एडवर्ड विल्सन"], 0],
+  ["किसी एक विशिष्ट समुदाय या आवास के भीतर पाई जाने वाली प्रजातियों की विविधता को क्या कहते हैं?", ["अल्फा विविधता (Alpha Diversity)", "बीटा विविधता (Beta Diversity)", "गामा विविधता (Gamma Diversity)", "आनुवंशिक विविधता"], 0],
+  ["'कोर प्रभाव' (Edge Effect) किससे संबंधित है?", ["मरुस्थलीकरण से", "इकोटोन (दो पारिस्थितिकी तंत्रों के मिलन क्षेत्र) में प्रजातियों की अधिक विविधता से", "ओजोन परत से", "जल प्रदूषण से"], 1],
+  ["'सहोपकारिता' (Mutualism) में दो प्रजातियों के बीच कैसा संबंध होता है?", ["दोनों को लाभ होता है (+, +)", "एक को लाभ और दूसरे को हानि (+, -)", "एक को लाभ और दूसरे पर कोई प्रभाव नहीं (+, 0)", "दोनों को हानि (-, -)"], 0],
+  ["लाइकेन (Lichen) किन दो जीवों के बीच सहजीवी संबंध (Symbiotic Relationship) का उदाहरण है?", ["जीवाणु और विषाणु", "शैवाल (Algae) और कवक (Fungi)", "कवक और उच्च पौधे", "शैवाल और प्रोटोजोआ"], 1],
+  ["'परजीविता' (Parasitism) में क्या होता है?", ["दोनों जीवों को लाभ होता है", "एक जीव (परजीवी) को लाभ होता है और दूसरे (पोषी) को हानि होती है", "किसी को कोई प्रभाव नहीं पड़ता", "दोनों नष्ट हो जाते हैं"], 1],
+  ["जैव-भूरासायनिक चक्रों (Biogeochemical Cycles) में 'अवसादी चक्र' (Sedimentary Cycle) का उदाहरण कौन-सा है?", ["कार्बन चक्र", "नाइट्रोजन चक्र", "फास्फोरस चक्र (Phosphorus Cycle)", "जल चक्र"], 2],
+  ["दलहनी फसलों (Leguminous Plants) की जड़ों में पाया जाने वाला कौन-सा जीवाणु नाइट्रोजन स्थिरीकरण (Nitrogen Fixation) करता है?", ["लैक्टोबैसिलस", "राइजोबियम (Rhizobium)", "ई. कोलाई", "साल्मोनेला"], 1],
+  ["किस जीव के पारिस्थितिकी तंत्र में संख्या का पिरामिड (Pyramid of Number) उल्टा बन सकता है?", ["घास के मैदान का पारिस्थितिकी तंत्र", "एक वृक्ष का पारिस्थितिकी तंत्र (Tree Ecosystem)", "तालाब का पारिस्थितिकी तंत्र", "फसल का खेत"], 1],
+  ["'समुद्री राष्ट्रीय उद्यान' (कच्छ की खाड़ी) किस राज्य में स्थित है?", ["महाराष्ट्र", "गुजरात", "गोवा", "केरल"], 1],
+  ["भारत का पहला समुद्री राष्ट्रीय उद्यान कौन-सा है?", ["मन्नार की खाड़ी", "कच्छ की खाड़ी समुद्री राष्ट्रीय उद्यान (1982)", "महात्मा गांधी समुद्री राष्ट्रीय उद्यान", "रानी झांसी समुद्री राष्ट्रीय उद्यान"], 1],
+  ["'महात्मा गांधी समुद्री राष्ट्रीय उद्यान' कहाँ स्थित है?", ["लक्षद्वीप", "अंडमान और निकोबार द्वीप समूह", "गुजरात", "तमिलनाडु"], 1],
+  ["'एक्वाकल्चर' (Aquaculture) किससे संबंधित है?", ["मधुमक्खी पालन", "जलीय जीवों (मछली, झींगा आदि) के पालन और संवर्धन से", "रेशम कीट पालन", "केंचुआ पालन"], 1],
+  ["'वर्मीकल्चर' (Vermiculture) में किसका उपयोग किया जाता है?", ["केंचुओं (Earthworms) का", "दीमक का", "चींटियों का", "मधुमक्खियों का"], 0],
+  ["'सिल्वीकल्चर' (Silviculture) किससे संबंधित है?", ["वनों और वृक्षों के संवर्धन से", "अंगूर की खेती से", "फूलों की खेती से", "सब्जियों की खेती से"], 0],
+  ["'पेरिस समझौते' का मुख्य लक्ष्य वैश्विक तापमान वृद्धि को पूर्व-औद्योगिक स्तर से कितने डिग्री सेल्सियस नीचे सीमित रखना है?", ["1.0°C", "2°C से काफी नीचे (और 1.5°C तक सीमित करने का प्रयास)", "3.5°C", "4.0°C"], 1],
+  ["भारत ने किस वर्ष तक 'नेट जीरो' (Net Zero) कार्बन उत्सर्जन का लक्ष्य रखा है?", ["2030", "2047", "2050", "2070"], 3],
+  ["भारतीय रेलवे ने किस वर्ष तक 'नेट जीरो कार्बन उत्सर्जक' बनने का लक्ष्य निर्धारित किया है?", ["2025", "2030", "2040", "2050"], 1],
+  ["'हरित ऊर्जा गलियारा' (Green Energy Corridor) परियोजना का उद्देश्य क्या है?", ["जंगलों में सड़क बनाना", "नवीकरणीय ऊर्जा (सौर और पवन) को राष्ट्रीय ग्रिड से जोड़ना", "नदियों को जोड़ना", "जैविक खेती को बढ़ावा देना"], 1],
+  ["निम्नलिखित में से कौन-सा ऊर्जा का नवीकरणीय स्रोत (Renewable Source) नहीं है?", ["सौर ऊर्जा", "पवन ऊर्जा", "भूतापीय ऊर्जा", "प्राकृतिक गैस (Natural Gas)"], 3],
+  ["'ओजोन दिवस' मनाने की शुरुआत किस प्रोटोकॉल की वर्षगांठ के उपलक्ष्य में की गई थी?", ["क्योटो प्रोटोकॉल", "मॉन्ट्रियल प्रोटोकॉल (16 सितंबर 1987)", "नागोया प्रोटोकॉल", "कार्टाजेना प्रोटोकॉल"], 1],
+  ["वायुमंडल में ओजोन गैस की सर्वाधिक सांद्रता पृथ्वी की सतह से कितनी ऊंचाई पर पाई जाती है?", ["5 से 10 किमी", "20 से 35 किमी (समतापमंडल में)", "50 से 80 किमी", "100 किमी से ऊपर"], 1],
+  ["सूर्य से आने वाली किन हानिकारक किरणों को ओजोन परत अवशोषित करती है?", ["अवरक्त किरणें (Infrared)", "पराबैंगनी किरणें (Ultraviolet / UV-B)", "रेडियो तरंगें", "सूक्ष्म तरंगें (Microwaves)"], 1],
+  ["पराबैंगनी किरणों के अत्यधिक संपर्क में आने से मनुष्यों में कौन-सी बीमारी हो सकती है?", ["मलेरिया", "त्वचा कैंसर (Skin Cancer) और मोतियाबिंद", "पीलिया", "टाइफाइड"], 1],
+  ["'विश्व मृदा दिवस' (World Soil Day) कब मनाया जाता है?", ["5 जून", "5 दिसंबर", "22 अप्रैल", "16 अक्टूबर"], 1],
+  ["'विश्व गौरैया दिवस' (World Sparrow Day) कब मनाया जाता है?", ["20 मार्च", "21 मार्च", "22 मार्च", "23 मार्च"], 0],
+  ["'अंतर्राष्ट्रीय पर्वत दिवस' (International Mountain Day) कब मनाया जाता है?", ["11 दिसंबर", "5 जून", "29 जुलाई", "3 मार्च"], 0],
+  ["'विश्व वन्यजीव दिवस' (World Wildlife Day) कब मनाया जाता है?", ["2 फरवरी", "3 मार्च", "22 मई", "4 अक्टूबर"], 1],
+  ["'राष्ट्रीय प्रदूषण नियंत्रण दिवस' भारत में कब मनाया जाता है?", ["2 दिसंबर (भोपाल गैस त्रासदी की स्मृति में)", "5 जून", "16 सितंबर", "11 जुलाई"], 0],
+  ["भारत का सबसे बड़ा टाइगर रिजर्व (क्षेत्रफल की दृष्टि से) कौन-सा है?", ["जिम कॉर्बेट", "नागार्जुनसागर-श्रीशैलम (आंध्र प्रदेश और तेलंगाना)", "मानस", "सुंदरवन"], 1],
+  ["भारत का सबसे छोटा टाइगर रिजर्व कौन-सा है?", ["बोर टाइगर रिजर्व (महाराष्ट्र)", "पेंच", "नामेरी", "बांदीपुर"], 0],
+  ["'सत्यमंगलम टाइगर रिजर्व' किस राज्य में स्थित है?", ["केरल", "तमिलनाडु", "कर्नाटक", "आंध्र प्रदेश"], 1],
+  ["'अमरावती टाइगर रिजर्व' (अम्राबाद) किस राज्य में स्थित है?", ["तेलंगाना", "महाराष्ट्र", "गुजरात", "ओडिशा"], 0],
+  ["'पीलीभीत टाइगर रिजर्व' किस राज्य में स्थित है?", ["उत्तराखंड", "उत्तर प्रदेश", "मध्य प्रदेश", "बिहार"], 1],
+  ["'रानीपुर टाइगर रिजर्व' उत्तर प्रदेश के किस जिले में स्थित है?", ["लखीमपुर खीरी", "चित्रकूट", "बिजनौर", "बहराइच"], 1],
+  ["'रामगढ़ विषधारी टाइगर रिजर्व' किस राज्य में स्थित है?", ["मध्य प्रदेश", "राजस्थान", "गुजरात", "हरियाणा"], 1],
+  ["'गुरु घासीदास-तमोर पिंगला टाइगर रिजर्व' किस राज्य में स्थित है?", ["झारखंड", "छत्तीसगढ़", "ओडिशा", "मध्य प्रदेश"], 1],
+  ["'वीरांगना दुर्गावती टाइगर रिजर्व' किस राज्य में स्थित है?", ["राजस्थान", "मध्य प्रदेश", "उत्तर प्रदेश", "महाराष्ट्र"], 1],
+  ["'धौलपुर-करौली टाइगर रिजर्व' किस राज्य में स्थित है?", ["राजस्थान", "मध्य प्रदेश", "गुजरात", "उत्तर प्रदेश"], 0],
+  ["भारत में 'हाथी संरक्षण' के लिए प्रसिद्ध 'माइक' (MIKE) कार्यक्रम का पूर्ण रूप क्या है?", ["Monitoring the Illegal Killing of Elephants", "Management of Indian Killer Elephants", "Mission for Indian Kangaroo and Elephants", "Monitoring International Kindness to Elephants"], 0],
+  ["'गंगा कार्य योजना' (Ganga Action Plan) किस वर्ष शुरू की गई थी?", ["1980", "1985 (राजीव गांधी द्वारा)", "1995", "2014"], 1],
+  ["'नमामि गंगे कार्यक्रम' (Namami Gange Programme) किस वर्ष शुरू किया गया था?", ["2012", "2014", "2016", "2018"], 1],
+  ["भारत में सर्वाधिक मैंग्रोव वन किस राज्य में पाए जाते हैं?", ["गुजरात", "पश्चिम बंगाल", "आंध्र प्रदेश", "ओडिशा"], 1],
+  ["भारत में मैंग्रोव वनों के मामले में दूसरा स्थान किस राज्य का है?", ["ओडिशा", "गुजरात", "महाराष्ट्र", "तमिलनाडु"], 1],
+  ["'मोंट्रेक्स रिकॉर्ड' (Montreux Record) किससे संबंधित है?", ["उन रामसर आर्द्रभूमियों की सूची जहाँ पारिस्थितिक चरित्र में परिवर्तन हो रहा है", "दुनिया के सबसे प्रदूषित शहरों की सूची", "विलुप्त पक्षियों की सूची", "सबसे बड़े बांधों की सूची"], 0],
+  ["भारत की कौन-सी दो आर्द्रभूमियां 'मोंट्रेक्स रिकॉर्ड' में शामिल हैं?", ["चिल्का झील और वुलर झील", "केवलादेव राष्ट्रीय उद्यान और लोकटक झील", "सांभर झील और भोज झील", "सुंदरवन और वेम्बनाड"], 1],
+  ["'प्रवाल भित्तियाँ' (Coral Reefs) किस प्रकार के जल में पनपती हैं?", ["गहरे और अत्यधिक ठंडे जल में", "उथले, स्वच्छ और गर्म उष्णकटिबंधीय समुद्री जल में", "मीठे पानी की नदियों में", "कीचड़ भरे दलदली जल में"], 1],
+  ["भारत में प्रवाल भित्तियाँ (Coral Reefs) मुख्य रूप से कहाँ पाई जाती हैं?", ["कच्छ की खाड़ी, मन्नार की खाड़ी, लक्षद्वीप और अंडमान-निकोबार", "सुंदरवन डेल्टा", "चिल्का झील", "मुंबई तट"], 0],
+  ["'अम्ल वर्षा' का pH मान सामान्यतः कितना होता है?", ["7.0 से अधिक", "5.6 से कम", "8.5 से अधिक", "ठीक 7.0"], 1],
+  ["अम्ल वर्षा की घटना की खोज सर्वप्रथम किसने की थी?", ["रॉबर्ट एंगस स्मिथ", "जोसेफ फूरियर", "चार्ल्स डार्विन", "अलेक्जेंडर फ्लेमिंग"], 0],
+  ["किस देश को 'अम्ल वर्षा का देश' कहा जाता है क्योंकि वहाँ झीलों को इससे भारी नुकसान हुआ है?", ["भारत", "नॉर्वे और स्वीडन (स्कैंडिनेवियाई देश)", "ब्राजील", "मिस्र"], 1],
+  ["घरों के अंदर होने वाले वायु प्रदूषण (Indoor Air Pollution) का सबसे प्रमुख और खतरनाक गैस प्रदूषक कौन-सा है?", ["रेडॉन गैस (Radon)", "oxygène", "आर्गन", "हीलियम"], 0],
+  ["जल में आर्सेनिक प्रदूषण की समस्या भारत के किस क्षेत्र में सर्वाधिक गंभीर है?", ["पश्चिम बंगाल और गंगा का मैदानी क्षेत्र", "राजस्थान का मरुस्थल", "पश्चिमी घाट", "लद्दाख"], 0],
+  ["'सेंटर फॉर साइंस एंड एनवायरनमेंट' (CSE) का मुख्यालय कहाँ स्थित है?", ["मुंबई", "नई दिल्ली", "बेंगलुरु", "चेन्नई"], 1],
+  ["'बॉम्बे नेचुरल हिस्ट्री सोसाइटी' (BNHS) की स्थापना किस वर्ष हुई थी?", ["1883", "1920", "1947", "1972"], 0],
+  ["'राष्ट्रीय वन नीति' (National Forest Policy) 1988 के अनुसार देश के कुल भौगोलिक क्षेत्र के कितने प्रतिशत भाग पर वन होना आवश्यक है?", ["20%", "25%", "33% (एक तिहाई)", "50%"], 2],
+  ["पहाड़ी और पर्वतीय क्षेत्रों में पारिस्थितिक संतुलन बनाए रखने के लिए कितने प्रतिशत वन आवरण का लक्ष्य रखा गया है?", ["33%", "50%", "66% (दो-तिहाई)", "75%"], 2],
+  ["'संयुक्त वन प्रबंधन' (Joint Forest Management - JFM) की अवधारणा भारत में सबसे पहले किस राज्य में सफल रही?", ["पश्चिम बंगाल (अराबाड़ी वन क्षेत्र)", "हरियाणा", "केरल", "गुजरात"], 0],
+  ["'वन अधिकार अधिनियम' (Forest Rights Act - FRA) भारत में किस वर्ष पारित किया गया था?", ["2002", "2006", "2010", "2014"], 1],
+  ["'CAMPA' (कैंपा) निधि का संबंध किससे है?", ["प्रतिपूरक वनीकरण (Compensatory Afforestation) से", "समुद्री प्रदूषण से", "परमाणु ऊर्जा से", "सौर ऊर्जा से"], 0],
+  ["जैव ईंधन (Biofuel) मुख्य रूप से किस पौधे के बीजों से प्राप्त किया जाता है?", ["जेट्रोफा (रतनजोत)", "यूकेलिप्टस", "सागौन", "बांस"], 0],
+  ["'बायो-डीजल' (Biodiesel) उत्पादन में किस रासायनिक प्रक्रिया का उपयोग होता है?", ["किण्वन (Fermentation)", "ट्रांसएस्टरीफिकेशन (Transesterification)", "आसवन (Distillation)", "वाष्पीकरण"], 1],
+  ["भारत सरकार ने पेट्रोल में 20% इथेनॉल मिश्रण (E20) का लक्ष्य कब तक प्राप्त करने के लिए आगे बढ़ाया है?", ["2025-26", "2030", "2035", "2040"], 0],
+  ["'ट्रैफिक' (TRAFFIC) नामक संगठन किस क्षेत्र में कार्य करता है?", ["सड़क यातायात नियंत्रण", "वन्यजीवों के अवैध व्यापार की निगरानी (वन्यजीव व्यापार निगरानी नेटवर्क)", "हवाई यातायात", "समुद्री परिवहन"], 1],
+  ["'पर्यावरण प्रभाव आकलन' (EIA - Environmental Impact Assessment) भारत में सर्वप्रथम किस क्षेत्र के लिए शुरू किया गया था?", ["नदी घाटी परियोजनाओं (River Valley Projects) के लिए", "परमाणु संयंत्रों के लिए", "सड़क निर्माण के लिए", "खनन के लिए"], 0],
+  ["किसी क्षेत्र की प्राकृतिक वनस्पति मुख्य रूप से किस पर निर्भर करती है?", ["जलवायु (तापमान और वर्षा) पर", "केवल मिट्टी के रंग पर", "जनसंख्या पर", "समुद्र से दूरी पर"], 0],
+  ["'टुंड्रा बायोम' (Tundra Biome) की मुख्य विशेषता क्या है?", ["घने सदाबहार वन", "पर्माफ्रॉस्ट (स्थायी रूप से जमी हुई भूमि) और वृक्षों का अभाव", "अत्यधिक गर्मी और रेत", "लंबी घास के मैदान"], 1],
+  ["सवाना (Savanna) घास के मैदान मुख्य रूप से किस महाद्वीप में पाए जाते हैं?", ["यूरोप", "अफ्रीका", "अंटार्कटिका", "उत्तरी अमेरिका"], 1],
+  ["'पम्पास' (Pampas) घास के मैदान किस देश में पाए जाते हैं?", ["ऑस्ट्रेलिया", "अर्जेंटीना (दक्षिण अमेरिका)", "कनाडा", "रूस"], 1],
+  ["'प्रेयरी' (Prairie) घास के मैदान किस महाद्वीप में स्थित हैं?", ["उत्तरी अमेरिका", "अफ्रीका", "एशिया", "यूरोप"], 0],
+  ["'स्टेपी' (Steppe) घास के मैदान किस क्षेत्र में पाए जाते हैं?", ["यूरेशिया (मध्य एशिया और पूर्वी यूरोप)", "दक्षिण अमेरिका", "ऑस्ट्रेलिया", "अफ्रीका"], 0]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+201}</b> / 300 (पर्यावरण एवं पारिस्थितिकी - भाग 3)</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+201}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+201}</button>
+  `).join("");
+}
+
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+  if(remaining <= 150){
+    timerEl.classList.add("blink");
+  }
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+  modal.classList.remove("hidden");
+}
+
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+  document.getElementById("greeting").textContent =
+    student + ", आपका 'पर्यावरण एवं पारिस्थितिकी (भाग 3)' टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+  let message = correct >= 90 ? "🏆 अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "📘 औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+  document.getElementById("motivation").textContent = message;
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+    if(type !== "all" && type !== status) return "";
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+201}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
