@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - भारतीय संविधान के प्रमुख संशोधन (भाग 5 - 100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1150px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display:flex;justify-content:center;align-items:center;
+  padding:15px;animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0);animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;padding:14px 18px;font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px;background:#f8fafc;display:flex;
+  justify-content:center;gap:12px;border-top:1px solid #e2e8f0;
+}
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>भारतीय संविधान के प्रमुख संशोधन (भाग 5 - SSC CPO विशेष मॉक टेस्ट)</b></p>
+  <p>SSC CPO | CGL | CHSL | Railway | UPSSSC | All Competitive Exams</p>
+  <p>कुल प्रश्न: 100 | कुल अंक: 100 | समय: 20 मिनट</p>
+</header>
+<div class="container">
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>टॉपिक: भारतीय संविधान के प्रमुख संशोधन - भाग 5 निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें। इस मॉक टेस्ट में संविधान संशोधन प्रक्रिया से लेकर 106वें संशोधन (नारी शक्ति वंदन अधिनियम) तक के <b>100 महत्वपूर्ण प्रश्न</b> शामिल हैं[cite: 1].</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+    <ul style="padding-left:20px;color:#334155">
+      <li>विषय: <b>संविधान के प्रमुख संशोधन (भाग 5)</b></li>
+      <li>कुल प्रश्न: <b>100 (प्रश्न 1 से 100)</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">विषय: <b>संविधान के प्रमुख संशोधन (भाग 5)</b> | हल किए: <b id="answered">0</b>/100 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette (100)</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+  </section>
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>परीक्षा परिणाम (Scorecard) - संविधान संशोधन (भाग 5)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा - संविधान संशोधन (भाग 5)</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+</div>
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY - संविधान संशोधन (भाग 5)</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons">
+      <!-- Buttons dynamically injected -->
+    </div>
+  </div>
+</div>
+<script>
+const RAW_Q = [
+  ["भारतीय संविधान में संशोधन करने की प्रक्रिया किस अनुच्छेद में दी गई है?", ["अनुच्छेद 352", "अनुच्छेद 356", "अनुच्छेद 368", "अनुच्छेद 370"], 2],
+  ["संविधान संशोधन की प्रक्रिया किस देश के संविधान से ली गई है?", ["अमेरिका", "ब्रिटेन", "दक्षिण अफ्रीका", "ऑस्ट्रेलिया"], 2],
+  ["भारतीय संविधान में अब तक कुल कितने संशोधन अधिनियम (Acts) पारित होकर लागू हो चुके हैं?", ["104", "105", "106", "108"], 2],
+  ["अनुच्छेद 368 के तहत संसद कितने प्रकार से संविधान में संशोधन कर सकती है?", ["1 प्रकार से", "2 प्रकार से (विशेष बहुमत, तथा विशेष बहुमत + आधे राज्यों का अनुसमर्थन)", "3 प्रकार से", "4 प्रकार से"], 1],
+  ["संविधान संशोधन विधेयक संसद के किस सदन में पेश किया जा सकता है?", ["केवल लोकसभा में", "केवल राज्यसभा में", "संसद के किसी भी सदन में", "केवल संयुक्त बैठक में"], 2],
+  ["क्या संविधान संशोधन विधेयक पर गतिरोध होने की स्थिति में संसद के दोनों सदनों की संयुक्त बैठक (अनुच्छेद 108) बुलाई जा सकती है?", ["हाँ, राष्ट्रपति बुला सकते हैं", "नहीं, संयुक्त बैठक का कोई प्रावधान नहीं है", "केवल लोकसभा अध्यक्ष की अनुमति से", "केवल धन संबंधी संशोधन पर"], 1],
+  ["किस संविधान संशोधन द्वारा यह अनिवार्य कर दिया गया कि राष्ट्रपति को संविधान संशोधन विधेयक पर अपनी सहमति देनी ही होगी?", ["24वें संशोधन (1971)", "42वें संशोधन (1976)", "44वें संशोधन (1978)", "52वें संशोधन (1985)"], 0],
+  ["भारत के संविधान में पहला संशोधन (1st Amendment) किस वर्ष किया गया था?", ["1950", "1951", "1952", "1955"], 1],
+  ["पहले संविधान संशोधन अधिनियम, 1951 द्वारा संविधान में कौन सी अनुसूची जोड़ी गई?", ["आठवीं अनुसूची", "नौवीं अनुसूची", "दसवीं अनुसूची", "ग्यारहवीं अनुसूची"], 1],
+  ["राज्यों के पुनर्गठन (14 राज्य और 6 केंद्र शासित प्रदेश) से संबंधित संविधान संशोधन कौन सा है?", ["पहला संशोधन (1951)", "चौथा संशोधन (1955)", "सातवाँ संशोधन (1956)", "दसवाँ संशोधन (1961)"], 2],
+  ["किस संशोधन द्वारा एक ही व्यक्ति को दो या दो से अधिक राज्यों का राज्यपाल नियुक्त करने का प्रावधान किया गया?", ["5वें संशोधन", "7वें संशोधन (1956)", "11वें संशोधन", "14वें संशोधन"], 1],
+  ["दादरा और नगर हवेली को किस संविधान संशोधन द्वारा भारत का केंद्र शासित प्रदेश बनाया गया?", ["10वें संशोधन (1961)", "12वें संशोधन (1962)", "14वें संशोधन (1962)", "35वें संशोधन (1974)"], 0],
+  ["गोवा, दमन और दीव को किस संविधान संशोधन द्वारा भारतीय संघ में शामिल किया गया?", ["10वें संशोधन (1961)", "12वें संशोधन (1962)", "14वें संशोधन (1962)", "56वें संशोधन (1987)"], 1],
+  ["पुदुचेरी (पांडिचेरी) को किस संविधान संशोधन द्वारा भारत का अंग बनाया गया?", ["10वें संशोधन", "12वें संशोधन", "14वें संशोधन (1962)", "18वें संशोधन"], 2],
+  ["किस संशोधन द्वारा उच्च न्यायालय (High Court) के न्यायाधीशों की सेवानिवृत्ति की आयु 60 वर्ष से बढ़ाकर 62 वर्ष की गई?", ["11वें संशोधन", "15वें संशोधन (1963)", "21वें संशोधन", "42वें संशोधन"], 1],
+  ["आठवीं अनुसूची में 15वीं भाषा के रूप में 'सिंधी' को किस संशोधन द्वारा जोड़ा गया?", ["15वें संशोधन", "21वें संशोधन (1967)", "71वें संशोधन", "92वें संशोधन"], 1],
+  ["किस संविधान संशोधन द्वारा मेघालय को असम के भीतर एक स्वायत्त राज्य बनाया गया था?", ["22वें संशोधन (1969)", "27वें संशोधन (1971)", "36वें संशोधन (1975)", "53वें संशोधन (1986)"], 0],
+  ["किस ऐतिहासिक मामले के फैसले के बाद संसद ने 24वाँ संविधान संशोधन (1971) पारित किया था?", ["शंकरी प्रसाद मामला", "गोलकनाथ मामला (1967)", "केशवानंद भारती मामला (1973)", "मिनर्वा मिल्स मामला (1980)"], 1],
+  ["भूतपूर्व देशी रियासतों के शासकों के 'प्रिवी पर्स' (Privy Purse) और विशेषाधिकारों को किस संशोधन द्वारा समाप्त किया गया?", ["24वें संशोधन", "25वें संशोधन", "26वें संशोधन (1971)", "28वें संशोधन"], 2],
+  ["किस संशोधन द्वारा लोकसभा की सीटों की संख्या 525 से बढ़ाकर 545 की गई?", ["7वें संशोधन", "31वें संशोधन (1973)", "42वें संशोधन", "84वें संशोधन"], 1],
+  ["सिक्किम को भारत के 'सह-राज्य' (Associate State) का दर्जा किस संविधान संशोधन द्वारा दिया गया था?", ["35वें संशोधन (1974)", "36वें संशोधन (1975)", "38वें संशोधन (1975)", "55वें संशोधन (1986)"], 0],
+  ["सिक्किम को भारत का पूर्ण राज्य (22वाँ राज्य) किस संविधान संशोधन द्वारा बनाया गया?", ["35वें संशोधन (1974)", "36वें संशोधन (1975)", "53वें संशोधन (1986)", "56वें संशोधन (1987)"], 1],
+  ["किस संविधान संशोधन द्वारा राष्ट्रपति द्वारा की गई आपातकाल की घोषणा को न्यायिक समीक्षा (Judicial Review) से बाहर रखा गया था?", ["38वें संशोधन (1975)", "39वें संशोधन (1975)", "42वें संशोधन (1976)", "44वें संशोधन (1978)"], 0],
+  ["किस संशोधन द्वारा राष्ट्रपति, उपराष्ट्रपति, प्रधानमंत्री और लोकसभा अध्यक्ष के चुनाव विवादों को न्यायालय के क्षेत्राधिकार से बाहर कर दिया गया था?", ["38वें संशोधन", "39वें संशोधन (1975)", "41वें संशोधन", "42वें संशोधन"], 1],
+  ["राज्य लोक सेवा आयोग (SPSC) के सदस्यों की सेवानिवृत्ति आयु 60 से बढ़ाकर 62 वर्ष किस संशोधन द्वारा की गई?", ["15वें संशोधन", "41वें संशोधन (1976)", "42वें संशोधन", "44वें संशोधन"], 1],
+  ["किस संविधान संशोधन अधिनियम को भारत का 'लघु संविधान' (Mini Constitution) कहा जाता है?", ["42वाँ संशोधन (1976)", "44वाँ संशोधन (1978)", "73वाँ संशोधन (1992)", "86वाँ संशोधन (2002)"], 0],
+  ["42वाँ संविधान संशोधन किस समिति की सिफारिशों पर आधारित था?", ["सरकारिया समिति", "स्वर्ण सिंह समिति", "वर्मा समिति", "बलवंत राय मेहता समिति"], 1],
+  ["भारतीय संविधान की प्रस्तावना (Preamble) में अब तक कितनी बार संशोधन किया गया है?", ["1 बार (42वें संशोधन, 1976 द्वारा)", "2 बार", "3 बार", "एक बार भी नहीं"], 0],
+  ["42वें संविधान संशोधन द्वारा प्रस्तावना में कौन से तीन नए शब्द जोड़े गए?", ["संप्रभु, लोकतांत्रिक, गणराज्य", "समाजवादी, पंथनिरपेक्ष, अखंडता", "न्याय, स्वतंत्रता, समानता", "बंधुत्व, एकता, गरिमा"], 1],
+  ["भारतीय संविधान में 'मौलिक कर्तव्य' (भाग IV-A, अनुच्छेद 51A) किस संशोधन द्वारा जोड़े गए?", ["42वें संशोधन (1976)", "44वें संशोधन (1978)", "86वें संशोधन (2002)", "97वें संशोधन (2011)"], 0],
+  ["42वें संशोधन के समय संविधान में कितने मौलिक कर्तव्य जोड़े गए थे?", ["10", "11", "12", "9"], 0],
+  ["किस संशोधन द्वारा 'शिक्षा', 'वन', 'नाप-तौल', 'वन्यजीवों एवं पक्षियों का संरक्षण' और 'न्याय का प्रशासन' विषयों को राज्य सूची से समवर्ती सूची में स्थानांतरित किया गया?", ["42वें संशोधन (1976)", "44वें संशोधन (1978)", "52वें संशोधन (1985)", "73वें संशोधन (1992)"], 0],
+  ["संविधान में 'प्रशासनिक अधिकरण' (Administrative Tribunals - भाग XIV-A, अनुच्छेद 323A और 323B) किस संशोधन द्वारा जोड़े गए?", ["39वें संशोधन", "42वें संशोधन (1976)", "44वें संशोधन (1978)", "52वें संशोधन (1985)"], 1],
+  ["नीति निदेशक तत्वों में 'समान न्याय और निःशुल्क विधिक सहायता' (अनुच्छेद 39A) किस संशोधन द्वारा जोड़ा गया?", ["42वें संशोधन (1976)", "44वें संशोधन (1978)", "86वें संशोधन (2002)", "97वें संशोधन (2011)"], 0],
+  ["उद्योगों के प्रबंधन में कामगारों की भागीदारी (अनुच्छेद 43A) और पर्यावरण की रक्षा (अनुच्छेद 48A) किस संशोधन द्वारा जोड़े गए?", ["42वें संशोधन (1976)", "44वें संशोधन (1978)", "73वें संशोधन (1992)", "86वें संशोधन (2002)"], 0],
+  ["किस संशोधन द्वारा लोकसभा और राज्य विधानसभाओं का कार्यकाल 5 वर्ष से बढ़ाकर 6 वर्ष कर दिया गया था?", ["42वें संशोधन (1976)", "44वें संशोधन (1978)", "52वें संशोधन (1985)", "61वें संशोधन (1989)"], 0],
+  ["किस संविधान संशोधन द्वारा राष्ट्रपति को मंत्रिपरिषद की सलाह मानने के लिए बाध्य किया गया?", ["24वें संशोधन", "42वें संशोधन (1976)", "44वें संशोधन (1978)", "52वें संशोधन"], 1],
+  ["किस संशोधन द्वारा राष्ट्रपति को मंत्रिपरिषद की सलाह को 'एक बार पुनर्विचार के लिए वापस भेजने' की शक्ति दी गई?", ["42वें संशोधन (1976)", "44वें संशोधन (1978)", "52वें संशोधन (1985)", "91वें संशोधन (2003)"], 1],
+  ["संपत्ति के अधिकार (अनुच्छेद 31 और 19(1)(f)) को मौलिक अधिकारों की सूची से किस संशोधन द्वारा हटाया गया?", ["42वें संशोधन (1976)", "44वें संशोधन (1978)", "45वें संशोधन (1980)", "52वें संशोधन (1985)"], 1],
+  ["44वें संशोधन के बाद संपत्ति के अधिकार को संविधान के किस नए अनुच्छेद में रखा गया?", ["अनुच्छेद 300", "अनुच्छेद 300A (भाग XII)", "अनुच्छेद 301", "अनुच्छेद 31A"], 1],
+  ["राष्ट्रीय आपातकाल (अनुच्छेद 352) के आधारों में 'आंतरिक अशांति' शब्द के स्थान पर 'सशस्त्र विद्रोह' शब्द किस संशोधन द्वारा जोड़ा गया?", ["42वें संशोधन (1976)", "44वें संशोधन (1978)", "52वें संशोधन (1985)", "61वें संशोधन (1989)"], 1],
+  ["किस संशोधन द्वारा यह प्रावधान किया गया कि राष्ट्रपति मंत्रिमंडल (Cabinet) की 'लिखित सिफारिश' पर ही राष्ट्रीय आपातकाल की घोषणा कर सकते हैं?", ["42वें संशोधन (1976)", "44वें संशोधन (1978)", "59वें संशोधन (1988)", "64वें संशोधन (1990)"], 1],
+  ["किस संविधान संशोधन ने यह सुनिश्चित किया कि राष्ट्रीय आपातकाल के दौरान भी अनुच्छेद 20 और 21 को निलंबित नहीं किया जा सकता?", ["42वें संशोधन (1976)", "44वें संशोधन (1978)", "86वें संशोधन (2002)", "91वें संशोधन (2003)"], 1],
+  ["लोकसभा और राज्य विधानसभाओं के कार्यकाल को 6 वर्ष से घटाकर पुनः 5 वर्ष किस संशोधन द्वारा किया गया?", ["43वें संशोधन (1977)", "44वें संशोधन (1978)", "52वें संशोधन (1985)", "61वें संशोधन (1989)"], 1],
+  ["42वें संशोधन द्वारा किए गए न्यायपालिका की शक्तियों में कटौती संबंधी कई प्रावधानों को किस संशोधन द्वारा रद्द किया गया?", ["43वें और 44वें संशोधन द्वारा", "45वें संशोधन द्वारा", "50वें संशोधन द्वारा", "52वें संशोधन द्वारा"], 0],
+  ["सर्वोच्च न्यायालय ने किस मामले में 42वें संशोधन की उन धाराओं (अनुच्छेद 31C और 368(4)) को असंवैधानिक घोषित किया जो न्यायिक समीक्षा को सीमित करती थीं?", ["केशवानंद भारती मामला (1973)", "मिनर्वा मिल्स मामला (1980)", "मेनका गांधी मामला (1978)", "एस.आर. बोम्मई मामला (1994)"], 1],
+  ["42वाँ संविधान संशोधन किस प्रधानमंत्री के कार्यकाल में पारित हुआ था?", ["मोरारजी देसाई", "इंदिरा गांधी", "राजीव गांधी", "लाल बहादुर शास्त्री"], 1],
+  ["44वाँ संविधान संशोधन, 1978 किस प्रधानमंत्री के कार्यकाल में पारित हुआ था?", ["इंदिरा गांधी", "मोरारजी देसाई (जनता पार्टी सरकार)", "चौधरी चरण सिंह", "राजीव गांधी"], 1],
+  ["किस संशोधन द्वारा नीति निदेशक तत्वों में अनुच्छेद 38(2) (आय, प्रतिष्ठा और अवसरों की असमानता को कम करना) जोड़ा गया?", ["42वें संशोधन", "44वें संशोधन (1978)", "86वें संशोधन", "97वें संशोधन"], 1],
+  ["संसद में गणपूर्ति (Quorum - 1/10 सदस्य) की व्यवस्था को किस संशोधन द्वारा पुनः बहाल किया गया था?", ["43वें संशोधन", "44वें संशोधन (1978)", "52वें संशोधन", "61वें संशोधन"], 1],
+  ["दलबदल विरोधी कानून (Anti-Defection Law) किस संविधान संशोधन द्वारा पारित किया गया?", ["44वें संशोधन (1978)", "52वें संशोधन (1985)", "61वें संशोधन (1989)", "91वें संशोधन (2003)"], 1],
+  ["52वें संविधान संशोधन, 1985 द्वारा संविधान में कौन सी नई अनुसूची जोड़ी गई?", ["नौवीं अनुसूची", "दसवीं अनुसूची", "ग्यारहवीं अनुसूची", "बारहवीं अनुसूची"], 1],
+  ["मिजोरम को पूर्ण राज्य का दर्जा किस संविधान संशोधन द्वारा दिया गया?", ["53वें संशोधन (1986)", "55वें संशोधन (1986)", "56वें संशोधन (1987)", "36वें संशोधन (1975)"], 0],
+  ["अरुणाचल प्रदेश को पूर्ण राज्य का दर्जा किस संविधान संशोधन द्वारा प्रदान किया गया?", ["53वें संशोधन (1986)", "55वें संशोधन (1986)", "56वें संशोधन (1987)", "69वें संशोधन (1991)"], 1],
+  ["गोवा को भारत का 25वाँ पूर्ण राज्य किस संविधान संशोधन द्वारा बनाया गया?", ["12वें संशोधन (1962)", "53वें संशोधन (1986)", "56वें संशोधन (1987)", "69वें संशोधन (1991)"], 2],
+  ["किस संविधान संशोधन द्वारा लोकसभा और विधानसभा चुनावों में मतदान की आयु 21 वर्ष से घटाकर 18 वर्ष कर दी गई?", ["44वें संशोधन (1978)", "52वें संशोधन (1985)", "61वें संशोधन (1989)", "73वें संशोधन (1992)"], 2],
+  ["किस संशोधन द्वारा राष्ट्रीय अनुसूचित जाति और जनजाति आयोग (अनुच्छेद 338) को संवैधानिक दर्जा दिया गया था?", ["65वें संशोधन (1990)", "69वें संशोधन (1991)", "89वें संशोधन (2003)", "102वें संशोधन (2018)"], 0],
+  ["केंद्र शासित प्रदेश दिल्ली को 'राष्ट्रीय राजधानी क्षेत्र दिल्ली' (NCT of Delhi) का विशेष दर्जा किस संशोधन द्वारा दिया गया?", ["61वें संशोधन (1989)", "69वें संशोधन (1991)", "70वें संशोधन (1992)", "74वें संशोधन (1992)"], 1],
+  ["दिल्ली और पुदुचेरी विधानसभाओं के निर्वाचित सदस्यों को राष्ट्रपति के निर्वाचक मंडल में किस संशोधन द्वारा शामिल किया गया?", ["69वें संशोधन (1991)", "70वें संशोधन (1992)", "71वें संशोधन (1992)", "84वें संशोधन (2001)"], 1],
+  ["आठवीं अनुसूची में 'कोंकणी', 'मणिपुरी' और 'नेपाली' भाषाओं को किस संशोधन द्वारा जोड़ा गया?", ["21वें संशोधन (1967)", "71वें संशोधन (1992)", "92वें संशोधन (2003)", "96वें संशोधन (2011)"], 1],
+  ["पंचायती राज संस्थाओं को संवैधानिक दर्जा किस संशोधन अधिनियम द्वारा प्रदान किया गया?", ["71वें संशोधन", "72वें संशोधन", "73वें संशोधन (1992)", "74वें संशोधन (1992)"], 2],
+  ["73वें संविधान संशोधन द्वारा संविधान में कौन सा नया भाग और अनुसूची जोड़ी गई?", ["भाग IX और ग्यारहवीं अनुसूची", "भाग IX-A और बारहवीं अनुसूची", "भाग IX-B और दसवीं अनुसूची", "भाग X और नौवीं अनुसूची"], 0],
+  ["शहरी स्थानीय निकायों (नगरपालिकाओं) को संवैधानिक दर्जा किस संशोधन द्वारा दिया गया?", ["73वें संशोधन (1992)", "74वें संशोधन (1992)", "86वें संशोधन (2002)", "97वें संशोधन (2011)"], 1],
+  ["74वें संविधान संशोधन द्वारा संविधान में कौन सा भाग और अनुसूची जोड़ी गई?", ["भाग IX और ग्यारहवीं अनुसूची", "भाग IX-A और बारहवीं अनुसूची", "भाग IX-B और बारहवीं अनुसूची", "भाग XI और ग्यारहवीं अनुसूची"], 1],
+  ["तमिलनाडु के 69% आरक्षण कानून को नौवीं अनुसूची में किस संविधान संशोधन द्वारा संरक्षित किया गया?", ["73वें संशोधन", "76वें संशोधन (1994)", "77वें संशोधन (1995)", "81वें संशोधन (2000)"], 1],
+  ["सरकारी नौकरियों में अनुसूचित जाति (SC) और अनुसूचित जनजाति (ST) के लिए पदोन्नति (Promotion) में आरक्षण का प्रावधान किस संशोधन द्वारा किया गया?", ["76वें संशोधन", "77वें संशोधन (1995)", "81वें संशोधन", "85वें संशोधन"], 1],
+  ["किस संविधान संशोधन द्वारा बैकलॉग रिक्तियों (Backlog Vacancies) पर आरक्षण की 50% सीमा लागू न होने का प्रावधान किया गया?", ["77वें संशोधन (1995)", "81वें संशोधन (2000)", "82वें संशोधन (2000)", "85वें संशोधन (2001)"], 1],
+  ["लोकसभा और राज्य विधानसभाओं की सीटों की संख्या को 1971 की जनगणना के आधार पर किस वर्ष तक के लिए स्थिर (Freeze) किया गया है?", ["2024", "2026", "2030", "2031"], 1],
+  ["6 से 14 वर्ष तक के बच्चों के लिए निःशुल्क और अनिवार्य शिक्षा को मौलिक अधिकार (अनुच्छेद 21A) किस संशोधन द्वारा बनाया गया?", ["84वें संशोधन (2001)", "86वें संशोधन (2002)", "91वें संशोधन (2003)", "93वें संशोधन (2005)"], 1],
+  ["86वें संविधान संशोधन, 2002 द्वारा संविधान के किन तीन भागों में परिवर्तन किया गया?", ["मौलिक अधिकार (अनुच्छेद 21A), नीति निदेशक तत्व (अनुच्छेद 45) और मौलिक कर्तव्य (अनुच्छेद 51A(k))", "प्रस्तावना, नागरिकता और संसद", "संघ कार्यपालिका, न्यायपालिका और पंचायत", "आपातकाल, चुनाव आयोग और वित्त आयोग"], 0],
+  ["किस संशोधन द्वारा अनुच्छेद 45 की विषय-वस्तु बदलकर 6 वर्ष से कम आयु के बच्चों की प्रारंभिक बाल्यावस्था देखभाल और शिक्षा का प्रावधान किया गया?", ["42वें संशोधन", "44वें संशोधन", "86वें संशोधन (2002)", "97वें संशोधन"], 2],
+  ["11वाँ मौलिक कर्तव्य (माता-पिता द्वारा 6 से 14 वर्ष के बच्चों को शिक्षा के अवसर प्रदान करना) किस संशोधन द्वारा जोड़ा गया?", ["42वें संशोधन (1976)", "86वें संशोधन (2002)", "91वें संशोधन (2003)", "97वें संशोधन (2011)"], 1],
+  ["73वाँ और 74वाँ संविधान संशोधन किस प्रधानमंत्री के कार्यकाल में पारित हुए थे?", ["राजीव गांधी", "पी.वी. नरसिम्हा राव", "अटल बिहारी वाजपेयी", "एच.डी. देवेगौड़ा"], 1],
+  ["किस संविधान संशोधन द्वारा राज्यों में निर्वाचन क्षेत्रों का परिसीमन 2001 की जनगणना के आधार पर करने का प्रावधान किया गया (बिना सीटों की कुल संख्या बदले)?", ["84वें संशोधन (2001)", "87वें संशोधन (2003)", "91वें संशोधन (2003)", "100वें संशोधन (2015)"], 1],
+  ["सेवा कर (Service Tax) के आरोपण और संग्रहण से संबंधित अनुच्छेद 268A किस संशोधन द्वारा जोड़ा गया था (जिसे बाद में 101वें संशोधन ने समाप्त किया)?", ["80वें संशोधन (2000)", "88वें संशोधन (2003)", "92वें संशोधन (2003)", "101वें संशोधन (2016)"], 1],
+  ["राष्ट्रीय अनुसूचित जाति और जनजाति आयोग को विभाजित कर दो अलग आयोग (NCSC - अनुच्छेद 338 और NCST - अनुच्छेद 338A) किस संशोधन द्वारा बनाए गए?", ["65वें संशोधन (1990)", "89वें संशोधन (2003)", "91वें संशोधन (2003)", "102वें संशोधन (2018)"], 1],
+  ["केंद्र और राज्यों में मंत्रिपरिषद के आकार को कुल सदस्य संख्या (लोकसभा/विधानसभा) के 15% तक सीमित करने वाला संशोधन कौन सा है?", ["52वाँ संशोधन (1985)", "86वाँ संशोधन (2002)", "91वाँ संशोधन (2003)", "97वाँ संशोधन (2011)"], 2],
+  ["91वें संविधान संशोधन द्वारा दलबदल कानून (दसवीं अनुसूची) में क्या बड़ा बदलाव किया गया?", ["किसी दल के एक-तिहाई (1/3) सदस्यों के विभाजन (Split) को दी गई छूट समाप्त कर दी गई (अब दो-तिहाई विलय ही मान्य)", "दलबदल का निर्णय राष्ट्रपति को सौंपा गया", "निर्दलीय विधायकों को दल में शामिल होने की छूट दी गई", "राज्यसभा सदस्यों को इससे बाहर रखा गया"], 0],
+  ["आठवीं अनुसूची में 'बोडो', 'डोगरी', 'मैथिली' और 'संथाली' भाषाओं को किस संशोधन द्वारा जोड़ा गया?", ["21वें संशोधन (1967)", "71वें संशोधन (1992)", "92वें संशोधन (2003)", "96वें संशोधन (2011)"], 2],
+  ["निजी गैर-सहायता प्राप्त शिक्षण संस्थानों (अल्पसंख्यक संस्थानों को छोड़कर) में पिछड़े वर्गों (OBC/SC/ST) के लिए आरक्षण का प्रावधान किस संशोधन द्वारा किया गया?", ["86वें संशोधन (2002)", "93वें संशोधन (2005)", "102वें संशोधन (2018)", "103वें संशोधन (2019)"], 1],
+  ["आठवीं अनुसूची में 'उड़िया' (Oriya) भाषा का नाम बदलकर 'ओडिया' (Odia) किस संविधान संशोधन द्वारा किया गया?", ["92वें संशोधन (2003)", "94वें संशोधन (2006)", "96वें संशोधन (2011)", "98वें संशोधन (2012)"], 2],
+  ["सहकारी समितियों (Co-operative Societies) को संवैधानिक दर्जा और संरक्षण किस संशोधन द्वारा दिया गया?", ["73वें संशोधन (1992)", "86वें संशोधन (2002)", "97वें संशोधन (2011)", "101वें संशोधन (2016)"], 2],
+  ["97वें संविधान संशोधन, 2011 द्वारा संविधान में कौन से नए प्रावधान जोड़े गए?", ["मौलिक अधिकार अनुच्छेद 19(1)(c) में 'सहकारी समितियाँ', नीति निदेशक तत्व अनुच्छेद 43B और नया भाग IX-B", "भाग IX-A और बारहवीं अनुसूची", "भाग XIV-A और अनुच्छेद 323A", "अनुच्छेद 338B और भाग XVI"], 0],
+  ["कर्नाटक राज्य के हैदराबाद-कर्नाटक क्षेत्र के विकास हेतु राज्यपाल को विशेष शक्तियाँ देने वाला अनुच्छेद 371J किस संशोधन द्वारा जोड़ा गया?", ["95वें संशोधन (2009)", "97वें संशोधन (2011)", "98वें संशोधन (2012)", "100वें संशोधन (2015)"], 2],
+  ["किस संविधान संशोधन द्वारा सर्वोच्च न्यायालय और उच्च न्यायालय के न्यायाधीशों की नियुक्ति के लिए 'राष्ट्रीय न्यायिक नियुक्ति आयोग' (NJAC) बनाया गया था, जिसे सुप्रीम कोर्ट ने रद्द कर दिया?", ["97वें संशोधन (2011)", "98वें संशोधन (2012)", "99वें संशोधन (2014)", "100वें संशोधन (2015)"], 2],
+  ["भारत और बांग्लादेश के बीच ऐतिहासिक भूमि सीमा समझौते (Land Boundary Agreement) को लागू करने वाला संविधान संशोधन कौन सा है?", ["99वाँ संशोधन (2014)", "100वाँ संशोधन (2015)", "101वाँ संशोधन (2016)", "102वाँ संशोधन (2018)"], 1],
+  ["वस्तु एवं सेवा कर (GST - Goods and Services Tax) किस संविधान संशोधन अधिनियम द्वारा लागू किया गया?", ["100वें संशोधन (2015)", "101वें संशोधन (2016)", "102वें संशोधन (2018)", "103वें संशोधन (2019)"], 1],
+  ["101वें संविधान संशोधन द्वारा संविधान में कौन से प्रमुख नए अनुच्छेद जोड़े गए?", ["अनुच्छेद 246A, 269A और 279A (GST परिषद)", "अनुच्छेद 338B और 342A", "अनुच्छेद 15(6) और 16(6)", "अनुच्छेद 330A और 332A"], 0],
+  ["101वें संविधान संशोधन के लिए संसद में कौन सा संविधान संशोधन विधेयक (Bill) पेश किया गया था?", ["120वाँ संशोधन विधेयक", "121वाँ संशोधन विधेयक", "122वाँ संशोधन विधेयक", "123वाँ संशोधन विधेयक"], 2],
+  ["राष्ट्रीय पिछड़ा वर्ग आयोग (NCBC) को संवैधानिक दर्जा किस संविधान संशोधन द्वारा दिया गया?", ["100वें संशोधन (2015)", "101वें संशोधन (2016)", "102वें संशोधन (2018)", "103वें संशोधन (2019)"], 2],
+  ["सामान्य वर्ग के आर्थिक रूप से कमजोर वर्गों (EWS) के लिए शिक्षा और सरकारी नौकरियों में 10% आरक्षण किस संशोधन द्वारा दिया गया?", ["101वें संशोधन (2016)", "102वें संशोधन (2018)", "103वें संशोधन (2019)", "104वें संशोधन (2019)"], 2],
+  ["103वें संविधान संशोधन, 2019 द्वारा संविधान के किन दो अनुच्छेदों में नए खंड जोड़े गए?", ["अनुच्छेद 15(6) और अनुच्छेद 16(6)", "अनुच्छेद 14(2) और अनुच्छेद 19(2)", "अनुच्छेद 21(A) और अनुच्छेद 45", "अनुच्छेद 330 और अनुच्छेद 332"], 0],
+  ["लोकसभा और राज्य विधानसभाओं में अनुसूचित जाति (SC) और अनुसूचित जनजाति (ST) के आरक्षण को 10 वर्ष (25 जनवरी 2030 तक) बढ़ाने वाला संशोधन कौन सा है?", ["102वाँ संशोधन (2018)", "103वाँ संशोधन (2019)", "104वाँ संशोधन (2019)", "105वाँ संशोधन (2021)"], 2],
+  ["किस संविधान संशोधन द्वारा लोकसभा और राज्य विधानसभाओं में आंग्ल-भारतीय (Anglo-Indian) समुदाय के मनोनयन के प्रावधान को समाप्त कर दिया गया?", ["102वें संशोधन (2018)", "103वें संशोधन (2019)", "104वें संशोधन (2019)", "105वें संशोधन (2021)"], 2],
+  ["राज्यों और केंद्र शासित प्रदेशों को सामाजिक और शैक्षणिक रूप से पिछड़े वर्गों (SEBC/OBC) की अपनी सूची बनाने का अधिकार पुनः किस संशोधन द्वारा बहाल किया गया?", ["102वें संशोधन (2018)", "103वें संशोधन (2019)", "104वें संशोधन (2019)", "105वें संशोधन (2021)"], 3],
+  ["'नारी शक्ति वंदन अधिनियम' (महिला आरक्षण अधिनियम, 2023) कौन सा संविधान संशोधन अधिनियम है?", ["104वाँ संशोधन अधिनियम", "105वाँ संशोधन अधिनियम", "106वाँ संशोधन अधिनियम (2023)", "107वाँ संशोधन अधिनियम"], 2],
+  ["106वें संविधान संशोधन अधिनियम, 2023 के तहत किन सदनों में महिलाओं के लिए एक-तिहाई (33%) सीटें आरक्षित की गई हैं?", ["लोकसभा, राज्य विधानसभाओं और दिल्ली विधानसभा में", "केवल लोकसभा और राज्यसभा में", "राज्यसभा और राज्य विधान परिषदों में", "केवल पंचायती राज संस्थाओं में"], 0],
+  ["106वें संविधान संशोधन के लिए संसद में कौन सा संविधान संशोधन विधेयक पेश किया गया था?", ["126वाँ संशोधन विधेयक", "127वाँ संशोधन विधेयक", "128वाँ संशोधन विधेयक (2023)", "129वाँ संशोधन विधेयक"], 2],
+  ["106वें संविधान संशोधन अधिनियम के अनुसार महिला आरक्षण प्रारंभ में कितने वर्षों की अवधि के लिए लागू रहेगा?", ["10 वर्ष", "15 वर्ष (संसद द्वारा कानून बनाकर बढ़ाया जा सकता है)", "20 वर्ष", "अनिश्चितकाल के लिए"], 1],
+  ["भारतीय संविधान की 'मूल संरचना' (Basic Structure) के सिद्धांत का अर्थ क्या है?", ["संसद संविधान के किसी भी हिस्से में संशोधन नहीं कर सकती", "संसद अनुच्छेद 368 के तहत संविधान में संशोधन कर सकती है, लेकिन वह संविधान के मूल ढाँचे को नष्ट या परिवर्तित नहीं कर सकती", "केवल सर्वोच्च न्यायालय ही संविधान में संशोधन कर सकता है", "राज्यों की सहमति से मूल संरचना बदली जा सकती है"], 1]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / ${Q.length} (संविधान संशोधन - भाग 5)</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+  if(remaining <= 150){
+    timerEl.classList.add("blink");
+  }
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+  modal.classList.remove("hidden");
+}
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+  document.getElementById("greeting").textContent =
+    student + ", आपका 'संविधान संशोधन (भाग 5)' टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+  let message = correct >= 90 ? "🏆 अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "📘 औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+  document.getElementById("motivation").textContent = message;
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+    if(type !== "all" && type !== status) return "";
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
