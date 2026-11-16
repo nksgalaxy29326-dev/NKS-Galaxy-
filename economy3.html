@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - भारतीय अर्थव्यवस्था (Indian Economy) - भाग 3 (100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width:1150px;margin:20px auto;padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark);margin-top:0}
+input[type=text]{
+  width:100%;padding:12px;border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px;margin:8px 0 15px;
+}
+input[type=text]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display:flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark);cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+.progress{
+  height:8px;background:#e2e8f0;border-radius:10px;
+  margin:10px 0 16px;overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+/* Question Card */
+.question{
+  background:white;padding:18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 12px;
+  border:1px solid #dce3eb;border-radius:8px;
+  cursor:pointer;transition:background 0.15s,border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px;accent-color:var(--primary)}
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px;font-size:12px}
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px;overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning);color:white;border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+.actions{
+  display:flex;justify-content:center;
+  gap:10px;flex-wrap:wrap;margin:20px 0;
+}
+.hidden{display:none!important}
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display:flex;justify-content:center;align-items:center;
+  padding:15px;animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0);animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg,var(--dark),var(--primary));
+  color:white;padding:14px 18px;font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px;background:#f8fafc;display:flex;
+  justify-content:center;gap:12px;border-top:1px solid #e2e8f0;
+}
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius:10px;border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>भारतीय अर्थव्यवस्था (Indian Economy) - भाग 3 (SSC & RRB विशेष मॉक टेस्ट)</b></p>
+  <p>मुद्रास्फीति, मौद्रिक नीति, राजकोषीय नीति, केंद्रीय बजट, घाटे एवं भारतीय कर प्रणाली (GST)</p>
+  <p>कुल प्रश्न: 100 | कुल अंक: 100 | समय: 20 मिनट</p>
+</header>
+<div class="container">
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>टॉपिक: भारतीय अर्थव्यवस्था - भाग 3 निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें। इस मॉक टेस्ट में मुद्रास्फीति, राजकोषीय नीति, बजट, घाटे और कर प्रणाली से जुड़े <b>100 महत्वपूर्ण प्रश्न (प्रश्न 201 से 300 तक)</b> शामिल हैं।</p>
+    <label><b>विद्यार्थी का नाम:</b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+    <ul style="padding-left:20px;color:#334155">
+      <li>विषय: <b>भारतीय अर्थव्यवस्था (भाग 3)</b></li>
+      <li>कुल प्रश्न: <b>100 (प्रश्न 201 से 300)</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size:16px;color:var(--dark)"></b>
+        <div class="muted">विषय: <b>भारतीय अर्थव्यवस्था (भाग 3)</b> | हल किए: <b id="answered">0</b>/100 | चिह्नित: <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px;color:var(--dark)">Question Palette (100)</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+  </section>
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>परीक्षा परिणाम (Scorecard) - भारतीय अर्थव्यवस्था (भाग 3)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+    <div class="actions">
+      <button class="primary" onclick="window.print()">🖨️ Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">📋 Answer Review</button>
+      <button class="secondary" onclick="location.reload()">🔄 Retake Test</button>
+    </div>
+  </section>
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा - भारतीय अर्थव्यवस्था (भाग 3)</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+</div>
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY - भारतीय अर्थव्यवस्था (भाग 3)</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons">
+      <!-- Buttons dynamically injected -->
+    </div>
+  </div>
+</div>
+<script>
+const RAW_Q = [
+  ["'मुद्रास्फीति' (Inflation) का क्या अर्थ है?", ["वस्तुओं और सेवाओं के सामान्य कीमत स्तर में निरंतर वृद्धि और मुद्रा की क्रय शक्ति (Purchasing Power) में गिरावट", "वस्तुओं की कीमतों में भारी गिरावट", "मुद्रा की क्रय शक्ति में वृद्धि", "केवल सोने की कीमतों में वृद्धि"], 0],
+  ["मुद्रास्फीति (महंगाई) के समय किसे लाभ और किसे हानि होती है?", ["ऋणी (कर्जदार/Debtor) को लाभ होता है और ऋणदाता (Creditor) को हानि होती है", "ऋणदाता को लाभ और ऋणी को हानि होती है", "दोनों को समान लाभ होता है", "निश्चित आय वाले वेतनभोगी वर्ग को सर्वाधिक लाभ होता है"], 0],
+  ["'मांग-प्रेरित मुद्रास्फीति' (Demand-Pull Inflation) किस कारण उत्पन्न होती है?", ["कच्चे माल की लागत बढ़ने के कारण", "अर्थव्यवस्था में वस्तुओं और सेवाओं की कुल आपूर्ति (Supply) की तुलना में कुल मांग (Demand) के बहुत अधिक बढ़ जाने के कारण", "करों में कटौती के कारण", "आयात बढ़ने के कारण"], 1],
+  ["'लागत-जन्य मुद्रास्फीति' (Cost-Push Inflation) का मुख्य कारण क्या है?", ["उत्पादन के कारकों (जैसे कच्चा माल, मजदूरी, ईंधन/पेट्रोलियम) की लागत में वृद्धि होना", "लोगों की आय बढ़ना", "बैंक ब्याज दर कम होना", "निर्यात कम होना"], 0],
+  ["'अपस्फीति' (Deflation) क्या है?", ["वस्तुओं और सेवाओं के सामान्य कीमत स्तर में निरंतर गिरावट (मुद्रास्फीति की विपरीत स्थिति)", "महंगाई की दर का धीमा होना", "मंदी के साथ महंगाई", "मुद्रा का अवमूल्यन"], 0],
+  ["'अवस्फीति' (Disinflation) का क्या अर्थ है?", ["कीमतों का शून्य से नीचे चला जाना", "मुद्रास्फीति (महंगाई) की दर में कमी आना (अर्थात कीमतें बढ़ तो रही हैं, लेकिन पहले की तुलना में धीमी गति से)", "वस्तुओं का मुफ्त वितरण", "मुद्रा आपूर्ति का बंद होना"], 1],
+  ["'रीफ्लेशन' (Reflation / संस्फीति) किसे कहते हैं?", ["अर्थव्यवस्था को मंदी और अपस्फीति से बाहर निकालने के लिए सरकार या केंद्रीय बैंक द्वारा जानबूझकर मुद्रा आपूर्ति बढ़ाकर कीमतों को सामान्य स्तर पर लाना", "अत्यधिक महंगाई को रोकना", "पुराने नोट बंद करना", "आयात पर प्रतिबंध लगाना"], 0],
+  ["'कोर मुद्रास्फीति' (Core Inflation) की गणना करते समय किन वस्तुओं की कीमतों को बाहर रखा जाता है?", ["कपड़ा और जूते", "खाद्य पदार्थ (Food) और ईंधन/ऊर्जा (Fuel), क्योंकि इनकी कीमतों में अस्थायी और तीव्र उतार-चढ़ाव होता है", "इलेक्ट्रॉनिक वस्तुएँ", "शिक्षा और स्वास्थ्य सेवाएँ"], 1],
+  ["भारत में मुद्रास्फीति (महंगाई) को मापने के लिए भारतीय रिज़र्व बैंक (RBI) किस सूचकांक का मुख्य रूप से उपयोग करता है?", ["थोक मूल्य सूचकांक (WPI)", "उपभोक्ता मूल्य सूचकांक - संयुक्त (CPI - Combined)", "औद्योगिक उत्पादन सूचकांक (IIP)", "सेंसेक्स (SENSEX)"], 1],
+  ["भारत में उपभोक्ता मूल्य सूचकांक (CPI - Rural, Urban, Combined) के आंकड़े कौन जारी करता है?", ["भारतीय रिज़र्व बैंक (RBI)", "राष्ट्रीय सांख्यिकी कार्यालय (NSO - सांख्यिकी एवं कार्यक्रम कार्यान्वयन मंत्रालय)", "वाणिज्य एवं उद्योग मंत्रालय", "वित्त मंत्रालय"], 1],
+  ["भारत में थोक मूल्य सूचकांक (Wholesale Price Index - WPI) कौन जारी करता है?", ["वाणिज्य एवं उद्योग मंत्रालय का आर्थिक सलाहकार कार्यालय (Office of Economic Adviser)", "भारतीय रिज़र्व बैंक", "नीति आयोग", "श्रम ब्यूरो"], 0],
+  ["वर्तमान में थोक मूल्य सूचकांक (WPI) का आधार वर्ष (Base Year) क्या है?", ["2004-05", "2011-12", "2014-15", "2017-18"], 1],
+  ["वर्तमान में उपभोक्ता मूल्य सूचकांक (CPI - Combined) का आधार वर्ष (Base Year) क्या है?", ["2010", "2012", "2015", "2018"], 1],
+  ["थोक मूल्य सूचकांक (WPI) और उपभोक्ता मूल्य सूचकांक (CPI) के बीच सबसे बड़ा अंतर क्या है?", ["WPI में केवल वस्तुएँ (Goods) शामिल होती हैं, सेवाएँ (Services) नहीं; जबकि CPI में वस्तुएँ और सेवाएँ दोनों शामिल होती हैं", "WPI में केवल सेवाएँ होती हैं", "CPI केवल किसानों के लिए होता है", "दोनों में कोई अंतर नहीं है"], 0],
+  ["भारत में 'मुद्रास्फीति लक्ष्यीकरण' (Inflation Targeting) ढांचे के तहत RBI के लिए मुद्रास्फीति का लक्ष्य क्या निर्धारित किया गया है?", ["2% (+/- 1%)", "4% (+/- 2%, अर्थात 2% से 6% के बीच)", "5% (+/- 2%)", "6% (+/- 1%)"], 1],
+  ["भारत में मुद्रास्फीति लक्ष्यीकरण (4% +/- 2%) किस समिति की सिफारिश पर अपनाया गया था?", ["उर्जित पटेल समिति (2014)", "रघुराम राजन समिति", "नरसिम्हम समिति", "सी. रंगराजन समिति"], 0],
+  ["'अति-मुद्रास्फीति' (Hyperinflation) की स्थिति क्या होती है?", ["जब महंगाई की दर 2% से कम हो", "जब कीमतें अनियंत्रित और अत्यधिक तीव्र गति (जैसे प्रति माह 50% या सैकड़ों/हजारों प्रतिशत) से बढ़ें और मुद्रा का मूल्य लगभग समाप्त हो जाए", "जब कीमतें स्थिर रहें", "जब केवल कृषि उत्पादों के दाम बढ़ें"], 1],
+  ["'श्रिंकफ्लेशन' (Shrinkflation) क्या होता है?", ["किसी उत्पाद की कीमत वही रखते हुए उसके पैकेट की मात्रा या वजन (Quantity) को कम कर देना", "वस्तु की कीमत आधा कर देना", "केवल कपड़ों के दाम बढ़ना", "बैंक ब्याज दर कम होना"], 0],
+  ["'औद्योगिक उत्पादन सूचकांक' (Index of Industrial Production - IIP) किसके द्वारा जारी किया जाता है?", ["भारतीय रिज़र्व बैंक", "राष्ट्रीय सांख्यिकी कार्यालय (NSO)", "सेबी (SEBI)", "नीति आयोग"], 1],
+  ["भारत के 'आठ प्रमुख उद्योगों' (Eight Core Industries) के सूचकांक में किस उद्योग का भारांश (Weightage) सर्वाधिक है?", ["कोयला (Coal)", "रिफाइनरी उत्पाद (Refinery Products - लगभग 28.04%)", "इस्पात (Steel)", "सीमेंट (Cement)"], 1],
+  ["मुद्रा आपूर्ति के मापों (M1, M2, M3, M4) में किसे 'संकीर्ण मुद्रा' (Narrow Money) कहा जाता है?", ["M1 (जनता के पास करेंसी + बैंकों में मांग जमा + RBI के पास अन्य जमा)", "M3", "M4", "केवल सिक्के"], 0],
+  ["मुद्रा आपूर्ति के मापों में किसे 'व्यापक मुद्रा' (Broad Money) कहा जाता है, जो तरलता का सबसे प्रचलित माप है?", ["M1", "M2", "M3 (M1 + वाणिज्यिक बैंकों के पास सावधि जमा/Time Deposits)", "M0"], 2],
+  ["'आरक्षित मुद्रा' या 'उच्च शक्ति मुद्रा' (Reserve Money / High-Powered Money - M0) कौन जारी करता है?", ["वाणिज्यिक बैंक", "भारतीय रिज़र्व बैंक (RBI) और भारत सरकार", "सेबी (SEBI)", "नाबार्ड"], 1],
+  ["मुद्रा आपूर्ति के किस माप की तरलता (Liquidity) सबसे अधिक होती है?", ["M1 (सबसे अधिक तरल)", "M2", "M3", "M4 (सबसे कम तरल)"], 0],
+  ["'हेलीकॉप्टर मनी' (Helicopter Money) शब्द किस प्रसिद्ध अर्थशास्त्री द्वारा गढ़ा गया था?", ["एडम स्मिथ", "मिल्टन फ्रीडमैन (1969)", "जॉन मेनार्ड कीन्स", "अमर्त्य सेन"], 1],
+  ["'हॉट मनी' (Hot Money) से क्या अभिप्राय है?", ["काला धन", "वह विदेशी पूंजी जो उच्च ब्याज दर या अल्पकालिक लाभ के लिए एक देश से दूसरे देश में बहुत तेजी से आती-जाती है (जैसे FPI)", "जाली मुद्रा", "सोने के सिक्के"], 1],
+  ["'मुद्रा का अवमूल्यन' (Devaluation of Currency) क्या है?", ["सरकार या केंद्रीय बैंक द्वारा जानबूझकर अपनी मुद्रा के विनिमय मूल्य को विदेशी मुद्राओं की तुलना में कम करना (ताकि निर्यात सस्ता होकर बढ़े और आयात महंगा हो)", "बाजार शक्तियों द्वारा मुद्रा का गिरना (Depreciation)", "नोटों को जला देना", "मुद्रा का मूल्य बढ़ाना"], 0],
+  ["स्वतंत्रता के बाद भारतीय रुपये का कितनी बार अवमूल्यन (Devaluation) किया गया है?", ["1 बार", "2 बार", "3 बार (1949, 1966 और 1991 में)", "4 बार"], 2],
+  ["जब बाजार की मांग और आपूर्ति की शक्तियों के कारण किसी मुद्रा का मूल्य विदेशी मुद्रा के मुकाबले कम होता है, तो उसे क्या कहते हैं?", ["अवमूल्यन (Devaluation)", "मूल्यह्रास (Depreciation)", "अधिमूल्यन (Appreciation)", "विमुद्रीकरण (Demonetisation)"], 1],
+  ["'स्टेरिलाइजेशन' (Sterilization) प्रक्रिया जो RBI द्वारा अपनाई जाती है, उसका उद्देश्य क्या है?", ["बैंकों का विलय करना", "देश में अत्यधिक विदेशी पूंजी प्रवाह के कारण बढ़ी हुई अतिरिक्त तरलता (Liquidity) को सरकारी प्रतिभूतियाँ बेचकर सोखना", "पुराने नोटों को नष्ट करना", "नए बैंक लाइसेंस देना"], 1],
+  ["भारत में 'राजकोषीय नीति' (Fiscal Policy) कौन तैयार करता है?", ["भारतीय रिज़र्व बैंक (RBI)", "भारत सरकार का वित्त मंत्रालय (Ministry of Finance)", "नीति आयोग", "सेबी (SEBI)"], 1],
+  ["भारतीय संविधान के किस अनुच्छेद में 'वार्षिक वित्तीय विवरण' (Annual Financial Statement - जिसे बजट कहा जाता है) का उल्लेख है?", ["अनुच्छेद 110", "अनुच्छेद 112", "अनुच्छेद 114", "अनुच्छेद 266"], 1],
+  ["स्वतंत्र भारत का पहला केंद्रीय बजट किसने प्रस्तुत किया था?", ["जवाहरलाल नेहरू", "आर.के. षणमुखम चेट्टी (26 नवंबर 1947 को)", "जॉन मथाई", "सी.डी. देशमुख"], 1],
+  ["गणतंत्र भारत (Republic India) का पहला केंद्रीय बजट 1950 में किसने पेश किया था?", ["आर.के. षणमुखम चेट्टी", "जॉन मथाई", "मोरारजी देसाई", "पी. चिदंबरम"], 1],
+  ["भारत में सबसे अधिक बार (10 बार) केंद्रीय बजट पेश करने का रिकॉर्ड किसके नाम है?", ["पी. चिदंबरम", "मोरारजी देसाई", "प्रणब मुखर्जी", "निर्मला सीतारमण"], 1],
+  ["रेल बजट को आम बजट (Union Budget) से किस समिति की सिफारिश पर 1924 में अलग किया गया था?", ["एकवर्थ समिति (Acworth Committee - 1921)", "विवेक देबरॉय समिति", "नरसिम्हम समिति", "चेलैया समिति"], 0],
+  ["रेल बजट को पुनः आम बजट में किस वर्ष विलय (Merge) कर दिया गया?", ["2015", "2016", "2017 (विवेक देबरॉय समिति की सिफारिश पर)", "2019"], 2],
+  ["केंद्रीय बजट को फरवरी के अंतिम कार्यदिवस के बजाय '1 फरवरी' को पेश करने की परंपरा किस वर्ष शुरू हुई?", ["2015", "2016", "2017", "2018"], 2],
+  ["'शून्य-आधारित बजट' (Zero-Based Budgeting - ZBB) का जनक किसे माना जाता है?", ["एडम स्मिथ", "पीटर पायर (Peter Pyhrr - 1969)", "जॉन मेनार्ड कीन्स", "अमर्त्य सेन"], 1],
+  ["'लैंगिक बजट' (Gender Budgeting) भारत में सर्वप्रथम किस केंद्रीय बजट में शुरू किया गया था?", ["2001-02", "2005-06", "2010-11", "2014-15"], 1],
+  ["'निष्पादन बजट' (Performance Budget) सबसे पहले किस देश में अपनाया गया था?", ["ब्रिटेन", "संयुक्त राज्य अमेरिका (USA)", "भारत", "फ्रांस"], 1],
+  ["'राजकोषीय घाटा' (Fiscal Deficit) का सही सूत्र क्या है?", ["कुल व्यय - कुल राजस्व प्राप्तियाँ", "कुल व्यय - (राजस्व प्राप्तियाँ + ऋण-भिन्न पूंजीगत प्राप्तियाँ), अर्थात सरकार की कुल उधार आवश्यकताएँ (Total Borrowings)", "राजस्व व्यय - राजस्व प्राप्तियाँ", "राजकोषीय घाटा - ब्याज भुगतान"], 1],
+  ["'प्राथमिक घाटा' (Primary Deficit) कैसे निकाला जाता है?", ["राजकोषीय घाटा (Fiscal Deficit) - ब्याज भुगतान (Interest Payments)", "राजस्व घाटा - पूंजीगत व्यय", "कुल व्यय - कुल प्राप्तियाँ", "राजकोषीय घाटा + ब्याज भुगतान"], 0],
+  ["'राजस्व घाटा' (Revenue Deficit) कब होता है?", ["जब सरकार का राजस्व व्यय (Revenue Expenditure), राजस्व प्राप्तियों (Revenue Receipts) से अधिक हो", "जब पूंजीगत व्यय अधिक हो", "जब निर्यात आयात से कम हो", "जब ब्याज भुगतान शून्य हो"], 0],
+  ["'प्रभावी राजस्व घाटा' (Effective Revenue Deficit) का सूत्र क्या है?", ["राजस्व घाटा - पूंजीगत परिसंपत्तियों के सृजन हेतु राज्यों को दिए गए अनुदान (Grants for creation of capital assets)", "राजकोषीय घाटा - राजस्व घाटा", "प्राथमिक घाटा + ब्याज भुगतान", "कुल व्यय - कर राजस्व"], 0],
+  ["राजकोषीय उत्तरदायित्व और बजट प्रबंधन अधिनियम (FRBM Act) किस वर्ष पारित किया गया था?", ["2000", "2003 (2004 में लागू हुआ)", "2005", "2008"], 1],
+  ["FRBM अधिनियम की समीक्षा के लिए गठित 'एन.के. सिंह समिति' (2017) ने राजकोषीय घाटे को जीडीपी के कितने प्रतिशत तक लाने की सिफारिश की थी?", ["2.5%", "3.0%", "4.0%", "4.5%"], 1],
+  ["निम्नलिखित में से कौन सा 'राजस्व व्यय' (Revenue Expenditure) का उदाहरण है?", ["नई सड़क और पुल का निर्माण", "सरकारी कर्मचारियों के वेतन, पेंशन, ब्याज भुगतान और सब्सिडी (इससे कोई नई संपत्ति नहीं बनती)", "सार्वजनिक उपक्रम के शेयर खरीदना", "राज्यों को ऋण देना"], 1],
+  ["निम्नलिखित में से कौन सा 'पूंजीगत व्यय' (Capital Expenditure / Capex) का उदाहरण है?", ["रक्षा उपकरणों की खरीद, राजमार्ग, रेलवे और अस्पताल का निर्माण (जिससे परिसंपत्तियों का सृजन या देनदारियों में कमी होती है)", "मुफ्त राशन वितरण", "ब्याज का भुगतान", "सरकारी कर्मचारियों का वेतन"], 0],
+  ["भारत सरकार की कुल आय (बजट प्राप्तियों) में सबसे बड़ा हिस्सा सामान्यतः किस स्रोत से आता है?", ["उधार और अन्य देयताएँ (Borrowings) तथा निगम कर/आयकर और GST", "सीमा शुल्क", "विनिवेश", "लाभांश"], 0],
+  ["भारत सरकार के कुल बजट व्यय में सबसे बड़ा हिस्सा सामान्यतः किस मद पर खर्च होता है?", ["रक्षा", "ब्याज भुगतान (Interest Payments) तथा करों और शुल्कों में राज्यों का हिस्सा", "शिक्षा", "स्वास्थ्य"], 1],
+  ["'विनिवेश' (Disinvestment) का क्या अर्थ है?", ["नए कारखाने लगाना", "सरकार द्वारा सार्वजनिक क्षेत्र के उपक्रमों (PSUs) में अपनी हिस्सेदारी (शेयर) बेचना", "विदेशी कंपनियों का अधिग्रहण करना", "बैंकों को ऋण देना"], 1],
+  ["'घाटे की वित्त व्यवस्था' (Deficit Financing) का क्या अर्थ है?", ["सरकार द्वारा अपने व्यय और राजस्व के बीच के अंतर (घाटे) को पूरा करने के लिए उधार लेना या नई मुद्रा छपवाना", "केवल कर बढ़ाना", "सरकारी खर्च पूरी तरह बंद करना", "विदेशी सहायता लौटाना"], 0],
+  ["भारत की संचित निधि (Consolidated Fund of India - अनुच्छेद 266) से धन निकालने के लिए किसकी अनुमति अनिवार्य है?", ["प्रधानमंत्री", "संसद (विनियोग विधेयक / Appropriation Bill पारित करके)", "आरबीआई गवर्नर", "नियंत्रक एवं महालेखा परीक्षक"], 1],
+  ["'लेखानुदान' (Vote on Account) क्या होता है?", ["बजट पारित होने से पहले नए वित्तीय वर्ष के शुरुआती महीनों के खर्चों को चलाने के लिए संसद द्वारा दी जाने वाली अग्रिम स्वीकृति", "पिछले वर्ष के खातों की जांच", "रक्षा बजट में कटौती", "करों में छूट"], 0],
+  ["'राजकोषीय कर्षण' (Fiscal Drag) क्या है?", ["मुद्रास्फीति के कारण लोगों की मौद्रिक आय बढ़ने से उनका उच्च कर स्लैब (Higher Tax Bracket) में पहुँच जाना, जिससे उनकी वास्तविक क्रय शक्ति कम हो जाती है", "कर दरों में कमी होना", "सरकारी खर्च बढ़ना", "निर् निर्यात पर कर लगना"], 0],
+  ["'पंप प्राइमिंग' (Pump Priming) किससे संबंधित है?", ["कृषि सिंचाई योजना", "अर्थव्यवस्था को मंदी के दौरान गति देने के लिए सरकार द्वारा सार्वजनिक व्यय और निवेश बढ़ाना", "पेट्रोल की कीमतें कम करना", "बैंकों का विलय"], 1],
+  ["'क्राउडिंग आउट प्रभाव' (Crowding-Out Effect) क्या होता है?", ["सरकार द्वारा बाजार से अत्यधिक उधार लेने के कारण ब्याज दरों में वृद्धि होना, जिससे निजी क्षेत्र (Private Sector) के निवेश में कमी आ जाती है", "बाजार में भीड़ बढ़ना", "विदेशी कंपनियों का बाहर जाना", "निर्यात बढ़ना"], 0],
+  ["भारत में 'आर्थिक सर्वेक्षण' (Economic Survey) किसके द्वारा तैयार और प्रस्तुत किया जाता है?", ["भारतीय रिज़र्व बैंक", "वित्त मंत्रालय के आर्थिक कार्य विभाग (मुख्य आर्थिक सलाहकार के मार्गदर्शन में) द्वारा, बजट से एक दिन पहले", "नीति आयोग", "प्रधानमंत्री कार्यालय"], 1],
+  ["भारत का पहला पेपरलेस (डिजिटल) केंद्रीय बजट किस वित्तीय वर्ष के लिए पेश किया गया था?", ["2019-20", "2020-21", "2021-22 (निर्मला सीतारमण द्वारा)", "2022-23"], 2],
+  ["'प्रत्यक्ष कर' (Direct Tax) क्या होता है?", ["वह कर जिसका कराघात (Impact) और करापात (Incidence) एक ही व्यक्ति पर पड़ता है (अर्थात जिसे दूसरों पर टाला नहीं जा सकता, जैसे- आयकर, निगम कर)", "वह कर जो वस्तुओं की बिक्री पर लगता है", "वह कर जो केवल आयात पर लगता है", "वह कर जो राज्य सरकार वसूलती है"], 0],
+  ["निम्नलिखित में से कौन सा 'प्रत्यक्ष कर' (Direct Tax) का उदाहरण है?", ["वस्तु एवं सेवा कर (GST)", "आयकर (Income Tax) और निगम कर (Corporate Tax)", "सीमा शुल्क (Customs Duty)", "उत्पाद शुल्क (Excise Duty)"], 1],
+  ["निम्नलिखित में से कौन सा 'अप्रत्यक्ष कर' (Indirect Tax) का उदाहरण है?", ["आयकर (Income Tax)", "निगम कर (Corporate Tax)", "वस्तु एवं सेवा कर (GST) और सीमा शुल्क (Customs Duty)", "पूंजीगत लाभ कर (Capital Gains Tax)"], 2],
+  ["'निगम कर' (Corporate Tax) किस पर लगाया जाता है?", ["व्यक्तिगत वेतन पर", "कंपनियों के शुद्ध लाभ (Net Profit) पर (यह केंद्र सरकार द्वारा लगाया जाता है)", "कृषि भूमि पर", "शेयर खरीदने पर"], 1],
+  ["भारत में किस प्रकार की आयकर प्रणाली (Income Tax System) प्रचलित है?", ["प्रतिगामी कर प्रणाली (Regressive Tax)", "प्रगतिशील कर प्रणाली (Progressive Tax - आय बढ़ने के साथ कर की दर बढ़ती है)", "आनुपातिक कर प्रणाली (Proportional Tax)", "एकसमान कर प्रणाली"], 1],
+  ["'प्रतिगामी कर प्रणाली' (Regressive Taxation) में क्या होता है?", ["आय बढ़ने पर कर की दर बढ़ती है", "आय बढ़ने पर कर की दर घटती है (अर्थात इसका बोझ अमीरों की तुलना में गरीबों पर अधिक पड़ता है, जैसे अधिकांश अप्रत्यक्ष कर)", "कर शून्य होता है", "केवल अमीरों पर कर लगता है"], 1],
+  ["भारत में वस्तु एवं सेवा कर (GST) कब लागू किया गया था?", ["1 अप्रैल 2017", "1 जुलाई 2017 (101वें संविधान संशोधन अधिनियम, 2016 के तहत)", "8 नवंबर 2016", "1 जनवरी 2018"], 1],
+  ["विश्व में सबसे पहले GST लागू करने वाला देश कौन सा था?", ["कनाडा", "फ्रांस (1954 में)", "अमेरिका", "ब्रिटेन"], 1],
+  ["भारत का GST मॉडल मुख्य रूप से किस देश के दोहरे GST मॉडल पर आधारित है?", ["फ्रांस", "कनाडा (Dual GST मॉडल - CGST और SGST)", "ऑस्ट्रेलिया", "जर्मनी"], 1],
+  ["भारत में GST लागू करने की सिफारिश किस समिति/टास्क फोर्स ने की थी?", ["विजय केलकर टास्क फोर्स (2002)", "नरसिम्हम समिति", "चेलैया समिति", "तेंदुलकर समिति"], 0],
+  ["GST के अंतर्गत प्रमुख कर दरें (Tax Slabs) कौन सी हैं?", ["0%, 5%, 12%, 18% और 28%", "2%, 8%, 15% और 25%", "5%, 10%, 20% और 30%", "1%, 5%, 10% और 18%"], 0],
+  ["GST पहचान संख्या (GSTIN - Goods and Services Tax Identification Number) कितने अंकों/अक्षरों की होती है?", ["10", "11", "15 (पहले 2 अंक राज्य कोड, अगले 10 अंक PAN नंबर)", "16"], 2],
+  ["अंतर-राज्यीय व्यापार (Inter-State Supply - एक राज्य से दूसरे राज्य में बिक्री) पर कौन सा GST लगाया जाता है?", ["CGST", "SGST", "IGST (Integrated Goods and Services Tax - अनुच्छेद 269A के तहत केंद्र द्वारा वसूला जाता है)", "UTGST"], 2],
+  ["GST परिषद (GST Council) में केंद्र और राज्यों का मतदान भारांश (Voting Weightage) क्रमशः कितना होता है?", ["केंद्र: 1/3 (33.33%), सभी राज्य मिलाकर: 2/3 (66.67%)", "केंद्र: 50%, राज्य: 50%", "केंद्र: 2/3, राज्य: 1/3", "केंद्र: 25%, राज्य: 75%"], 0],
+  ["निम्नलिखित में से कौन सा उत्पाद वर्तमान में GST के दायरे से बाहर रखा गया है?", ["मोबाइल फोन और लैपटॉप", "पेट्रोलियम उत्पाद (कच्चा तेल, पेट्रोल, डीजल, प्राकृतिक गैस, विमानन ईंधन) और मानव उपभोग के लिए शराब", "कंक्रीट और इस्पात", "बैंकिंग और बीमा सेवाएँ"], 1],
+  ["भारत में कर सुधारों (Tax Reforms) के लिए 1991 में गठित प्रसिद्ध समिति कौन सी थी?", ["राजा चेलैया समिति (Raja Chelliah Committee)", "हिल्टन यंग आयोग", "सरकारिया समिति", "गोइपोरिया समिति"], 0],
+  ["'न्यूनतम वैकल्पिक कर' (MAT - Minimum Alternate Tax) किस पर लगाया जाता है?", ["वेतनभोगी कर्मचारियों पर", "उन 'शून्य कर कंपनियों' (Zero-Tax Companies) पर जो भारी मुनाफा कमाने और लाभांश बांटने के बावजूद कर छूटों का लाभ उठाकर कोई निगम कर नहीं देतीं", "किसानों पर", "विदेशी पर्यटकों पर"], 1],
+  ["'प्रतिभूति लेनदेन कर' (STT - Securities Transaction Tax) किससे संबंधित है?", ["जमीन की खरीद-बिक्री से", "मान्यता प्राप्त स्टॉक एक्सचेंजों (शेयर बाजार) के माध्यम से शेयरों और प्रतिभूतियों की खरीद-बिक्री से", "सोना खरीदने से", "विदेश यात्रा से"], 1],
+  ["'एंजेल टैक्स' (Angel Tax) क्या था (जिसे बजट 2024-25 में सभी निवेशक वर्गों के लिए समाप्त कर दिया गया)?", ["गैर-सूचीबद्ध स्टार्टअप्स (Unlisted Startups) द्वारा अपने उचित बाजार मूल्य (Fair Market Value) से अधिक कीमत पर शेयर जारी कर जुटाई गई पूंजी पर लगने वाला आयकर", "चैरिटी ट्रस्ट पर लगने वाला कर", "मनोरंजन कर", "संपत्ति कर"], 0],
+  ["'टोबिन टैक्स' (Tobin Tax) किस पर लगाया जाने वाला प्रस्तावित कर है?", ["तंबाकू उत्पादों पर", "अल्पकालिक विदेशी मुद्रा लेनदेन (Spot Currency Conversions) पर, ताकि सट्टेबाजी को रोका जा सके (अर्थशास्त्री जेम्स टोबिन द्वारा प्रस्तावित)", "कार्बन उत्सर्जन पर", "विलासिता की कारों पर"], 1],
+  ["'पिगौवियन टैक्स' (Pigouvian Tax) किस पर लगाया जाता है?", ["उन आर्थिक गतिविधियों पर जो समाज या पर्यावरण को नकारात्मक बाह्यता (Negative Externalities - जैसे प्रदूषण, तंबाकू, कार्बन उत्सर्जन) पहुंचाती हैं", "कृषि आय पर", "निर्यात पर", "शिक्षा पर"], 0],
+  ["'विंडफॉल टैक्स' (Windfall Tax) क्या होता है?", ["किसी उद्योग या कंपनी (जैसे तेल कंपनियों) को बिना किसी अतिरिक्त प्रयास के अचानक बाहरी परिस्थितियों से होने वाले अप्रत्याशित भारी मुनाफे पर लगाया जाने वाला एकमुश्त कर", "कृषि घाटे पर छूट", "आयात शुल्क", "संपत्ति कर"], 0],
+  ["'सीमा शुल्क' (Customs Duty) किस पर लगाया जाता है?", ["देश के भीतर वस्तुओं के उत्पादन पर", "वस्तुओं के आयात (Import) और निर्यात (Export) पर", "दुकानों की बिक्री पर", "बैंक जमा पर"], 1],
+  ["केंद्रीय प्रत्यक्ष कर बोर्ड (CBDT) और केंद्रीय अप्रत्यक्ष कर एवं सीमा शुल्क बोर्ड (CBIC) किस मंत्रालय के अधीन कार्य करते हैं?", ["वाणिज्य मंत्रालय", "वित्त मंत्रालय (राजस्व विभाग)", "गृह मंत्रालय", "कॉर्पोरेट कार्य मंत्रालय"], 1],
+  ["PAN (Permanent Account Number) कार्ड में कुल कितने अक्षर/अंक (Alphanumeric Characters) होते हैं?", ["8", "10", "12", "15"], 1],
+  ["'मॉडवैट' (MODVAT) और 'सेनवैट' (CENVAT) किस कर से संबंधित थे?", ["आयकर", "केंद्रीय उत्पाद शुल्क (Central Excise Duty)", "सीमा शुल्क", "संपत्ति कर"], 1],
+  ["भारत में मूल्य वर्धित कर (VAT - Value Added Tax) किस वर्ष लागू किया गया था?", ["1991", "2000", "2005 (अधिकांश राज्यों में 1 अप्रैल 2005 को; हरियाणा लागू करने वाला पहला राज्य था)", "2017"], 2],
+  ["'कर अपवंचन' (Tax Evasion) और 'कर परिहार' (Tax Avoidance) में क्या अंतर है?", ["कर अपवंचन अवैध तरीके (जैसे आय छिपाना) से कर चोरी करना है; जबकि कर परिहार कानून की खामियों का लाभ उठाकर कानूनी रूप से कर कम करना है", "दोनों एक ही हैं", "कर परिहार गैर-कानूनी है", "कर अपवंचन कानूनी है"], 0],
+  ["'कर उछाल' (Tax Buoyancy) क्या दर्शाता है?", ["जीडीपी (GDP) में वृद्धि के अनुपात में कर राजस्व में होने वाली वृद्धि की प्रतिक्रियाशीलता (बिना कर दरों में बदलाव किए)", "कर चोरी की दर", "कर वापसी की गति", "विदेशी कर दरें"], 0],
+  ["'पूंजीगत लाभ कर' (Capital Gains Tax) कब लगता है?", ["किसी पूंजीगत संपत्ति (जैसे जमीन, मकान, शेयर, सोना) को उसकी खरीद मूल्य से अधिक कीमत पर बेचने से हुए लाभ पर", "मास्क वेतन मिलने पर", "बैंक में पैसे जमा करने पर", "बिजली का बिल भरने पर"], 0],
+  ["भारतीय संविधान के किस अनुच्छेद में कहा गया है कि \"विधि के प्राधिकार के बिना कोई कर न तो लगाया जाएगा और न ही एकत्र किया जाएगा\"?", ["अनुच्छेद 265", "अनुच्छेद 266", "अनुच्छेद 270", "अनुच्छेद 280"], 0],
+  ["'समानता लेवी' (Equalisation Levy / Google Tax) भारत में किस पर लगाया गया था?", ["विदेशी डिजिटल कंपनियों (जैसे ऑनलाइन विज्ञापन और ई-कॉमर्स) द्वारा भारत से अर्जित राजस्व पर", "घरेलू किसानों पर", "रेलवे टिकटों पर", "सरकारी कर्मचारियों पर"], 0],
+  ["'डबल टैक्सेशन अवॉइडेंस एग्रीमेंट' (DTAA) दो देशों के बीच क्यों किया जाता है?", ["ताकि किसी व्यक्ति या कंपनी को एक ही आय पर दो अलग-अलग देशों में दो बार कर न चुकाना पड़े", "व्यापार बंद करने के लिए", "आयात शुल्क दोगुना करने के लिए", "वीजा समाप्त करने के लिए"], 0],
+  ["'प्रत्यक्ष लाभ अंतरण' (Direct Benefit Transfer - DBT) योजना भारत में कब शुरू की गई थी?", ["1 जनवरी 2013 (सब्सिडी की राशि सीधे लाभार्थियों के बैंक खाते में भेजने के लिए)", "15 अगस्त 2014", "1 जुलाई 2017", "2 अक्टूबर 2015"], 0],
+  ["'ई-वे बिल' (E-Way Bill) प्रणाली किस कर व्यवस्था के तहत माल की आवाजाही के लिए अनिवार्य की गई है?", ["आयकर", "वस्तु एवं सेवा कर (GST - 50,000 रुपये से अधिक मूल्य के माल के परिवहन पर)", "संपत्ति कर", "मनोरंजन कर"], 1],
+  ["भारत में किस राज्य ने सबसे पहले GST विधेयक का अनुसमर्थन (Ratification) किया था?", ["महाराष्ट्र", "असम (अगस्त 2016 में)", "गुजरात", "बिहार"], 1],
+  ["'अधिभार' (Surcharge) और 'उपकर' (Cess) में मुख्य अंतर क्या है?", ["उपकर (Cess) किसी विशिष्ट उद्देश्य (जैसे शिक्षा या स्वास्थ्य) के लिए लगाया जाता है और उसका पैसा केवल उसी मद पर खर्च होता है; जबकि अधिभार (Surcharge) कर पर कर है जिसका उपयोग सरकार किसी भी सामान्य कार्य के लिए कर सकती है", "दोनों बिल्कुल समान हैं", "उपकर राज्यों को बांटा जाता है, अधिभार नहीं", "अधिभार केवल गरीबों पर लगता है"], 0],
+  ["'एंटी-प्रॉफिटियरिंग अथॉरिटी' (मुनाफाखोरी रोधी प्राधिकरण) किस कर व्यवस्था से संबंधित थी?", ["आयकर", "GST (यह सुनिश्चित करने के लिए कि कर दरों में कटौती का लाभ उपभोक्ताओं को कम कीमतों के रूप में मिले)", "सीमा शुल्क", "निगम कर"], 1],
+  ["भारत में 'आयकर दिवस' (Income Tax Day / आयकर दिवस) प्रतिवर्ष कब मनाया जाता है?", ["1 अप्रैल", "24 जुलाई (24 जुलाई 1860 को सर जेम्स विल्सन द्वारा भारत में पहली बार आयकर पेश किया गया था)", "1 जुलाई", "15 सितंबर"], 1],
+  ["'कृषि आय' (Agricultural Income) पर भारत में कर लगाने का अधिकार किसके पास है?", ["केंद्र सरकार", "राज्य सरकारें (संविधान की राज्य सूची का विषय; वर्तमान में यह आयकर अधिनियम की धारा 10(1) के तहत कर-मुक्त है)", "भारतीय रिज़र्व बैंक", "नगर निगम"], 1]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "👤 " + student;
+  Q = [...RAW_Q];
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / ${Q.length} (भारतीय अर्थव्यवस्था - भाग 3)</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+  if(remaining <= 150){
+    timerEl.classList.add("blink");
+  }
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+  modal.classList.remove("hidden");
+}
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0 
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+  document.getElementById("greeting").textContent =
+    student + ", आपका 'भारतीय अर्थव्यवस्था (भाग 3)' टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+  let message = correct >= 90 ? "🏆 अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "🌟 बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "👍 अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "📘 औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                                "💪 अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+  document.getElementById("motivation").textContent = message;
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सही: ${correct} | गलत: ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+    if(type !== "all" && type !== status) return "";
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तर: <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">✖ आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">✔ आपका उत्तर सही है।</p>' : '')}
+      </div>
+    `;
+  }).join("");
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
