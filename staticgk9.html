@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - Static GK भाग 9 (प्रश्न 801 से 900)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial, "Noto Sans Devanagari", sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg, var(--dark), var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width: 1150px; margin:20px auto; padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius: 12px; box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark); margin-top:0}
+input[type=text]{
+  width:100%;padding: 12px; border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px; margin:8px 0 15px;
+}
+input[type=text]:focus {outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display: flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark); cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display: flex; justify-content:space-between; align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+
+.progress{
+  height:8px;background:#e2e8f0; border-radius:10px;
+  margin:10px 0 16px; overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+
+/* Question Card */
+.question{
+  background:white;padding: 18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display: flex; justify-content:space-between; align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid; gap:10px}
+.option{
+  display: flex;align-items:flex-start;gap: 10px;padding:11px 12px;
+  border:1px solid #dce3eb; border-radius:8px;
+  cursor:pointer;transition:background 0.15s, border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px; accent-color:var(--primary)}
+
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px; font-size:12px}
+
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns: 1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px; height: 14px; border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px; overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155; border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning); color:white; border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+
+.actions{
+  display: flex; justify-content:center;
+  gap:10px; flex-wrap:wrap; margin:20px 0;
+}
+.hidden{display:none!important}
+
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display: flex; justify-content:center;align-items:center;
+  padding: 15px; animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius: 12px; overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0); animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg, var(--dark), var(--primary));
+  color:white;padding: 14px 18px; font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px; background:#f8fafc;display:flex;
+  justify-content:center; gap:12px;border-top:1px solid #e2e8f0;
+}
+
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4, 1fr); gap: 12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius: 10px; border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px; flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>Static GK - भाग 8 (SSC & RRB विशेष मॉक टेस्ट)</b></p>
+  <p>भारत की जनगणना 2011, प्रमुख दर्रे व घाटियां, ऐतिहासिक युद्ध व मकबरे, राजव्यवस्था, विज्ञान एवं पुरस्कार (प्रश्न 801 से 900)</p>
+  <p>कुल प्रश्नः 100 | कुल अंकः 100 | समयः 20 मिनट</p>
+</header>
+
+<div class="container">
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>टॉपिक: Static GK - भाग 8 निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें। इस मॉक टेस्ट में भारत की जनगणना 2011, प्रमुख दर्रे व घाटियां, ऐतिहासिक युद्ध व मकबरे, भारतीय राजव्यवस्था, सामान्य विज्ञान और अंतर्राष्ट्रीय पुरस्कारों से जुड़े <b>100 महत्वपूर्ण प्रश्न (प्रश्न 801 से 900 तक)</b> शामिल हैं।</p>
+    
+    <label><b>विद्यार्थी का नाम: </b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+    
+    <ul style="padding-left:20px;color:#334155">
+      <li>विषयः <b>Static GK (भाग 8)</b></li>
+      <li>कुल प्रश्नः <b>100 (प्रश्न 801 से 900)</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+    
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size: 16px;color:var(--dark)"></b>
+        <div class="muted">विषय: <b>Static GK (भाग 8)</b> | हल किए: <b id="answered">0</b>/100 | चिह्नितः <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+    
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px; color:var(--dark)">Question Palette (1-100)</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>परीक्षा परिणाम (Scorecard) - Static GK (भाग 8)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+    <div class="actions">
+      <button class="primary" onclick="window.print()">Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">Answer Review</button>
+      <button class="secondary" onclick="location.reload()">Retake Test</button>
+    </div>
+  </section>
+
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा - Static GK (भाग 8)</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+</div>
+
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY - Static GK (भाग 8)</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons"></div>
+  </div>
+</div>
+
+<script>
+const RAW_Q = [
+  ["जनगणना 2011 के अनुसार, भारत का सबसे अधिक जनसंख्या वाला राज्य कौन सा है?", ["महाराष्ट्र", "बिहार", "उत्तर प्रदेश", "पश्चिम बंगाल"], 2],
+  ["जनगणना 2011 के अनुसार, भारत में सबसे कम जनसंख्या वाला राज्य कौन सा है?", ["मिजोरम", "सिक्किम", "अरुणाचल प्रदेश", "गोवा"], 1],
+  ["जनगणना 2011 के अनुसार, भारत का सर्वाधिक साक्षरता दर वाला राज्य कौन सा है?", ["मिजोरम", "केरल (94%)", "गोवा", "त्रिपुरा"], 1],
+  ["जनगणना 2011 के अनुसार, भारत का सबसे कम साक्षरता दर वाला राज्य कौन सा है?", ["अरुणाचल प्रदेश", "बिहार", "राजस्थान", "झारखंड"], 1],
+  ["जनगणना 2011 के अनुसार, भारत का लिंगानुपात (Sex Ratio) कितना है?", ["933", "943 (प्रति 1000 पुरुषों पर महिलाएं)", "950", "912"], 1],
+  ["भारत में सर्वाधिक लिंगानुपात किस राज्य में है (जनगणना 2011)?", ["तमिलनाडु", "केरल (1084)", "आंध्र प्रदेश", "छत्तीसगढ़"], 1],
+  ["जनगणना 2011 के अनुसार, सबसे अधिक जनसंख्या घनत्व (Population Density) किस राज्य का है?", ["पश्चिम बंगाल", "बिहार (1106 व्यक्ति प्रति वर्ग किमी)", "केरल", "उत्तर प्रदेश"], 1],
+  ["जनगणना 2011 के अनुसार, सबसे कम जनसंख्या घनत्व वाला राज्य कौन सा है?", ["मिजोरम", "अरुणाचल प्रदेश (17 व्यक्ति प्रति वर्ग किमी)", "सिक्किम", "नागालैंड"], 1],
+  ["भारत में नियमित (दशकीय) जनगणना की शुरुआत 1881 में किस वायसराय के काल में हुई थी?", ["लॉर्ड मेयो", "लॉर्ड रिपन", "लॉर्ड कर्जन", "लॉर्ड लिटन"], 1],
+  ["'बनिहाल दर्रा' (जवाहर सुरंग) किस केंद्र शासित प्रदेश में स्थित है?", ["लद्दाख", "जम्मू और कश्मीर", "हिमाचल प्रदेश", "उत्तराखंड"], 1],
+  ["'रोहतांग दर्रा' (अटल सुरंग) किस राज्य में स्थित है?", ["उत्तराखंड", "हिमाचल प्रदेश", "सिक्किम", "अरुणाचल प्रदेश"], 1],
+  ["'जेलेप ला दर्रा' (Jelep La Pass) किस राज्य में स्थित है?", ["अरुणाचल प्रदेश", "सिक्किम", "हिमाचल प्रदेश", "उत्तराखंड"], 1],
+  ["'पालघाट दर्रा' (Palakkad Gap) किन दो राज्यों को आपस में जोड़ता है?", ["महाराष्ट्र और गुजरात", "केरल और तमिलनाडु", "कर्नाटक और गोवा", "आंध्र प्रदेश और ओडिशा"], 1],
+  ["'फूलों की घाटी' (Valley of Flowers) राष्ट्रीय उद्यान किस राज्य में है?", ["हिमाचल प्रदेश", "उत्तराखंड", "जम्मू-कश्मीर", "सिक्किम"], 1],
+  ["'शांत घाटी' (Silent Valley) किस राज्य में स्थित है?", ["तमिलनाडु", "केरल", "कर्नाटक", "असम"], 1],
+  ["भारत की सबसे ऊंची पर्वत चोटी (भारतीय क्षेत्र में स्थित) कौन सी है?", ["माउंट एवरेस्ट", "कंचनजंगा (सिक्किम)", "नंदा देवी", "कामेट"], 1],
+  ["'सतपुड़ा पर्वत श्रेणी' की सबसे ऊंची चोटी कौन सी है?", ["गुरु शिखर", "धूपगढ़ (मध्य प्रदेश)", "अमरकंटक", "पारसनाथ"], 1],
+  ["'नंदा देवी' पर्वत चोटी किस राज्य में स्थित है?", ["हिमाचल प्रदेश", "उत्तराखंड", "सिक्किम", "अरुणाचल प्रदेश"], 1],
+  ["भारत में सबसे अधिक कोयला भंडार किस क्षेत्र में पाए जाते हैं?", ["गोदावरी घाटी", "दामोदर घाटी (झारखंड-पश्चिम बंगाल)", "सोन घाटी", "महानदी घाटी"], 1],
+  ["'डिगबोई' (भारत का सबसे पुराना तेल क्षेत्र) किस राज्य में स्थित है?", ["गुजरात", "असम", "महाराष्ट्र", "राजस्थान"], 1],
+  ["'हाइडेस्पीज का युद्ध' (झेलम का युद्ध - 326 ईसा पूर्व) किनके बीच लड़ा गया था?", ["चंद्रगुप्त मौर्य और सेल्यूकस", "सिकंदर और राजा पोरस", "अशोक और कलिंग", "बाबर और राणा सांगा"], 1],
+  ["'तराइन का द्वितीय युद्ध' (1192) किसने जीता था?", ["पृथ्वीराज चौहान", "मुहम्मद गौरी", "जयचंद", "कुतुबुद्दीन ऐबक"], 1],
+  ["'खानवा का युद्ध' (1527) बाबर और किसके बीच लड़ा गया था?", ["इब्राहिम लोदी", "राणा सांगा", "मेदिनी राय", "महमूद लोदी"], 1],
+  ["'चौसा का युद्ध' (1539) किसने जीता था?", ["हुमायूं", "शेरशाह सूरी", "अकबर", "हेमू"], 1],
+  ["'पानीपत का द्वितीय युद्ध' (1556) किनके बीच हुआ था?", ["बाबर और इब्राहिम लोदी", "अकबर (बैरम खान) और हेमू", "अहमद शाह अब्दाली और मराठा", "अकबर और महाराणा प्रताप"], 1],
+  ["'पानीपत का तृतीय युद्ध' (1761) किनके बीच लड़ा गया था?", ["अंग्रेज और फ्रांसीसी", "अहमद शाह अब्दाली और मराठा", "अकबर और हेमू", "बाबर और लोदी"], 1],
+  ["'तालीकोटा का युद्ध' (1565) किस साम्राज्य के पतन का कारण बना?", ["बहमनी साम्राज्य", "विजयनगर साम्राज्य", "चोल साम्राज्य", "मुगल साम्राज्य"], 1],
+  ["'वांडीवाश का युद्ध' (1760) किन दो यूरोपीय शक्तियों के बीच लड़ा गया था?", ["पुर्तगाली और डच", "अंग्रेज और फ्रांसीसी", "अंग्रेज और डच", "पुर्तगाली और अंग्रेज"], 1],
+  ["'शेरशाह सूरी का मकबरा' कहां स्थित है?", ["दिल्ली", "सासाराम (बिहार)", "आगरा", "लाहौर"], 1],
+  ["'हुमायूं का मकबरा' किस शहर में स्थित है?", ["आगरा", "नई दिल्ली", "लाहौर", "फतेहपुर सीकरी"], 1],
+  ["मुगल सम्राट 'अकबर का मकबरा' कहां स्थित है?", ["दिल्ली", "सिकंदरा (आगरा)", "फतेहपुर सीकरी", "काबुल"], 1],
+  ["'बाबर का मकबरा' वर्तमान में किस शहर में स्थित है?", ["आगरा", "काबुल (अफगानिस्तान)", "दिल्ली", "समरकंद"], 1],
+  ["'बीबी का मकबरा' (जिसे दक्षिण का ताजमहल कहा जाता है) कहां स्थित है?", ["हैदराबाद", "छत्रपति संभाजीनगर / औरंगाबाद (महाराष्ट्र)", "बीजापुर", "गोलकुंडा"], 1],
+  ["'श्रीमद्भगवद्गीता' का अंग्रेजी में अनुवाद करने वाले प्रथम यूरोपीय कौन थे?", ["विलियम जोन्स", "चार्ल्स विल्किंस", "मैक्स मूलर", "जेम्स प्रिंसेप"], 1],
+  ["अशोक के शिलालेखों को सर्वप्रथम किसने पढ़ा था?", ["अलेक्जेंडर कनिंघम", "जेम्स प्रिंसेप (1837)", "दयाराम साहनी", "जॉन मार्शल"], 1],
+  ["'गौतम बुद्ध' को ज्ञान की प्राप्ति किस वृक्ष के नीचे हुई थी?", ["साल वृक्ष", "पीपल (बोधि वृक्ष - बोधगया)", "वट वृक्ष", "अशोक वृक्ष"], 1],
+  ["'महावीर स्वामी' का जन्म किस स्थान पर हुआ था?", ["लुंबिनी", "कुंडग्राम (वैशाली)", "पावापुरी", "सारनाथ"], 1],
+  ["'गौतम बुद्ध' ने अपने सर्वाधिक उपदेश कहां दिए थे?", ["सारनाथ", "श्रावस्ती", "राजगृह", "वैशाली"], 1],
+  ["'सत्यशोधक समाज' की स्थापना ज्योतिबा फुले ने किस वर्ष की थी?", ["1828", "1873", "1875", "1897"], 1],
+  ["'लखनऊ समझौता' (1916) किन दो दलों के बीच हुआ था?", ["कांग्रेस और ब्रिटिश सरकार", "भारतीय राष्ट्रीय कांग्रेस और मुस्लिम लीग", "नरम दल और ब्रिटिश सरकार", "स्वराज पार्टी और कांग्रेस"], 1],
+  ["भारत के राष्ट्रपति को पद की शपथ कौन दिलाता है?", ["उपराष्ट्रपति", "भारत के मुख्य न्यायाधीश (CJI)", "प्रधानमंत्री", "लोकसभा अध्यक्ष"], 1],
+  ["राष्ट्रपति अपना त्यागपत्र किसे सौंपता है?", ["मुख्य न्यायाधीश को", "उपराष्ट्रपति को", "प्रधानमंत्री को", "लोकसभा अध्यक्ष को"], 1],
+  ["कोई विधेयक 'धन विधेयक' (Money Bill) है या नहीं, इसका अंतिम निर्णय कौन करता है?", ["राष्ट्रपति", "लोकसभा अध्यक्ष (Speaker)", "वित्त मंत्री", "राज्यसभा सभापति"], 1],
+  ["लोकसभा की अधिकतम सदस्य संख्या संविधान के अनुसार कितनी निर्धारित की गई है?", ["545", "550 (पूर्व में 552)", "500", "543"], 1],
+  ["राज्यसभा की अधिकतम सदस्य संख्या कितनी हो सकती है?", ["238", "250", "245", "260"], 1],
+  ["राज्यसभा में राष्ट्रपति द्वारा कितने सदस्यों को मनोनीत (Nominate) किया जाता है?", ["2", "12", "10", "6"], 1],
+  ["भारत के प्रथम उपराष्ट्रपति कौन थे?", ["डॉ. जाकिर हुसैन", "डॉ. सर्वपल्ली राधाकृष्णन", "वी.वी. गिरि", "बी.डी. जत्ती"], 1],
+  ["भारत के एकमात्र निर्विरोध चुने जाने वाले राष्ट्रपति कौन थे?", ["डॉ. राजेंद्र प्रसाद", "नीलम संजीव रेड्डी", "ज्ञानी जैल सिंह", "डॉ. ए.पी.जे. अब्दुल कलाम"], 1],
+  ["'अंतर्राष्ट्रीय न्यायालय' (ICJ) के न्यायाधीशों का कार्यकाल कितने वर्ष का होता है?", ["5 वर्ष", "9 वर्ष", "6 वर्ष", "10 वर्ष"], 1],
+  ["भारत के संविधान का कौन सा भाग 'मौलिक अधिकारों' से संबंधित है?", ["भाग II", "भाग III (अनुच्छेद 12-35)", "भाग IV", "भाग IVA"], 1],
+  ["संविधान का कौन सा भाग 'राज्य के नीति निर्देशक तत्वों' (DPSP) से संबंधित है?", ["भाग III", "भाग IV (अनुच्छेद 36-51)", "भाग V", "भाग IX"], 1],
+  ["'संघ की राजभाषा हिंदी और लिपि देवनागरी होगी' यह किस अनुच्छेद में वर्णित है?", ["अनुच्छेद 340", "अनुच्छेद 343", "अनुच्छेद 350", "अनुच्छेद 351"], 1],
+  ["किस संविधान संशोधन द्वारा दिल्ली को 'राष्ट्रीय राजधानी क्षेत्र' (NCR) का दर्जा दिया गया?", ["61वां संशोधन", "69वां संशोधन (1991)", "73वां संशोधन", "86वां संशोधन"], 1],
+  ["भारतीय संविधान में 'विधि का शासन' (Rule of Law) किस देश से लिया गया है?", ["अमेरिका", "ब्रिटेन (इंग्लैंड)", "कनाडा", "जापान"], 1],
+  ["भारतीय संविधान की 'प्रस्तावना' में अब तक कितनी बार संशोधन किया गया है?", ["एक भी बार नहीं", "केवल एक बार (42वां संशोधन, 1976)", "दो बार", "तीन बार"], 1],
+  ["संसद के दो सत्रों के बीच अधिकतम कितने समय का अंतराल हो सकता है?", ["3 महीने", "6 महीने", "9 महीने", "1 वर्ष"], 1],
+  ["'केंद्रीय सतर्कता आयोग' (CVC) की स्थापना किस समिति की सिफारिश पर की गई थी?", ["स्वर्ण सिंह समिति", "संथानम समिति", "सरकारी आयोग", "कोठारी आयोग"], 1],
+  ["भारत में 'संविधान दिवस' (Constitution Day) प्रतिवर्ष किस तिथि को मनाया जाता है?", ["26 जनवरी", "26 नवंबर", "15 अगस्त", "9 दिसंबर"], 1],
+  ["'जीएसटी परिषद' (GST Council) का अध्यक्ष कौन होता है?", ["प्रधानमंत्री", "केंद्रीय वित्त मंत्री", "आरबीआई गवर्नर", "नीति आयोग के उपाध्यक्ष"], 1],
+  ["भारत में सबसे कम समय तक प्रधानमंत्री पद पर रहने वाले व्यक्ति कौन थे?", ["चौधरी चरण सिंह", "अटल बिहारी वाजपेयी (13 दिन - 1996 में)", "गुलजारीलाल नंदा", "चंद्रशेखर"], 1],
+  ["'सोनार' (SONAR) का उपयोग मुख्य रूप से किसके द्वारा किया जाता है?", ["अंतरिक्ष यात्रियों द्वारा", "नौसंचालकों (समुद्र में डूबी वस्तुओं का पता लगाने के लिए) द्वारा", "डॉक्टरों द्वारा", "मौसम वैज्ञानिकों द्वारा"], 1],
+  ["'रडार' (RADAR) का पूर्ण रूप क्या है?", ["Radio Detection and Ranging", "Radio Device and Ranging", "Ray Detection and Ranging", "Radio Distance and Ranging"], 0],
+  ["'विटामिन K' का रासायनिक नाम क्या है?", ["टोकोफेरॉल", "फाइलोक्विनोन (Phylloquinone)", "बायोटिन", "नियासिन"], 1],
+  ["'कालाजार' (Kala-azar) रोग किस परजीवी (प्रोटोजोआ) के कारण होता है?", ["प्लाज्मोडियम", "लीशमैनिया डोनोवानी (Leishmania)", "एंटअमीबा", "ट्रिपैनोसोमा"], 1],
+  ["'एलिसा टेस्ट' (ELISA Test) किस रोग की पहचान के लिए किया जाता है?", ["कैंसर", "एड्स (AIDS / HIV)", "तपेदिक (TB)", "टाइफाइड"], 1],
+  ["'विडाल टेस्ट' (Widal Test) किस बीमारी के निदान के लिए किया जाता है?", ["मलेरिया", "टाइफाइड (Typhoid)", "डेंगू", "पीलिया"], 1],
+  ["मानव शरीर की सबसे बड़ी कोशिका कौन सी है?", ["शुक्राणु", "अंडाणु (Ovum)", "तंत्रिका कोशिका (सबसे लंबी)", "यकृत कोशिका"], 1],
+  ["'भविष्य का ईंधन' (Fuel of the Future) किस गैस को कहा जाता है?", ["मीथेन", "हाइड्रोजन (Hydrogen)", "नाइट्रोजन", "हीलियम"], 1],
+  ["'मार्श गैस' (Marsh Gas) किसे कहा जाता है?", ["ईथेन", "मीथेन (CH4)", "प्रोपेन", "ब्यूटेन"], 1],
+  ["'भारी जल' (Heavy Water) का रासायनिक सूत्र क्या है?", ["H2O", "D2O (ड्यूटेरियम ऑक्साइड)", "H2O2", "T2O"], 1],
+  ["'क्विक सिल्वर' (Quick Silver) के नाम से किस धातु को जाना जाता है?", ["चांदी", "पारा (Mercury)", "प्लैटिनम", "एल्युमिनियम"], 1],
+  ["'चाकू से काटी जा सकने वाली' मुलायम धातु कौन सी है?", ["लोहा", "सोडियम (Sodium) और पोटेशियम", "तांबा", "सोना"], 1],
+  ["'स्टेनलेस स्टील' बनाने के लिए लोहे में क्या मिलाया जाता है?", ["तांबा और टिन", "क्रोमियम और निकेल", "जस्ता और कार्बन", "एल्युमिनियम और मैग्नीशियम"], 1],
+  ["ध्वनि की तीव्रता किस पर निर्भर करती है?", ["आवृत्ति (Frequency) पर", "आयाम (Amplitude) पर", "तरंगदैर्ध्य पर", "वेग पर"], 1],
+  ["'तारों का टिमटिमाना' प्रकाश की किस घटना के कारण होता है?", ["परावर्तन", "वायुमंडलीय अपवर्तन (Atmospheric Refraction)", "प्रकीर्णन", "पूर्ण आंतरिक परावर्तन"], 1],
+  ["मानव नेत्र के किस भाग पर वस्तु का प्रतिबिंब (Image) बनता है?", ["कॉर्निया", "रेटिना (दृष्टिपटल)", "आइरिस", "पुतली"], 1],
+  ["नेत्रदान में आंख का कौन सा भाग दान किया जाता है?", ["पूरी आंख", "कॉर्निया (Cornea)", "रेटिना", "लेंस"], 1],
+  ["'बीसीजी' (BCG) का टीका किस रोग से बचाव के लिए लगाया जाता है?", ["पोलियो", "तपेदिक / क्षय रोग (Tuberculosis - TB)", "चेचक", "खसरा"], 1],
+  ["'केंचुआ पालन' (Earthworm Farming) को क्या कहा जाता है?", ["सेरीकल्चर", "वर्मीकल्चर (Vermiculture)", "एपिकल्चर", "पिसीकल्चर"], 1],
+  ["'रेशम कीट पालन' (Silk Farming) को किस नाम से जाना जाता है?", ["एपिकल्चर", "सेरीकल्चर (Sericulture)", "विटीकल्चर", "हॉर्टिकल्चर"], 1],
+  ["'एबेल पुरस्कार' (Abel Prize) किस क्षेत्र में असाधारण योगदान के लिए दिया जाता है?", ["भौतिकी", "गणित (Mathematics - गणित का नोबेल)", "वास्तुकला", "कंप्यूटर विज्ञान"], 1],
+  ["'प्रित्ज़कर पुरस्कार' (Pritzker Prize) किस क्षेत्र से संबंधित है?", ["पत्रकारिता", "वास्तुकला (Architecture)", "संगीत", "पर्यावरण"], 1],
+  ["'ग्रैमी पुरस्कार' (Grammy Award) किस क्षेत्र में प्रदान किया जाता है?", ["सिनेमा", "संगीत (Music)", "साहित्य", "टेलीविजन"], 1],
+  ["'ट्यूरिंग अवार्ड' (Turing Award) किस क्षेत्र का सर्वोच्च सम्मान है?", ["जीव विज्ञान", "कंप्यूटर विज्ञान (Computer Science)", "अंतरिक्ष विज्ञान", "अर्थशास्त्र"], 1],
+  ["'बोरलॉग पुरस्कार' (Borlaug Award) किस क्षेत्र में दिया जाता है?", ["चिकित्सा", "कृषि विज्ञान (Agriculture)", "खेल", "साहित्य"], 1],
+  ["'मधुमक्खी पालन' (Beekeeping) को क्या कहा जाता है?", ["सेरीकल्चर", "एपिकल्चर (Apiculture)", "फ्लोरीकल्चर", "सिल्वीकल्चर"], 1],
+  ["'अंगूर की खेती' को किस नाम से जाना जाता है?", ["हॉर्टिकल्चर", "विटीकल्चर (Viticulture)", "ओलेरीकल्चर", "पोमोलॉजी"], 1],
+  ["'अंतर्राष्ट्रीय सौर गठबंधन' (ISA - International Solar Alliance) का मुख्यालय कहां स्थित है?", ["नई दिल्ली", "गुरुग्राम (हरियाणा)", "पेरिस", "बेंगलुरु"], 1],
+  ["'संयुक्त राष्ट्र पर्यावरण कार्यक्रम' (UNEP) का मुख्यालय कहां स्थित है?", ["जिनेवा", "नैरोबी (केन्या)", "वियना", "न्यूयॉर्क"], 1],
+  ["'विश्व डोपिंग रोधी एजेंसी' (WADA) का मुख्यालय कहां है?", ["लुसाने", "मॉन्ट्रियल (कनाडा)", "पेरिस", "लंदन"], 1],
+  ["'एमनेस्टी इंटरनेशनल' (मानवाधिकार संगठन) का मुख्यालय कहां स्थित है?", ["न्यूयॉर्क", "लंदन (ब्रिटेन)", "जिनेवा", "ब्रुसेल्स"], 1],
+  ["'वॉलीबॉल' (Volleyball) के एक पक्ष में मैदान पर कितने खिलाड़ी खेलते हैं?", ["5", "6", "7", "9"], 1],
+  ["'बेसबॉल' (Baseball) किस देश का राष्ट्रीय खेल है?", ["कनाडा", "संयुक्त राज्य अमेरिका (USA)", "जापान", "ऑस्ट्रेलिया"], 1],
+  ["'आइस हॉकी' (Ice Hockey) किस देश का राष्ट्रीय खेल है?", ["रूस", "कनाडा", "नॉर्वे", "स्वीडन"], 1],
+  ["'बटरफ्लाई' के अलावा, 'ब्रेस्टस्ट्रोक' और 'फ्रीस्टाइल' शब्द किस खेल से संबंधित हैं?", ["नौकायन", "तैराकी (Swimming)", "घुड़दौड़", "जिम्नास्टिक"], 1],
+  ["'विश्व रक्तदाता दिवस' (World Blood Donor Day) प्रतिवर्ष कब मनाया जाता है?", ["7 अप्रैल", "14 जून", "1 दिसंबर", "4 फरवरी"], 1],
+  ["'विश्व स्वास्थ्य दिवस' (World Health Day) किस तिथि को मनाया जाता है?", ["7 अप्रैल", "8 मई", "5 जून", "11 जुलाई"], 0],
+  ["'विश्व जनसंख्या दिवस' (World Population Day) कब मनाया जाता है?", ["11 मई", "11 जुलाई", "16 सितंबर", "24 अक्टूबर"], 1],
+  ["'राष्ट्रीय हिंदी दिवस' भारत में प्रतिवर्ष किस तिथि को मनाया जाता है?", ["10 जनवरी (विश्व हिंदी दिवस)", "14 सितंबर", "21 फरवरी", "5 सितंबर"], 1],
+  ["'कारगिल विजय दिवस' (Kargil Vijay Diwas) प्रतिवर्ष कब मनाया जाता है?", ["15 जनवरी", "26 जुलाई", "8 अक्टूबर", "16 दिसंबर"], 1]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "विद्यार्थी: " + student;
+  Q = [...RAW_Q];
+  
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+  
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+  
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / 100 (Static GK - भाग 8)</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+  
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+  
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+  
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+  
+  if(remaining <= 150){
+    timerEl.classList.add("blink");
+  }
+  
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+  
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+    
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+    
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+  
+  modal.classList.remove("hidden");
+}
+
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+  
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+  
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+  
+  document.getElementById("greeting").textContent =
+    student + ", आपका 'Static GK (भाग 8)' टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+  
+  let message = correct >= 90 ? "अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                "अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+                
+  document.getElementById("motivation").textContent = message;
+  
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सहीः ${correct} | गलतः ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+    
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+    if(type !== "all" && type !== status) return "";
+    
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तरः <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">आपका उत्तर सही है।</p>' : "")}
+      </div>
+    `;
+  }).join("");
+  
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
