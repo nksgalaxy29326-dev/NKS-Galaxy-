@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKS Galaxy - Static GK भाग 6 (100 प्रश्न)</title>
+<style>
+:root{
+  --primary:#1769aa;
+  --dark:#102542;
+  --success:#16834a;
+  --danger:#c62828;
+  --warning:#f59e0b;
+  --bg:#f1f4f9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#202b3c;
+  font-family:Arial, "Noto Sans Devanagari", sans-serif;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(120deg, var(--dark), var(--primary));
+  color:white;text-align:center;padding:22px 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+header h1{margin:0;font-size:28px;letter-spacing:1px}
+header p{margin:4px 0;font-size:15px}
+.container{max-width: 1150px; margin:20px auto; padding:0 12px}
+.card{
+  background:white;padding:20px;margin-bottom:16px;
+  border-radius: 12px; box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+h2{color:var(--dark); margin-top:0}
+input[type=text]{
+  width:100%;padding: 12px; border:1px solid #cbd5e1;
+  border-radius:8px;font-size:16px; margin:8px 0 15px;
+}
+input[type=text]:focus {outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(23,105,170,0.15)}
+.checkbox-row{
+  display: flex;align-items:center;gap:8px;margin:10px 0 16px;
+  font-weight:bold;color:var(--dark); cursor:pointer;
+}
+button{
+  padding:10px 16px;border:0;border-radius:8px;
+  font-size:14px;font-weight:bold;cursor:pointer;
+  transition:all 0.2s;
+}
+.primary{background:var(--primary);color:white}
+.secondary{background:#e2e8f0;color:var(--dark)}
+.danger{background:var(--danger);color:white}
+.warning{background:var(--warning);color:white}
+.success{background:var(--success);color:white}
+button:hover{opacity:.92;transform:translateY(-1px)}
+
+/* Sticky Top Bar */
+.sticky{
+  position:sticky;top:0;z-index:100;background:white;
+  padding:12px 16px;border-radius:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.12);
+  display: flex; justify-content:space-between; align-items:center;
+  margin-bottom:14px;
+}
+#timer{font-size:24px;color:var(--danger);font-weight:bold;font-variant-numeric:tabular-nums}
+.blink{animation:blinker 1s linear infinite}
+@keyframes blinker{50%{opacity:0.3}}
+
+.progress{
+  height:8px;background:#e2e8f0; border-radius:10px;
+  margin:10px 0 16px; overflow:hidden;
+}
+#progressFill{height:100%;width:0;background:var(--success);transition:width 0.3s}
+
+/* Layout Grid for Test Area */
+.test-layout{
+  display:grid;
+  grid-template-columns:1fr 290px;
+  gap:16px;
+  align-items:start;
+}
+
+/* Question Card */
+.question{
+  background:white;padding: 18px;margin-bottom:16px;
+  border-radius:10px;box-shadow:0 2px 9px rgba(0,0,0,0.06);
+  scroll-margin-top:85px;
+  border-left:4px solid transparent;
+}
+.question.answered-card{border-left-color:var(--success)}
+.question.marked-card{border-left-color:var(--warning)}
+.question h3{font-size:17px;margin:6px 0 14px;color:#0f172a}
+.qhead{
+  display: flex; justify-content:space-between; align-items:center;
+  font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;padding-bottom:6px;
+}
+.options{display:grid; gap:10px}
+.option{
+  display: flex;align-items:flex-start;gap: 10px;padding:11px 12px;
+  border:1px solid #dce3eb; border-radius:8px;
+  cursor:pointer;transition:background 0.15s, border-color 0.15s;
+}
+.option:hover{background:#f8fafc}
+.option.selected{background:#eaf4ff;border-color:var(--primary);font-weight:500}
+.option input{margin-top:4px; accent-color:var(--primary)}
+
+.q-controls{
+  display:flex;gap:8px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed #e2e8f0;
+}
+.q-controls button{padding:6px 12px; font-size:12px}
+
+/* Question Palette */
+.palette-card{
+  position:sticky;top:82px;background:white;padding:15px;
+  border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+.palette-legend{
+  display:grid;grid-template-columns: 1fr 1fr;gap:6px;
+  font-size:12px;margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:14px; height: 14px; border-radius:4px;display:inline-block}
+.palette-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+  max-height:360px; overflow-y:auto;padding-right:4px;
+}
+.p-btn{
+  padding:7px 0;font-size:12px;border-radius:6px;
+  background:#f1f5f9;color:#334155; border:1px solid #cbd5e1;
+  text-align:center;
+}
+.p-btn.ans{background:var(--success);color:white;border-color:var(--success)}
+.p-btn.mark{background:var(--warning); color:white; border-color:var(--warning)}
+.p-btn.ans-mark{background:#7c3aed;color:white;border-color:#7c3aed}
+
+.actions{
+  display: flex; justify-content:center;
+  gap:10px; flex-wrap:wrap; margin:20px 0;
+}
+.hidden{display:none!important}
+
+/* Custom Modal Popup Styles */
+.modal-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);z-index:1000;
+  display: flex; justify-content:center;align-items:center;
+  padding: 15px; animation:fadeIn 0.2s ease-in-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:white;width:100%;max-width:420px;
+  border-radius: 12px; overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transform:translateY(0); animation:slideUp 0.25s ease-in-out;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{
+  background:linear-gradient(120deg, var(--dark), var(--primary));
+  color:white;padding: 14px 18px; font-size:18px;font-weight:bold;
+  text-align:center;letter-spacing:0.5px;
+}
+.modal-body{padding:20px;font-size:15px;color:#334155;text-align:center}
+.modal-footer{
+  padding:12px 20px; background:#f8fafc;display:flex;
+  justify-content:center; gap:12px;border-top:1px solid #e2e8f0;
+}
+
+/* Result & Stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4, 1fr); gap: 12px;margin:16px 0;
+}
+.stat{
+  background:#edf4fa;padding:15px;text-align:center;
+  border-radius: 10px; border:1px solid #dbeafe;
+}
+.stat strong{display:block;font-size:24px;color:var(--dark);margin-bottom:4px}
+
+/* Review Filters */
+.filter-bar{
+  display:flex;gap:8px; flex-wrap:wrap;margin-bottom:15px;
+}
+.filter-btn.active{background:var(--dark);color:white}
+.review{
+  border:1px solid #e2e8f0;padding:14px;
+  margin:10px 0;border-radius:8px;background:#fafbfc;
+}
+.review.rev-correct{border-left:5px solid var(--success)}
+.review.rev-wrong{border-left:5px solid var(--danger)}
+.review.rev-skip{border-left:5px solid #94a3b8}
+.green{color:var(--success);font-weight:bold}
+.red{color:var(--danger);font-weight:bold}
+.muted{font-size:13px;color:#64748b}
+
+@media(max-width:850px){
+  .test-layout{grid-template-columns:1fr}
+  .palette-card{position:static;margin-bottom:16px}
+}
+@media(max-width:600px){
+  header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  #timer{font-size:20px}
+  .card{padding:14px}
+}
+@media print{
+  header{background:var(--dark)!important;color:white!important;-webkit-print-color-adjust:exact}
+  button,.sticky,.palette-card,.filter-bar{display:none!important}
+  body{background:white}
+  .card{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>NKS GALAXY</h1>
+  <p><b>Static GK - भाग 6 (SSC & RRB विशेष मॉक टेस्ट)</b></p>
+  <p>प्रमुख बंदरगाह, जनजातियां, अर्थव्यवस्था व बैंकिंग, खेल शब्दावली, सामान्य विज्ञान एवं विविध (प्रश्न 501 से 600)</p>
+  <p>कुल प्रश्नः 100 | कुल अंकः 100 | समयः 20 मिनट</p>
+</header>
+
+<div class="container">
+  <!-- Start Panel -->
+  <section class="card" id="startPanel">
+    <h2>टॉपिक: Static GK - भाग 6 निर्देश</h2>
+    <p>अपना नाम दर्ज करें और नीचे दिए गए निर्देशों को पढ़कर टेस्ट शुरू करें। इस मॉक टेस्ट में भारत के प्रमुख बंदरगाह, जनजातियां, राष्ट्रीय उद्यान, अर्थव्यवस्था व बैंकिंग, खेल शब्दावली, सामान्य विज्ञान और महत्वपूर्ण पुरस्कारों से जुड़े <b>100 महत्वपूर्ण प्रश्न (प्रश्न 501 से 600 तक)</b> शामिल हैं।</p>
+    <label><b>विद्यार्थी का नाम: </b></label>
+    <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें...">
+    
+    <label class="checkbox-row">
+      <input type="checkbox" id="shuffleCheck">
+      प्रश्नों का क्रम बदलें (Shuffle Questions)
+    </label>
+    
+    <ul style="padding-left:20px;color:#334155">
+      <li>विषयः <b>Static GK (भाग 6)</b></li>
+      <li>कुल प्रश्नः <b>100 (प्रश्न 501 से 600)</b> | कुल समय: <b>20 मिनट</b></li>
+      <li>प्रत्येक सही उत्तर के लिए <b>1 अंक</b> मिलेगा।</li>
+      <li><b>Negative Marking:</b> नहीं है।</li>
+      <li>आप किसी भी प्रश्न को <b>Mark for Review</b> कर सकते हैं या <b>Clear</b> कर सकते हैं।</li>
+    </ul>
+    <div class="actions">
+      <button class="primary" style="font-size:16px;padding:12px 28px" onclick="startTest()">START TEST</button>
+    </div>
+  </section>
+
+  <!-- Test Area -->
+  <section id="testArea" class="hidden">
+    <div class="sticky">
+      <div>
+        <b id="studentLabel" style="font-size: 16px;color:var(--dark)"></b>
+        <div class="muted">विषय: <b>Static GK (भाग 6)</b> | हल किए: <b id="answered">0</b>/100 | चिह्नितः <b id="markedCount">0</b></div>
+      </div>
+      <div style="text-align:right">
+        <div class="muted">शेष समय</div>
+        <div id="timer">20:00</div>
+      </div>
+    </div>
+    
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+
+    <div class="test-layout">
+      <!-- Questions Column -->
+      <div>
+        <div id="questions"></div>
+        <div class="actions">
+          <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ सबसे ऊपर जाएँ</button>
+          <button class="danger" style="padding:12px 24px;font-size:15px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+        </div>
+      </div>
+
+      <!-- Question Palette Sidebar -->
+      <aside class="palette-card">
+        <h3 style="margin:0 0 10px;font-size:16px; color:var(--dark)">Question Palette (1-100)</h3>
+        <div class="palette-legend">
+          <div class="legend-item"><span class="dot" style="background:var(--success)"></span> हल किया</div>
+          <div class="legend-item"><span class="dot" style="background:var(--warning)"></span> समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#7c3aed"></span> हल + समीक्षा</div>
+          <div class="legend-item"><span class="dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></span> शेष</div>
+        </div>
+        <div class="palette-grid" id="paletteGrid"></div>
+        <button class="danger" style="width:100%;margin-top:14px" onclick="confirmSubmit(false)">SUBMIT TEST</button>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Result Area -->
+  <section id="resultArea" class="card hidden">
+    <h2>परीक्षा परिणाम (Scorecard) - Static GK (भाग 6)</h2>
+    <p id="greeting" style="font-size:16px;font-weight:bold;color:var(--primary)"></p>
+    <div class="stats">
+      <div class="stat"><strong id="score">0/100</strong>प्राप्त अंक</div>
+      <div class="stat"><strong id="percent">0%</strong>प्रतिशत (Accuracy)</div>
+      <div class="stat"><strong id="right" style="color:var(--success)">0</strong>सही उत्तर</div>
+      <div class="stat"><strong id="wrong" style="color:var(--danger)">0</strong>गलत / छोड़े</div>
+    </div>
+    <h3 id="motivation" style="text-align:center;color:var(--dark)"></h3>
+    <p id="timeTaken" class="muted" style="text-align:center;font-size:14px"></p>
+    <div class="actions">
+      <button class="primary" onclick="window.print()">Print Scorecard</button>
+      <button class="success" onclick="showReview('all')">Answer Review</button>
+      <button class="secondary" onclick="location.reload()">Retake Test</button>
+    </div>
+  </section>
+
+  <!-- Review Area -->
+  <section id="reviewArea" class="card hidden">
+    <h2>सभी प्रश्नों की उत्तर समीक्षा - Static GK (भाग 6)</h2>
+    <div class="filter-bar">
+      <button class="secondary filter-btn active" onclick="filterReview('all', this)">सभी (100)</button>
+      <button class="secondary filter-btn" onclick="filterReview('correct', this)">सही उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('wrong', this)">गलत उत्तर</button>
+      <button class="secondary filter-btn" onclick="filterReview('skipped', this)">छोड़े गए प्रश्न</button>
+    </div>
+    <div id="reviewList"></div>
+  </section>
+</div>
+
+<!-- Custom NKS Galaxy Modal Popup Container -->
+<div id="customModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">NKS GALAXY - Static GK (भाग 6)</div>
+    <div class="modal-body" id="modalMessage">यहाँ संदेश दिखाई देगा।</div>
+    <div class="modal-footer" id="modalButtons"></div>
+  </div>
+</div>
+
+<script>
+const RAW_Q = [
+  ["भारत का सबसे बड़ा प्राकृतिक बंदरगाह कौन सा है?", ["चेन्नई बंदरगाह", "मुंबई बंदरगाह", "कोच्चि बंदरगाह", "कोलकाता बंदरगाह"], 1],
+  ["'पारादीप बंदरगाह' किस राज्य में स्थित है?", ["पश्चिम बंगाल", "ओडिशा", "आंध्र प्रदेश", "तमिलनाडु"], 1],
+  ["भारत का एकमात्र 'नदी बंदरगाह' (Riverine Port) कौन सा है?", ["हल्दिया", "श्यामा प्रसाद मुखर्जी बंदरगाह (कोलकाता)", "कांडला", "मोरमुगाओ"], 1],
+  ["'मोरमुगाओ बंदरगाह' किस राज्य में स्थित है?", ["महाराष्ट्र", "गोवा", "कर्नाटक", "केरल"], 1],
+  ["'तूतीकोरिन बंदरगाह' (वी.ओ. चिदंबरनार बंदरगाह) किस राज्य में है?", ["केरल", "तमिलनाडु", "आंध्र प्रदेश", "ओडिशा"], 1],
+  ["'टोडा' जनजाति मुख्य रूप से किस पर्वत श्रेणी में निवास करती है?", ["अरावली पहाड़ियां", "नीलगिरी पहाड़ियां (तमिलनाडु)", "सतपुड़ा पहाड़ियां", "विंध्य पर्वत"], 1],
+  ["'गारो, खासी और जयंतिया' जनजातियां किस राज्य में पाई जाती हैं?", ["असम", "मेघालय", "मिजोरम", "नागालैंड"], 1],
+  ["'जारवा' और 'सेंटिनली' (Sentinelese) जनजातियां कहां निवास करती हैं?", ["लक्षद्वीप", "अंडमान और निकोबार द्वीप समूह", "दमन और दीव", "पुडुचेरी"], 1],
+  ["भारत की सबसे बड़ी जनजाति कौन सी है?", ["संथाल", "भील", "गोंड", "मुंडा"], 1],
+  ["'थारू' जनजाति मुख्य रूप से किस क्षेत्र में पाई जाती है?", ["तराई क्षेत्र (उत्तर प्रदेश और उत्तराखंड)", "बुंदेलखंड", "मालवा पठार", "छोटा नागपुर पठार"], 0],
+  ["'बांधवगढ़ राष्ट्रीय उद्यान' किस राज्य में स्थित है?", ["छत्तीसगढ़", "मध्य प्रदेश", "महाराष्ट्र", "राजस्थान"], 1],
+  ["'पेरियार वन्यजीव अभयारण्य' किस राज्य में और किसके लिए प्रसिद्ध है?", ["केरल - हाथियों के लिए", "तमिलनाडु - बाघों के लिए", "कर्नाटक - चंदन के लिए", "आंध्र प्रदेश - पक्षियों के लिए"], 0],
+  ["'नामदफा राष्ट्रीय उद्यान' किस राज्य में स्थित है?", ["असम", "अरुणाचल प्रदेश", "मणिपुर", "सिक्किम"], 1],
+  ["विश्व का एकमात्र तैरता हुआ राष्ट्रीय उद्यान 'केबुल लामजाओ' किस राज्य में है?", ["असम", "मणिपुर (लोकटक झील)", "मेघालय", "त्रिपुरा"], 1],
+  ["'दुधवा राष्ट्रीय उद्यान' किस राज्य में स्थित है?", ["उत्तराखंड", "उत्तर प्रदेश", "बिहार", "मध्य प्रदेश"], 1],
+  ["'शिपकी ला दर्रा' किस राज्य में स्थित है?", ["उत्तराखंड", "हिमाचल प्रदेश", "सिक्किम", "अरुणाचल प्रदेश"], 1],
+  ["'लिपुलेख दर्रा' किस राज्य में स्थित है?", ["हिमाचल प्रदेश", "उत्तराखंड", "सिक्किम", "लद्दाख"], 1],
+  ["'बोमडिला दर्रा' भारत के किस राज्य में स्थित है?", ["सिक्किम", "अरुणाचल प्रदेश", "मणिपुर", "नागालैंड"], 1],
+  ["दक्षिण भारत की सबसे ऊंची पर्वत चोटी कौन सी है?", ["डोडाबेट्टा", "अनाइमुडी", "महेंद्रगिरि", "कलसुबाई"], 1],
+  ["'अरावली पर्वत श्रृंखला' की सबसे ऊंची चोटी कौन सी है?", ["धूपगढ़", "गुरु शिखर", "अमरकंटक", "पारसनाथ"], 1],
+  ["भारतीय रिजर्व बैंक (RBI) का राष्ट्रीयकरण किस वर्ष किया गया था?", ["1935", "1947", "1949", "1955"], 2],
+  ["'भारतीय स्टेट बैंक' (SBI) का पुराना नाम क्या था?", ["बैंक ऑफ हिंदुस्तान", "इंपीरियल बैंक ऑफ इंडिया", "बैंक ऑफ मद्रास", "सेंट्रल बैंक"], 1],
+  ["'गरीबी हटाओ' का नारा किस पंचवर्षीय योजना के दौरान दिया गया था?", ["तीसरी पंचवर्षीय योजना", "चौथी पंचवर्षीय योजना", "पांचवीं पंचवर्षीय योजना", "छठी पंचवर्षीय योजना"], 2],
+  ["दूसरी पंचवर्षीय योजना (1956-1961) किस पर केंद्रित थी?", ["कृषि विकास", "तीव्र औद्योगीकरण (महालनोबिस मॉडल)", "आत्मनिर्भरता", "शिक्षा और स्वास्थ्य"], 1],
+  ["'नीति आयोग' (NITI Aayog) की स्थापना कब की गई थी?", ["1 जनवरी 2014", "1 जनवरी 2015", "1 अप्रैल 2015", "15 अगस्त 2014"], 1],
+  ["भारत में 'मौद्रिक नीति' (Monetary Policy) कौन तैयार करता है?", ["वित्त मंत्रालय", "भारतीय रिजर्व बैंक (RBI)", "नीति आयोग", "सेबी (SEBI)"], 1],
+  ["वह दर जिस पर RBI वाणिज्यिक बैंकों को अल्पकालिक ऋण देता है, क्या कहलाती है?", ["रिवर्स रेपो दर", "रेपो दर (Repo Rate)", "बैंक दर", "नकद आरक्षित अनुपात (CRR)"], 1],
+  ["'बुल और बियर' (Bull and Bear) शब्दावली का संबंध किस क्षेत्र से है?", ["बैंकिंग", "शेयर बाजार (Stock Market)", "विदेशी व्यापार", "कृषि उत्पादन"], 1],
+  ["भारत का सबसे पुराना स्टॉक एक्सचेंज कौन सा है?", ["नेशनल स्टॉक एक्सचेंज (NSE)", "बॉम्बे स्टॉक एक्सचेंज (BSE - 1875)", "कलकत्ता स्टॉक एक्सचेंज", "मद्रास स्टॉक एक्सचेंज"], 1],
+  ["'राष्ट्रीय ग्रामीण रोजगार गारंटी अधिनियम' (मनरेगा / MGNREGA) किस वर्ष पारित हुआ था?", ["2004", "2005", "2006", "2009"], 1],
+  ["भारत में 'मुद्रास्फीति' (Inflation) को मापने के लिए मुख्य रूप से किस सूचकांक का उपयोग होता है?", ["उपभोक्ता मूल्य सूचकांक (CPI)", "मानव विकास सूचकांक (HDI)", "सेंसेक्स", "निफ्टी"], 0],
+  ["'नीली क्रांति' (Blue Revolution) का संबंध किस क्षेत्र से है?", ["दुग्ध उत्पादन", "मत्स्य पालन (Fisheries)", "उर्वरक उत्पादन", "पेट्रोलियम उत्पादन"], 1],
+  ["'पीली क्रांति' (Yellow Revolution) किसके उत्पादन से संबंधित है?", ["दालें", "तिलहन (Oilseeds)", "हल्दी", "मक्का"], 1],
+  ["'सिडबी' (SIDBI - भारतीय लघु उद्योग विकास बैंक) का मुख्यालय कहां स्थित है?", ["मुंबई", "लखनऊ", "नई दिल्ली", "हैदराबाद"], 1],
+  ["1 रुपये के नोट पर किसके हस्ताक्षर होते हैं?", ["आरबीआई गवर्नर", "वित्त सचिव (भारत सरकार)", "वित्त मंत्री", "राष्ट्रपति"], 1],
+  ["भारत में 'दशमलव मुद्रा प्रणाली' (Decimal Coinage System) कब शुरू हुई थी?", ["1950", "1955", "1957", "1962"], 2],
+  ["'मिनी रत्न, नवरत्न और महारत्न' दर्जा किसे दिया जाता है?", ["निजी बैंकों को", "सार्वजनिक क्षेत्र के उपक्रमों (PSUs) को", "राज्य सरकारों को", "विदेशी कंपनियों को"], 1],
+  ["'हवाला' (Hawala) क्या है?", ["कर की चोरी", "विदेशी मुद्रा का अवैध लेन-देन", "शेयर बाजार का घोटाला", "सरकारी सब्सिडी"], 1],
+  ["भारत में 'कृषि और ग्रामीण विकास' के लिए शीर्ष बैंक कौन सा है?", ["SBI", "NABARD", "RBI", "SIDBI"], 1],
+  ["'मिश्रित अर्थव्यवस्था' (Mixed Economy) का क्या अर्थ है?", ["कृषि और उद्योग का सह-अस्तित्व", "सार्वजनिक और निजी क्षेत्र का सह-अस्तित्व", "घरेलू और विदेशी व्यापार", "पारंपरिक और आधुनिक तकनीक"], 1],
+  ["आधुनिक ओलंपिक खेलों की शुरुआत 1896 में किस शहर से हुई थी?", ["पेरिस", "एथेंस (ग्रीस)", "लंदन", "रोम"], 1],
+  ["ओलंपिक ध्वज में कितने छल्ले (Rings) होते हैं?", ["4", "5", "6", "7"], 1],
+  ["'राइडर कप' (Ryder Cup) किस खेल से संबंधित है?", ["पोलो", "गोल्फ", "घुड़दौड़", "नौकायन"], 1],
+  ["'देवधर ट्रॉफी' और 'दिलीप ट्रॉफी' किस खेल की प्रतियोगिताएं हैं?", ["हॉकी", "क्रिकेट", "फुटबॉल", "बैडमिंटन"], 1],
+  ["'बटरफ्लाई स्ट्रोक' (Butterfly Stroke) शब्द किस खेल से संबंधित है?", ["जिम्नास्टिक", "तैराकी (Swimming)", "मुक्केबाजी", "कुश्ती"], 1],
+  ["'गैम्बिट' (Gambit) और 'चेकमेट' शब्द किस खेल में प्रयोग होते हैं?", ["ब्रिज", "शतरंज (Chess)", "बिलियर्ड्स", "लूडो"], 1],
+  ["'सुल्तान अजलान शाह कप' किस खेल से संबंधित है?", ["फुटबॉल", "हॉकी", "क्रिकेट", "पोलो"], 1],
+  ["'अंतर्राष्ट्रीय क्रिकेट परिषद' (ICC) का मुख्यालय कहां स्थित है?", ["लंदन", "दुबई (UAE)", "मेलबर्न", "मुंबई"], 1],
+  ["'फीफा' (FIFA) का मुख्यालय कहां स्थित है?", ["पेरिस", "ज्यूरिख (स्विट्जरलैंड)", "जिनेवा", "मैड्रिड"], 1],
+  ["पहले एशियाई खेल (Asian Games) 1951 में कहां आयोजित किए गए थे?", ["टोक्यो", "नई दिल्ली", "बैंकॉक", "बीजिंग"], 1],
+  ["'वानखेड़े स्टेडियम' किस शहर में स्थित है?", ["पुणे", "मुंबई", "अहमदाबाद", "नागपुर"], 1],
+  ["'नरेंद्र मोदी स्टेडियम' (विश्व का सबसे बड़ा क्रिकेट स्टेडियम) किस शहर में स्थित है?", ["सूरत", "अहमदाबाद", "वडोदरा", "राजकोट"], 1],
+  ["'लव' (Love) और 'ड्यूस' (Deuce) शब्द किस खेल से जुड़े हैं?", ["बैडमिंटन और टेनिस", "गोल्फ", "हॉकी", "बेसबॉल"], 0],
+  ["'एजरा कप' (Ezra Cup) किस खेल से संबंधित है?", ["हॉकी", "पोलो", "गोल्फ", "फुटबॉल"], 1],
+  ["ओलंपिक में व्यक्तिगत स्वर्ण पदक जीतने वाले पहले भारतीय खिलाड़ी कौन थे?", ["नीरज चोपड़ा", "अभिनव बिंद्रा (2008)", "राज्यवर्धन सिंह राठौड़", "सुशील कुमार"], 1],
+  ["भारत की पहली महिला ग्रैंडमास्टर (शतरंज) कौन बनीं?", ["कोनेरू हम्पी", "एस. विजयलक्ष्मी", "हरिका द्रोणावल्ली", "तानिया सचदेव"], 1],
+  ["'सुब्रतो कप' किस खेल से संबंधित है?", ["क्रिकेट", "फुटबॉल", "हॉकी", "बास्केटबॉल"], 1],
+  ["'खो-खो' खेल में एक टीम में कितने खिलाड़ी मैदान पर खेलते हैं?", ["7", "9", "11", "12"], 1],
+  ["'कबड्डी' के एक पक्ष में कितने खिलाड़ी मैदान पर खेलते हैं?", ["5", "7", "9", "11"], 1],
+  ["'बास्केटबॉल' के प्रत्येक पक्ष में खिलाड़ियों की संख्या कितनी होती है?", ["5", "6", "7", "9"], 0],
+  ["'टेलीफोन' का आविष्कार किसने किया था?", ["थॉमस एडिसन", "अलेक्जेंडर ग्राहम बेल", "गुग्लिल्मो मार्कोनी", "जेम्स वाट"], 1],
+  ["'डायनामाइट' का आविष्कार किस वैज्ञानिक ने किया था?", ["अल्फ्रेड नोबेल", "माइकल फैराडे", "रुडोल्फ डीजल", "मैडम क्यूरी"], 0],
+  ["'रेडियोधर्मिता' (Radioactivity) की खोज किसने की थी?", ["हेनरी बेक्वेरेल", "रदरफोर्ड", "नील्स बोर", "जे.जे. थॉमसन"], 0],
+  ["'इलेक्ट्रॉन' की खोज किसने की थी?", ["जेम्स चैडविक", "जे.जे. थॉमसन", "गोल्डस्टीन", "जॉन डाल्टन"], 1],
+  ["'न्यूट्रॉन' की खोज किस वैज्ञानिक ने की थी?", ["जेम्स चैडविक", "रदरफोर्ड", "जे.जे. थॉमसन", "मैक्स प्लैंक"], 0],
+  ["'एक्स-रे' (X-Rays) की खोज किसने की थी?", ["विल्हेम रॉन्टजन", "मैडम क्यूरी", "पियरे क्यूरी", "अल्बर्ट आइंस्टीन"], 0],
+  ["'रक्त समूह' (Blood Groups) की खोज किसने की थी?", ["विलियम हार्वे", "कार्ल लैंडस्टीनर", "लुई पाश्चर", "रॉबर्ट हुक"], 1],
+  ["'कोशिका' (Cell) की खोज सर्वप्रथम किसने की थी?", ["रॉबर्ट ब्राउन", "रॉबर्ट हुक (1665)", "श्लाइडेन और श्वान", "ल्यूवेनहॉक"], 1],
+  ["'आनुवंशिकता के नियम' (Laws of Inheritance) किसने प्रतिपादित किए थे?", ["चार्ल्स डार्विन", "ग्रेगर जॉन मेंडल", "लैमार्क", "ह्यूगो डी व्रीज"], 1],
+  ["'सापेक्षता का सिद्धांत' (Theory of Relativity - E=mc²) किसने दिया था?", ["आइजैक न्यूटन", "अल्बर्ट आइंस्टीन", "गैलीलियो गैलीली", "स्टीफन हॉकिंग"], 1],
+  ["कार्य और ऊर्जा का SI मात्रक क्या है?", ["वाट", "जूल (Joule)", "न्यूटन", "पास्कल"], 1],
+  ["'बल' (Force) का SI मात्रक क्या है?", ["डाइन", "न्यूटन (Newton)", "किलोग्राम", "मीटर/सेकंड"], 1],
+  ["'सोना' (Gold) का रासायनिक प्रतीक क्या है?", ["Ag", "Au", "Fe", "Hg"], 1],
+  ["'चांदी' (Silver) का रासायनिक प्रतीक क्या है?", ["Au", "Ag", "Sn", "Pb"], 1],
+  ["'काला सोना' (Black Gold) किसे कहा जाता है?", ["कोयला", "पेट्रोलियम", "ग्रेफाइट", "लोहा"], 1],
+  ["'नीला थोथा' (Blue Vitriol) का रासायनिक नाम क्या है?", ["फेरस सल्फेट", "कॉपर सल्फेट (CuSO4)", "जिंक सल्फेट", "मैग्नीशियम सल्फेट"], 1],
+  ["मानव शरीर में 'पित्त रस' (Bile Juice) का निर्माण कहां होता है?", ["पित्ताशय में", "यकृत (Liver) में", "आमाशय में", "छोटी आंत में"], 1],
+  ["'मास्टर ग्रंथि' (Master Gland) किस ग्रंथि को कहा जाता है?", ["थायरॉयड ग्रंथि", "पीयूष ग्रंथि (Pituitary Gland)", "एड्रिनल ग्रंथि", "पीनियल ग्रंथि"], 1],
+  ["'टाइफाइड' रोग किस जीवाणु (Bacteria) के कारण होता है?", ["विब्रियो कोलेरी", "साल्मोनेला टाइफी", "माइकोबैक्टीरियम ट्यूबरकुलोसिस", "क्लोस्ट्रीडियम टेटेनी"], 1],
+  ["'पृथ्वी का पलायन वेग' (Escape Velocity) कितना होता है?", ["9.8 किमी/सेकंड", "11.2 किमी/सेकंड", "7.9 किमी/सेकंड", "15.4 किमी/सेकंड"], 1],
+  ["'ताजमहल' को यूनेस्को (UNESCO) की विश्व धरोहर सूची में किस वर्ष शामिल किया गया था?", ["1980", "1983", "1986", "1989"], 1],
+  ["'काजीरंगा राष्ट्रीय उद्यान' को यूनेस्को विश्व धरोहर स्थल कब घोषित किया गया?", ["1983", "1985", "1987", "1990"], 1],
+  ["'धोलावीरा' (हड़प्पा स्थल), जिसे यूनेस्को विश्व धरोहर सूची में शामिल किया गया है, किस राज्य में है?", ["राजस्थान", "गुजरात", "हरियाणा", "पंजाब"], 1],
+  ["'रानी की वाव' (जो 100 रुपये के नए नोट पर अंकित है) किस राज्य में स्थित है?", ["राजस्थान", "गुजरात (पाटन)", "मध्य प्रदेश", "महाराष्ट्र"], 1],
+  ["'मंगलयान' का चित्र कितने रुपये के भारतीय नोट पर अंकित था?", ["500 रुपये", "2000 रुपये", "200 रुपये", "50 रुपये"], 1],
+  ["'सांची का स्तूप' कितने रुपये के भारतीय नोट के पीछे अंकित है?", ["100 रुपये", "200 रुपये", "500 रुपये", "50 रुपये"], 1],
+  ["'हम्पी का पत्थर से बना रथ' कितने रुपये के भारतीय नोट पर अंकित है?", ["10 रुपये", "20 रुपये", "50 रुपये", "100 रुपये"], 2],
+  ["'सरस्वती सम्मान' और 'व्यास सम्मान' किस संस्था द्वारा प्रदान किए जाते हैं?", ["साहित्य अकादमी", "के.के. बिड़ला फाउंडेशन", "ज्ञानपीठ ट्रस्ट", "संस्कृति मंत्रालय"], 1],
+  ["'शांति स्वरूप भटनागर पुरस्कार' किस क्षेत्र में दिया जाता है?", ["साहित्य", "विज्ञान एवं प्रौद्योगिकी", "समाज सेवा", "पत्रकारिता"], 1],
+  ["'कलिंग पुरस्कार' (विज्ञान को लोकप्रिय बनाने के लिए) किस संस्था द्वारा दिया जाता है?", ["ओडिशा सरकार", "यूनेस्को (UNESCO)", "भारत सरकार", "विश्व बैंक"], 1],
+  ["'राष्ट्रीय विज्ञान दिवस' (28 फरवरी) किस वैज्ञानिक की खोज के उपलक्ष्य में मनाया जाता है?", ["होमी जहांगीर भाभा", "डॉ. सी.वी. रमन (रमन प्रभाव)", "विक्रम साराभाई", "जगदीश चंद्र बसु"], 1],
+  ["'शिक्षक दिवस' (5 सितंबर) किसके जन्मदिवस के रूप में मनाया जाता है?", ["मौलाना अबुल कलाम आजाद", "डॉ. सर्वपल्ली राधाकृष्णन", "डॉ. ए.पी.जे. अब्दुल कलाम", "जवाहरलाल नेहरू"], 1],
+  ["'राष्ट्रीय शिक्षा दिवस' (11 नवंबर) किसकी जयंती पर मनाया जाता है?", ["डॉ. एस. राधाकृष्णन", "मौलाना अबुल कलाम आजाद", "स्वामी विवेकानंद", "मदन मोहन मालवीय"], 1],
+  ["'प्रवासी भारतीय दिवस' प्रतिवर्ष किस तिथि को मनाया जाता है?", ["9 जनवरी", "12 जनवरी", "15 जनवरी", "24 जनवरी"], 0],
+  ["'राष्ट्रीय युवा दिवस' (12 जनवरी) किस महापुरुष की जयंती पर मनाया जाता है?", ["सुभाष चंद्र बोस", "स्वामी विवेकानंद", "भगत सिंह", "राजीव गांधी"], 1],
+  ["'सुशासन दिवस' (Good Governance Day) 25 दिसंबर को किसके जन्मदिवस पर मनाया जाता है?", ["मदन मोहन मालवीय", "अटल बिहारी वाजपेयी", "चौधरी चरण सिंह", "सरदार पटेल"], 1],
+  ["'किसान दिवस' (23 दिसंबर) किस पूर्व प्रधानमंत्री के जन्मदिवस पर मनाया जाता है?", ["लाल बहादुर शास्त्री", "चौधरी चरण सिंह", "पी.वी. नरसिम्हा राव", "एच.डी. देवगौड़ा"], 1],
+  ["'विश्व रेड क्रॉस दिवस' किस तिथि को मनाया जाता है?", ["1 मई", "8 मई", "11 मई", "31 मई"], 1],
+  ["'विश्व तंबाकू निषेध दिवस' कब मनाया जाता है?", ["31 मई", "5 जून", "14 जून", "21 जून"], 0],
+  ["'राष्ट्रीय सांख्यिकी दिवस' (29 जून) किसके जन्मदिवस पर मनाया जाता है?", ["सी.आर. राव", "प्रो. पी.सी. महालनोबिस", "अमर्त्य सेन", "अभिजीत बनर्जी"], 1]
+];
+
+let Q = [];
+let answers = [];
+let marked = [];
+let remaining = 1200; // 20 minutes for 100 questions
+let timerInterval = null;
+let submitted = false;
+let student = "";
+
+function startTest(){
+  student = document.getElementById("studentName").value.trim() || "विद्यार्थी";
+  document.getElementById("studentLabel").textContent = "विद्यार्थी: " + student;
+  Q = [...RAW_Q];
+  
+  if(document.getElementById("shuffleCheck").checked){
+    for(let i = Q.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [Q[i], Q[j]] = [Q[j], Q[i]];
+    }
+  }
+  
+  answers = new Array(Q.length).fill(null);
+  marked = new Array(Q.length).fill(false);
+  
+  document.getElementById("startPanel").classList.add("hidden");
+  document.getElementById("testArea").classList.remove("hidden");
+  
+  renderQuestions();
+  renderPalette();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderQuestions(){
+  document.getElementById("questions").innerHTML = Q.map((q, i) => `
+    <div class="question" id="q${i}">
+      <div class="qhead">
+        <span><b>प्रश्न ${i+1}</b> / 100 (Static GK - भाग 6)</span>
+        <span>अंक: +1 | 0</span>
+      </div>
+      <h3>${i+1}. ${q[0]}</h3>
+      <div class="options">
+        ${q[1].map((o, j) => `
+          <label class="option" id="opt${i}_${j}">
+            <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i},${j})">
+            <span><b>${"ABCD"[j]})</b> ${o}</span>
+          </label>
+        `).join("")}
+      </div>
+      <div class="q-controls">
+        <button type="button" class="secondary" onclick="clearResponse(${i})">Clear Response</button>
+        <button type="button" class="warning" id="markBtn${i}" onclick="toggleMark(${i})">Mark for Review</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderPalette(){
+  document.getElementById("paletteGrid").innerHTML = Q.map((_, i) => `
+    <button type="button" class="p-btn" id="pbtn${i}" onclick="scrollToQuestion(${i})">${i+1}</button>
+  `).join("");
+}
+
+function scrollToQuestion(i){
+  document.getElementById(`q${i}`).scrollIntoView({behavior:"smooth"});
+}
+
+function selectAnswer(i, j){
+  if(submitted) return;
+  answers[i] = j;
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.toggle("selected", k === j);
+  }
+  updateStatus(i);
+}
+
+function clearResponse(i){
+  if(submitted) return;
+  answers[i] = null;
+  const radios = document.getElementsByName(`q${i}`);
+  radios.forEach(r => r.checked = false);
+  for(let k = 0; k < 4; k++){
+    document.getElementById(`opt${i}_${k}`).classList.remove("selected");
+  }
+  updateStatus(i);
+}
+
+function toggleMark(i){
+  if(submitted) return;
+  marked[i] = !marked[i];
+  const btn = document.getElementById(`markBtn${i}`);
+  btn.textContent = marked[i] ? "Unmark" : "Mark for Review";
+  updateStatus(i);
+}
+
+function updateStatus(i){
+  const qCard = document.getElementById(`q${i}`);
+  const pBtn = document.getElementById(`pbtn${i}`);
+  const isAns = answers[i] !== null;
+  const isMark = marked[i];
+  
+  qCard.classList.remove("answered-card", "marked-card");
+  pBtn.classList.remove("ans", "mark", "ans-mark");
+  
+  if(isAns && isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("ans-mark");
+  } else if(isAns){
+    qCard.classList.add("answered-card");
+    pBtn.classList.add("ans");
+  } else if(isMark){
+    qCard.classList.add("marked-card");
+    pBtn.classList.add("mark");
+  }
+  
+  let ansCount = answers.filter(a => a !== null).length;
+  let markCount = marked.filter(m => m).length;
+  
+  document.getElementById("answered").textContent = ansCount;
+  document.getElementById("markedCount").textContent = markCount;
+  document.getElementById("progressFill").style.width = (ansCount / Q.length * 100) + "%";
+}
+
+function updateTimer(){
+  let m = Math.floor(remaining / 60), s = remaining % 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+  
+  if(remaining <= 150){
+    timerEl.classList.add("blink");
+  }
+  
+  if(remaining <= 0){
+    clearInterval(timerInterval);
+    submitTest(true);
+    return;
+  }
+  remaining--;
+}
+
+/* Custom Modal Control Functions */
+function showCustomModal(message, isConfirm = false, onConfirm = null){
+  const modal = document.getElementById("customModal");
+  const msgEl = document.getElementById("modalMessage");
+  const btnContainer = document.getElementById("modalButtons");
+  
+  msgEl.textContent = message;
+  btnContainer.innerHTML = "";
+  
+  if(isConfirm){
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "primary";
+    yesBtn.textContent = "हाँ, सबमिट करें";
+    yesBtn.onclick = () => {
+      closeCustomModal();
+      if(onConfirm) onConfirm();
+    };
+    
+    const noBtn = document.createElement("button");
+    noBtn.className = "secondary";
+    noBtn.textContent = "रद्द करें";
+    noBtn.onclick = closeCustomModal;
+    
+    btnContainer.appendChild(yesBtn);
+    btnContainer.appendChild(noBtn);
+  } else {
+    const okBtn = document.createElement("button");
+    okBtn.className = "primary";
+    okBtn.textContent = "ठीक है";
+    okBtn.onclick = closeCustomModal;
+    btnContainer.appendChild(okBtn);
+  }
+  
+  modal.classList.remove("hidden");
+}
+
+function closeCustomModal(){
+  document.getElementById("customModal").classList.add("hidden");
+}
+
+function confirmSubmit(auto){
+  if(submitted) return;
+  let unanswered = answers.filter(a => a === null).length;
+  if(auto){
+    submitTest(true);
+  } else {
+    let msg = unanswered > 0
+      ? `आपने अभी ${unanswered} प्रश्न अनुत्तरित छोड़े हैं। क्या आप वाकई अपना टेस्ट सबमिट करना चाहते हैं?`
+      : "क्या आप अपना टेस्ट सबमिट करना चाहते हैं?";
+    showCustomModal(msg, true, () => {
+      submitTest(false);
+    });
+  }
+}
+
+function submitTest(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  
+  let correct = 0, attempted = 0;
+  Q.forEach((q, i) => {
+    if(answers[i] !== null) attempted++;
+    if(answers[i] === q[2]) correct++;
+  });
+  
+  let incorrect = attempted - correct;
+  let skipped = Q.length - attempted;
+  let percentage = (correct / Q.length * 100).toFixed(2);
+  
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+  
+  document.getElementById("greeting").textContent =
+    student + ", आपका 'Static GK (भाग 6)' टेस्ट " + (auto ? "समय समाप्त होने पर स्वतः" : "सफलतापूर्वक") + " सबमिट हो गया है।";
+  document.getElementById("score").textContent = correct + "/100";
+  document.getElementById("percent").textContent = percentage + "%";
+  document.getElementById("right").textContent = correct;
+  document.getElementById("wrong").textContent = incorrect + skipped;
+  
+  let message = correct >= 90 ? "अत्यंत शानदार! आपकी तैयारी सर्वोच्च स्तर की है।" :
+                correct >= 75 ? "बहुत अच्छा प्रदर्शन! निरंतर अभ्यास जारी रखें।" :
+                correct >= 60 ? "अच्छा प्रयास! थोड़ा और रिवीजन करें।" :
+                correct >= 40 ? "औसत प्रदर्शन! गलत प्रश्नों को दोबारा पढ़ें।" :
+                "अभ्यास जारी रखें। नियमित मेहनत से सफलता निश्चित है।";
+                
+  document.getElementById("motivation").textContent = message;
+  
+  let used = 1200 - remaining;
+  document.getElementById("timeTaken").textContent =
+    `कुल हल किए: ${attempted} | सहीः ${correct} | गलतः ${incorrect} | छोड़े: ${skipped} | लिया गया समय: ${Math.floor(used/60)} मिनट ${used%60} सेकंड`;
+    
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function showReview(filterType = 'all'){
+  document.getElementById("reviewArea").classList.remove("hidden");
+  renderReviewList(filterType);
+  document.getElementById("reviewArea").scrollIntoView({behavior:"smooth"});
+}
+
+function filterReview(type, btn){
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReviewList(type);
+}
+
+function renderReviewList(type){
+  let html = Q.map((q, i) => {
+    let a = answers[i], c = q[2];
+    let status = a === null ? "skipped" : (a === c ? "correct" : "wrong");
+    if(type !== "all" && type !== status) return "";
+    
+    let cardClass = status === "correct" ? "rev-correct" : (status === "wrong" ? "rev-wrong" : "rev-skip");
+    
+    return `
+      <div class="review ${cardClass}">
+        <b>प्रश्न ${i+1}. ${q[0]}</b>
+        <p>आपका उत्तरः <b>${a === null ? "नहीं दिया (Skipped)" : "ABCD"[a] + ") " + q[1][a]}</b></p>
+        <p class="green">सही उत्तर: ${"ABCD"[c]}) ${q[1][c]}</p>
+        ${status === "wrong" ? '<p class="red">आपका उत्तर गलत है।</p>' : (status === "correct" ? '<p class="green">आपका उत्तर सही है।</p>' : "")}
+      </div>
+    `;
+  }).join("");
+  
+  document.getElementById("reviewList").innerHTML = html || "<p class='muted'>इस श्रेणी में कोई प्रश्न नहीं है।</p>";
+}
+</script>
+</body>
+</html>
